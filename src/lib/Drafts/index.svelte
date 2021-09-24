@@ -23,7 +23,7 @@
 </style>
 
 
-// {#await upcomingDraftData }
+//{#await upcomingDraftData }
 //	<div class="loading">
 //		<p>Retrieving upcoming draft...</p>
 //		<br />
@@ -35,7 +35,7 @@
 // {:catch error}
 //	<!-- promise was rejected -->
 //	<p>Something went wrong: {error.message}</p>
-// {/await}
+//{/await}
 
 
 {#await previousDraftsData }
