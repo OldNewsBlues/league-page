@@ -23,19 +23,19 @@
 </style>
 
 
-//{#await upcomingDraftData }
-//	<div class="loading">
-//		<p>Retrieving upcoming draft...</p>
-//		<br />
-//		<LinearProgress indeterminate />
-//	</div>
-// {:then upcomingDraft }
-//    <h4>Upcoming {upcomingDraft.year} Draft</h4>
-//    <Draft draftData={upcomingDraft} />
-// {:catch error}
-//	<!-- promise was rejected -->
-//	<p>Something went wrong: {error.message}</p>
-//{/await}
+<!-- {#await upcomingDraftData }
+	<div class="loading">
+		<p>Retrieving upcoming draft...</p>
+		<br />
+		<LinearProgress indeterminate />
+	</div>
+ {:then upcomingDraft }
+    <h4>Upcoming {upcomingDraft.year} Draft</h4>
+    <Draft draftData={upcomingDraft} />
+ {:catch error} -->
+	<!-- promise was rejected -->
+<!-- 	<p>Something went wrong: {error.message}</p>
+{/await} -->
 
 
 {#await previousDraftsData }
