@@ -441,7 +441,7 @@
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
-		    <Cell>{"TEST"}</Cell>
+		    <Cell>{mostSeasonLongPoint.ppg}</Cell>
                 </Row>
             {/each}
         </Body>
@@ -544,8 +544,8 @@
                     <Row>
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
-                        <Cell class="header">Points For</Cell>
-                        <Cell class="header">Points Against</Cell>
+                        <Cell class="header">PF</Cell>
+                        <Cell class="header">PA</Cell>
                     </Row>
                 </Head>
                 <Body>
