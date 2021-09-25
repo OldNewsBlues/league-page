@@ -544,8 +544,8 @@
                     <Row>
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
-                        <Cell class="header">PF</Cell>
-                        <Cell class="header">PA</Cell>
+                        <Cell class="header">{"PF"}</Cell>
+                        <Cell class="header">{"PA"}</Cell>
                     </Row>
                 </Head>
                 <Body>
