@@ -123,7 +123,7 @@ export const getLeagueRecords = async () => {
 		// loop through each week of the season
 		const matchupsPromises = [];
 		while(week > 0) {
-			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true}))
+			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true})); // ADDED ";"
 			week--;
 		}
 	
