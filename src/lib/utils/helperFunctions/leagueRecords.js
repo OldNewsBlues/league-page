@@ -14,7 +14,7 @@ export const getLeagueRecords = async () => {
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
-		week = nflState.week;  // ORIGINAL CODE HAD nflState.week - 1
+		week = nflState.week - 1;  // ORIGINAL CODE HAD nflState.week - 1
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
@@ -150,7 +150,7 @@ export const getLeagueRecords = async () => {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
 					fpts: matchup.points,
-					week: matchupWeek, // OC HAD + 1
+					week: matchupWeek + 2, // OC HAD + 1 with week originally set to nflState - 1 at top
 					year,
 					rosterID: matchup.roster_id
 				}
