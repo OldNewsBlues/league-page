@@ -424,7 +424,7 @@
                     <Cell class="header">Year</Cell>
                 {/if}
                 <Cell class="header">FPTS</Cell>
-		<Cell class="header">PPG</Cell>
+		<Cell class="header">FPPG</Cell>
             </Row>
         </Head>
         <Body>
