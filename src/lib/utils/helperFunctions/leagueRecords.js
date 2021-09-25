@@ -42,10 +42,9 @@ export const getLeagueRecords = async () => {
 
 		// on first run, week is provided above from nflState,
 		// after that get the final week of regular season from leagueData
-		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
-// 			week = leagueData.settings.playoff_week_start - 1; ORIGINAL CODE
-			week = nflState.week;
-		}
+// 		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
+//  			week = leagueData.settings.playoff_week_start - 1
+// 		} ORIGINAL CODE SEEMS TO BE LIMITING RECORDS TO REGULAR SEASON
 
 		lastYear = year;
 	
