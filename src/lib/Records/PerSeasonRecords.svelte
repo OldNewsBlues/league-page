@@ -61,7 +61,6 @@
 				rosterID,
 				fpts,
 				year: null,
-		    		ppg: round(season.fpts / (season.wins + season.ties + season.losses), //Jesse add fppg
 			})
 
             // add win percentage rankings
@@ -74,15 +73,6 @@
                 losses: season.losses,
             })
 	    
-	    // add FPPG Jesse
-// 	    yearsObj[season.year].fptspg.push({
-// 	    	rosterID,
-//                 manager: season.manager,
-// 		ppg: round(season.fpts / (season.wins + season.ties + season.losses),
-//                 wins: season.wins,
-//                 ties: season.ties,
-//                 losses: season.losses,
-//             })
 		
             // add lineup IQ rankings
             let lineupIQ = {
