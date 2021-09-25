@@ -14,7 +14,7 @@ export const getLeagueRecords = async () => {
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
-		week = nflState.week;
+		week = nflState.week;  // ORIGINAL CODE HAD nflState.week - 1
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
@@ -42,9 +42,9 @@ export const getLeagueRecords = async () => {
 
 		// on first run, week is provided above from nflState,
 		// after that get the final week of regular season from leagueData
-// 		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
-//  			week = leagueData.settings.playoff_week_start - 1
-// 		} ORIGINAL CODE SEEMS TO BE LIMITING RECORDS TO REGULAR SEASON
+		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
+ 			week = leagueData.settings.playoff_week_start - 1
+		} 
 
 		lastYear = year;
 	
