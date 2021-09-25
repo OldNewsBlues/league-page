@@ -14,7 +14,7 @@ export const getLeagueRecords = async () => {
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
-		week = nflState.week - 1;
+		week = nflState.week;
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
