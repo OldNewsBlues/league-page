@@ -163,7 +163,7 @@
                 curGraph = 0;
                 break;
             case 1 - iqOffset:
-                if(curGraph == 1 - iqOffset || curGraph == 2 - iqOffset) {
+                if(curGraph == 1 - iqOffset || curGraph == 2 - iqOffset) { //Jessetest
                     break;
                 }
                 curGraph = 1 - iqOffset;
