@@ -16,6 +16,7 @@
             fptsHistories: [],
             tradesData: [],
             waiversData: [],
+	    fptspg: [], // jesse
             showTies: false,
             year: loopYear
         }
@@ -72,7 +73,17 @@
                 ties: season.ties,
                 losses: season.losses,
             })
-
+	    
+	    // add FPPG Jesse
+	    yearsObj[season.year].fptspg.push({
+	    	rosterID,
+                manager: season.manager,
+		ppg: round(season.fpts / (season.wins + season.ties + season.losses),
+                wins: season.wins,
+                ties: season.ties,
+                losses: season.losses,
+            })
+		
             // add lineup IQ rankings
             let lineupIQ = {
                 rosterID,
@@ -102,6 +113,7 @@
         
         // sort rankings
         yearsObj[key].winPercentages.sort((a, b) => b.percentage - a.percentage);
+	yearsObj[key].fptspg.sort((a, b) => b.ppg - a.ppg); //ADD PPG Jesse
         yearsObj[key].lineupIQs.sort((a, b) => b.iq - a.iq);
         yearsObj[key].fptsHistories.sort((a, b) => b.fptsFor - a.fptsFor);
         yearsObj[key].tradesData.sort((a, b) => b.trades - a.trades);
@@ -114,7 +126,7 @@
     years.sort((a, b) => b.year - a.year);
 </script>
 
-{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, year}, ix}
+{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, showTies, winPercentages, fptspg, fptsHistories, lineupIQs, year}, ix}
     <RecordsAndRankings
         {waiversData}
         {tradesData}
@@ -122,6 +134,7 @@
         {seasonLongRecords}
         {showTies}
         {winPercentages}
+	{fptspg}
         {fptsHistories}
         {lineupIQs}
         prefix={year}
