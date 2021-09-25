@@ -415,7 +415,7 @@
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=4>{prefix} Season-long Scoring Records</Cell>
+                <Cell class="header" colspan=5>{prefix} Season-long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header"></Cell>
@@ -424,6 +424,7 @@
                     <Cell class="header">Year</Cell>
                 {/if}
                 <Cell class="header">FPTS</Cell>
+		<Cell class="header">PPG</Cell>
             </Row>
         </Head>
         <Body>
@@ -437,9 +438,10 @@
                         {/if}
                     </Cell>
                     {#if allTime}
-                        <Cell>{mostSeasonLongPoint.year + "(xxx PPG)"}</Cell>
+                        <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		    <Cell>{"TEST"}</Cell>
                 </Row>
             {/each}
         </Body>
