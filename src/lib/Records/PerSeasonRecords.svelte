@@ -1,12 +1,9 @@
 <script>
     import {round} from '$lib/utils/helper'
   	import RecordsAndRankings from './RecordsAndRankings.svelte';
-
     export let leagueRosterRecords, seasonWeekRecords, currentManagers, currentYear, lastYear, transactionTotals;
-
     const yearsObj = {};
     const years = [];
-
     let loopYear = currentYear;
     while(loopYear >= lastYear) {
         yearsObj[loopYear] = {
@@ -21,7 +18,6 @@
         }
         loopYear--;
     }
-
     for(const seasonWeekRecord of seasonWeekRecords) {
         yearsObj[seasonWeekRecord.year].weekRecords = seasonWeekRecord.seasonPointsRecords;
         for(const weekRecord of yearsObj[seasonWeekRecord.year].weekRecords) {
@@ -44,7 +40,6 @@
             })
         }
     }
-
     for(const rosterID in leagueRosterRecords) {
         const leagueRosterRecord = leagueRosterRecords[rosterID];
         for(const season of leagueRosterRecord.years) {
@@ -52,18 +47,14 @@
             if(season.ties > 0) {
                 yearsObj[season.year].showTies = true;
             }
-
 			const fpts = round(season.fpts);
-
             // add season-long scoring record
             yearsObj[season.year].seasonLongRecords.push({
                 manager: season.manager,
 				rosterID,
 				fpts,
-		    		fppg,
 				year: null,
 			})
-
             // add win percentage rankings
             yearsObj[season.year].winPercentages.push({
                 rosterID,
@@ -73,8 +64,6 @@
                 ties: season.ties,
                 losses: season.losses,
             })
-	    
-		
             // add lineup IQ rankings
             let lineupIQ = {
                 rosterID,
@@ -85,9 +74,7 @@
                 lineupIQ.iq = round(season.fpts / season.potentialPoints * 100);
                 lineupIQ.potentialPoints = round(season.potentialPoints);
             }
-
             yearsObj[season.year].lineupIQs.push(lineupIQ)
-
             // add fantasy points histories
             yearsObj[season.year].fptsHistories.push({
                 rosterID,
@@ -97,7 +84,6 @@
             })
         }
     }
-
     for(const key in yearsObj) {
         // sort records
         yearsObj[key].seasonLongRecords = yearsObj[key].seasonLongRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
@@ -108,11 +94,9 @@
         yearsObj[key].fptsHistories.sort((a, b) => b.fptsFor - a.fptsFor);
         yearsObj[key].tradesData.sort((a, b) => b.trades - a.trades);
         yearsObj[key].waiversData.sort((a, b) => b.waivers - a.waivers);
-
         // add to array
         years.push(yearsObj[key]);
     }
-
     years.sort((a, b) => b.year - a.year);
 </script>
 
