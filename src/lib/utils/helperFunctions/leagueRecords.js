@@ -12,9 +12,9 @@ export const getLeagueRecords = async () => {
 		return get(records);
 	}
 	const nflState = await getNflState().catch((err) => { console.error(err); });
-	let week = 0;
+	let week = 1; // OC had 0
 	if(nflState.season_type == 'regular') {
-		week = nflState.week - 1;  // ORIGINAL CODE HAD nflState.week - 1
+		week = nflState.display_week;  // ORIGINAL CODE HAD nflState.week - 1
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
@@ -42,9 +42,9 @@ export const getLeagueRecords = async () => {
 
 		// on first run, week is provided above from nflState,
 		// after that get the final week of regular season from leagueData
-		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
- 			week = leagueData.settings.playoff_week_start - 1
-		} 
+// 		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) { OC HERE to next 2 lines
+//  			week = leagueData.settings.playoff_week_start - 1
+// 		} 
 
 		lastYear = year;
 	
@@ -122,10 +122,13 @@ export const getLeagueRecords = async () => {
 
 		// loop through each week of the season
 		const matchupsPromises = [];
-		while(week > 0) {
-			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true})) // ADDED ";"
-			week--;
+		for(let i = 1; i < leagueData.settings.playoff_week_start; i++) {
+			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${leagueID}/matchups/${i}`, {compress: true}))
 		}
+// 		while(week > 0) {
+// 			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true})) // ADDED ";"
+// 			week--;
+// 		}
 	
 		const matchupsRes = await waitForAll(...matchupsPromises).catch((err) => { console.error(err); });
 
@@ -145,12 +148,18 @@ export const getLeagueRecords = async () => {
 
 		const seasonPointsRecord = [];
 		// process all the matchups
-		for(let matchupWeek = 0; matchupWeek < matchupsData.length; matchupWeek++) { // OC started with 0
+		for(let matchupWeek = 1; matchupWeek < matchupsData.length + 1; matchupWeek++) { // OC started with 0 and length + 1
+			const processed = processMatchups(matchupsData[matchupWeek - 1], rosters, users, i);
+			if(processed) {
+				seasonPointsRecord.push({
+					matchups: processed.matchups,
+					week: processed.week
+				});
 			for(const matchup of matchupsData[matchupWeek]) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
 					fpts: matchup.points,
-					week: matchupWeek + 1, // OC HAD + 1 with week originally set to nflState - 1 at top
+					// week: , // OC HAD "week: matchupWeek + 1," with week originally set to nflState - 1 at top
 					year,
 					rosterID: matchup.roster_id
 				}
