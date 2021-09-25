@@ -150,7 +150,7 @@ export const getLeagueRecords = async () => {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
 					fpts: matchup.points,
-					week: matchupWeek + 1,
+					week: matchupWeek, // OC HAD + 1
 					year,
 					rosterID: matchup.roster_id
 				}
