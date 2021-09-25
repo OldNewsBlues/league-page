@@ -391,7 +391,7 @@
                     <Cell class="header"></Cell>
                     <Cell class="header">Manager</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Total Points</Cell>
+                    <Cell class="header">FPTS</Cell>
                 </Row>
             </Head>
             <Body>
@@ -423,7 +423,7 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">Total Points</Cell>
+                <Cell class="header">FPTS</Cell>
             </Row>
         </Head>
         <Body>
@@ -437,7 +437,7 @@
                         {/if}
                     </Cell>
                     {#if allTime}
-                        <Cell>{mostSeasonLongPoint.year}</Cell>
+                        <Cell>{mostSeasonLongPoint.year + "(xxx PPG)"}</Cell>
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
                 </Row>
