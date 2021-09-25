@@ -60,6 +60,7 @@
                 manager: season.manager,
 				rosterID,
 				fpts,
+		    		fppg,
 				year: null,
 			})
 
