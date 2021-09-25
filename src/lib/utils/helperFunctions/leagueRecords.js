@@ -145,7 +145,7 @@ export const getLeagueRecords = async () => {
 
 		const seasonPointsRecord = [];
 		// process all the matchups
-		for(let matchupWeek = 1; matchupWeek < matchupsData.length; matchupWeek++) { // OC started with 0
+		for(let matchupWeek = 0; matchupWeek < matchupsData.length; matchupWeek++) { // OC started with 0
 			for(const matchup of matchupsData[matchupWeek]) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
