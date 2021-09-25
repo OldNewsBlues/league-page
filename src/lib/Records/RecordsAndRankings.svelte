@@ -404,7 +404,7 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " – " : "" }{leagueWeekRecord.week}</Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " –" : "" } {leagueWeekRecord.week}</Cell>
                         <Cell>{leagueWeekRecord.fpts}</Cell>
                     </Row>
                 {/each}
