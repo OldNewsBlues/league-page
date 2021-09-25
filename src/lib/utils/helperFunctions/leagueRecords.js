@@ -123,7 +123,7 @@ export const getLeagueRecords = async () => {
 		// loop through each week of the season
 		const matchupsPromises = [];
 		while(week > 0) {
-			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true})); // ADDED ";"
+			matchupsPromises.push(fetch(`https://api.sleeper.app/v1/league/${curSeason}/matchups/${week}`, {compress: true})) // ADDED ";"
 			week--;
 		}
 	
@@ -150,7 +150,7 @@ export const getLeagueRecords = async () => {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
 					fpts: matchup.points,
-					week: matchupWeek + 2, // OC HAD + 1 with week originally set to nflState - 1 at top
+					week: matchupWeek + 1, // OC HAD + 1 with week originally set to nflState - 1 at top
 					year,
 					rosterID: matchup.roster_id
 				}
