@@ -78,6 +78,7 @@ export const getLeagueRecords = async () => {
 					fptsFor: 0,
 					fptsAgainst: 0,
 					potentialPoints: 0,
+					fptspg: 0, //Jesse ppg
 					years: []
 				}
 			}
@@ -85,6 +86,7 @@ export const getLeagueRecords = async () => {
 			const fpts = roster.settings.fpts + (roster.settings.fpts_decimal / 100);
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
+			const fptspg = round(roster.settings.fpts / (roster.settings.wins + roster.settings.ties + roster.settings.losses))//Jesse ppg
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -93,6 +95,7 @@ export const getLeagueRecords = async () => {
 			leagueRosterRecords[rosterID].fptsFor += fpts;
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
+			leagueRosterRecords[rosterID].fptspg += fptspg;//Jesse ppg
 
 			// add singleSeason info [`${year}fptsFor`]
 			const singleYearInfo = {
