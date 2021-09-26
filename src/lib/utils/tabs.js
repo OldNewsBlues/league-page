@@ -43,7 +43,7 @@ export const tabs = [
             },
             {
                 icon: 'leaderboard',
-                label: 'Stats',
+                label: 'Statistics',
                 dest: '/statistics',
             },
             {
