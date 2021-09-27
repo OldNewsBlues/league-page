@@ -1,8 +1,8 @@
 <script context="module">
-	import { getLeagueRecords, getLeagueTransactions, waitForAll } from '$lib/utils/helper';
+	import { getLeagueStatistics, getLeagueTransactions, waitForAll } from '$lib/utils/helper';
     export async function load() {
         const recordsInfo = waitForAll(
-			getLeagueRecords(),
+			getLeagueStatistics(),
 			getLeagueTransactions(false),
 		)
 	
