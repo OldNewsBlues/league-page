@@ -1,7 +1,7 @@
 <script>
     import {round} from '$lib/utils/helper'
   	import RecordsAndRankings from './StatisticsAndRankings.svelte';
-    export let leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, transactionTotals;
+    export let leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, transactionTotals; //Jesse
     let winPercentages = [];
     let lineupIQs = [];
     const fptsHistories = [];
