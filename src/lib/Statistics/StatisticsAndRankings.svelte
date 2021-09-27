@@ -3,7 +3,7 @@
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager } from '$lib/utils/helper';
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-    export let tradesData, waiversData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekStatistics, seasonLongStatistics, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false;
     const lineupIQGraph = {
         stats: lineupIQs,
         x: "Manager",
@@ -147,7 +147,7 @@
                 curGraph = 0;
                 break;
             case 1 - iqOffset:
-                if(curGraph == 1 - iqOffset || curGraph == 2 - iqOffset) { //Jessetest
+                if(curGraph == 1 - iqOffset || curGraph == 2 - iqOffset) {
                     break;
                 }
                 curGraph = 1 - iqOffset;
@@ -332,7 +332,7 @@
 </style>
 <h4>{prefix} Records</h4>
 <div class="fullFlex">
-    {#if weekRecords && weekRecords.length}
+    {#if weekStatistics && weekStatistics.length}
         <DataTable class="recordTable">
             <Head>
                 <Row>
@@ -346,17 +346,17 @@
                 </Row>
             </Head>
             <Body>
-                {#each weekRecords as leagueWeekRecord, ix}
+                {#each weekStatistics as leagueWeekStatistic, ix}
                     <Row>
                         <Cell>{ix + 1}</Cell>
-                        <Cell class="cellName" on:click={() => gotoManager(leagueWeekRecord.rosterID)}>
-                            {leagueWeekRecord.manager.name}
-                            {#if !allTime  && cleanName(leagueWeekRecord.manager.name) != cleanName(currentManagers[leagueWeekRecord.rosterID].name)}
-                                <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
+                        <Cell class="cellName" on:click={() => gotoManager(leagueWeekStatistic.rosterID)}>
+                            {leagueWeekStatistic.manager.name}
+                            {#if !allTime  && cleanName(leagueWeekStatistic.manager.name) != cleanName(currentManagers[leagueWeekStatistic.rosterID].name)}
+                                <div class="curRecordManager">({currentManagers[leagueWeekStatistic.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " –" : "" } {leagueWeekRecord.week}</Cell>
-                        <Cell>{leagueWeekRecord.fpts}</Cell>
+                        <Cell>{allTime ? leagueWeekStatistic.year + " –" : "" } {leagueWeekStatistic.week}</Cell>
+                        <Cell>{leagueWeekStatistic.fpts}</Cell>
                     </Row>
                 {/each}
             </Body>
@@ -378,7 +378,7 @@
             </Row>
         </Head>
         <Body>
-            {#each seasonLongRecords as mostSeasonLongPoint, ix}
+            {#each seasonLongStatistics as mostSeasonLongPoint, ix}
                 <Row>
                     <Cell>{ix + 1}</Cell>
                     <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
