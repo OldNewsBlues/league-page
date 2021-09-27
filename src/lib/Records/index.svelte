@@ -1,5 +1,5 @@
 <script>
-    import AllTimeRecords from './AllTimeRecords.svelte';
+    import AllTimeRecords from './AllTimeRecords.svelte'; //Jesse
     import PerSeasonRecords from './PerSeasonRecords.svelte';
     export let leagueRecords, totals, stale;
     const refreshTransactions = async () => {
