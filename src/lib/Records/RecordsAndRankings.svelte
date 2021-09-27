@@ -440,7 +440,7 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">Total Points</Cell>
+                <Cell class="header">PF</Cell>
             </Row>
         </Head>
         <Body>
@@ -494,7 +494,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
+                        <Cell>{allTime ? blowout.year + " - " : "" } {blowout.week}</Cell>
                         <Cell>{round(blowout.differential)}</Cell>
                     </Row>
                 {/each}
@@ -512,7 +512,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Differential</Cell>
+                    <Cell class="header">Diff</Cell>
                 </Row>
             </Head>
             <Body>
@@ -534,7 +534,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
+                        <Cell>{allTime ? closestMatchup.year + " - " : "" } {closestMatchup.week}</Cell>
                         <Cell>{round(closestMatchup.differential)}</Cell>
                     </Row>
                 {/each}
@@ -564,9 +564,9 @@
                         <Row>
                             <Cell class="header"></Cell>
                             <Cell class="header">Manager</Cell>
-                            <Cell class="header">Lineup IQ</Cell>
-                            <Cell class="header">Points</Cell>
-                            <Cell class="header">Potential Points</Cell>
+                            <Cell class="header">IQ</Cell>
+                            <Cell class="header">PF</Cell>
+                            <Cell class="header">Potential PF</Cell>
                         </Row>
                     </Head>
                     <Body>
@@ -599,11 +599,11 @@
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
                         <Cell class="header">Win %</Cell>
-                        <Cell class="header">Wins</Cell>
+                        <Cell class="header">W</Cell>
                         {#if showTies}
-                            <Cell class="header">Ties</Cell>
+                            <Cell class="header">T</Cell>
                         {/if}
-                        <Cell class="header">Losses</Cell>
+                        <Cell class="header">L</Cell>
                     </Row>
                 </Head>
                 <Body>
