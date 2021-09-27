@@ -402,7 +402,7 @@
         <DataTable class="recordTable">
             <Head>
                 <Row>
-                    <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
+                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
                 </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
@@ -432,7 +432,7 @@
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=4>{prefix} Season-long Scoring Records</Cell>
+                <Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -472,7 +472,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Differential</Cell>
+                    <Cell class="header">Diff</Cell>
                 </Row>
             </Head>
             <Body>
