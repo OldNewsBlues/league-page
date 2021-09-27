@@ -1,14 +1,14 @@
 import { getLeagueData } from './leagueData';
 import { leagueID } from '$lib/utils/leagueInfo';
 import { getNflState } from './nflState';
-import { getLeagueRosters } from "./leagueRosters"
+import { getLeagueStatistics } from "./leagueStatistics"
 import { getLeagueUsers } from "./leagueUsers"
 import { waitForAll } from './multiPromise';
 import { get } from 'svelte/store';
 import {statisticsStore} from '$lib/stores';
 
 export const getLeagueStatistics = async () => {
-	if(get(statisticsStore).seasonWeekRecords) {
+	if(get(statisticsStore).seasonWeekStatistics) {
 		return get(statisticsStore);
 	}
 	const nflState = await getNflState().catch((err) => { console.error(err); });
@@ -26,9 +26,9 @@ export const getLeagueStatistics = async () => {
 	let currentYear;
 	let lastYear;
 
-	let leagueRosterRecords = {}; // every full season stat point (for each year and all years combined)
-	let seasonWeekRecords = []; // highest weekly points within a single season
-	let leagueWeekRecords = []; // highest weekly points within a single season
+	let leagueRosterStatistics = {}; // every full season stat point (for each year and all years combined)
+	let seasonWeekStatistics = []; // highest weekly points within a single season
+	let leagueWeekStatistics = []; // highest weekly points within a single season
 	let mostSeasonLongPoints = []; // 10 highest full season points
 
 	while(curSeason && curSeason != 0) {
@@ -70,8 +70,8 @@ export const getLeagueStatistics = async () => {
 
 			if(roster.settings.wins == 0 && roster.settings.ties == 0 && roster.settings.losses == 0) continue;
 
-			if(!leagueRosterRecords[rosterID]) {
-				leagueRosterRecords[rosterID] = {
+			if(!leagueRosterStatistics[rosterID]) {
+				leagueRosterStatistics[rosterID] = {
 					wins: 0,
 					losses: 0,
 					ties: 0,
@@ -87,12 +87,12 @@ export const getLeagueStatistics = async () => {
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
 
 			// add records to league roster record record
-			leagueRosterRecords[rosterID].wins += roster.settings.wins;
-			leagueRosterRecords[rosterID].losses += roster.settings.losses;
-			leagueRosterRecords[rosterID].ties += roster.settings.ties;
-			leagueRosterRecords[rosterID].fptsFor += fpts;
-			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
-			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
+			leagueRosterStatistics[rosterID].wins += roster.settings.wins;
+			leagueRosterStatistics[rosterID].losses += roster.settings.losses;
+			leagueRosterStatistics[rosterID].ties += roster.settings.ties;
+			leagueRosterStatistics[rosterID].fptsFor += fpts;
+			leagueRosterStatistics[rosterID].fptsAgainst += fptsAgainst;
+			leagueRosterStatistics[rosterID].potentialPoints += potentialPoints;
 
 			// add singleSeason info [`${year}fptsFor`]
 			const singleYearInfo = {
@@ -106,7 +106,7 @@ export const getLeagueStatistics = async () => {
 				year
 			}
 
-			leagueRosterRecords[rosterID].years.push(singleYearInfo);
+			leagueRosterStatistics[rosterID].years.push(singleYearInfo);
 
 			mostSeasonLongPoints.push({
 				rosterID,
@@ -143,7 +143,7 @@ export const getLeagueStatistics = async () => {
 		// now that we've used the current season ID for everything we need, set it to the previous season
 		curSeason = leagueData.previous_league_id;
 
-		const seasonPointsRecord = [];
+		const seasonPointsStatistic = [];
 		// process all the matchups
 		for(let matchupWeek = 0; matchupWeek < matchupsData.length; matchupWeek++) { // OC started with 0
 			for(const matchup of matchupsData[matchupWeek]) {
@@ -154,37 +154,37 @@ export const getLeagueStatistics = async () => {
 					year,
 					rosterID: matchup.roster_id
 				}
-				seasonPointsRecord.push(entry);
-				leagueWeekRecords.push(entry);
+				seasonPointsStatistic.push(entry);
+				leagueWeekStatistics.push(entry);
 			}
 		}
 		const interSeasonEntry = {
 			year,
-			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
+			seasonPointsStatistics: seasonPointsStatistic.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
 		}
 
-		if(interSeasonEntry.seasonPointsRecords.length > 0) {
+		if(interSeasonEntry.seasonPointsStatistics.length > 0) {
 			if(!currentYear) {
 				currentYear = year;
 			}
-			seasonWeekRecords.push(interSeasonEntry)
+			seasonPointsStatistics.push(interSeasonEntry)
 		};
 	}
 
-	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
+	leagueWeekStatistics = leagueWeekStatistics.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 
-	const recordsData = {
+	const statisticsData = {
 		mostSeasonLongPoints,
-		leagueWeekRecords,
-		seasonWeekRecords,
-		leagueRosterRecords,
+		leagueWeekStatistics,
+		seasonWeekStatistics,
+		leagueRosterStatistics,
 		currentManagers,
 		currentYear,
 		lastYear
 	};
 
-	statisticsStore.update(() => recordsData);
+	statisticsStore.update(() => statisticsData);
 
-	return recordsData;
+	return statisticsData;
 }
