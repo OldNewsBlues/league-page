@@ -2,7 +2,7 @@
     import {round} from '$lib/utils/helper'
   	import RecordsAndRankings from './RecordsAndRankings.svelte';
 
-    export let leagueRosterRecords, leagueWeekRecords, currentManagers, mostSeasonLongPoints, transactionTotals;
+    export let leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, transactionTotals;
 
     let winPercentages = [];
     let lineupIQs = [];
@@ -26,26 +26,26 @@
     }
 
 
-    for(const key in leagueRosterRecords) {
-        const leagueRosterRecord = leagueRosterRecords[key];
+    for(const key in leagueRosterStatistics) {
+        const leagueRosterStatistic = leagueRosterStatistics[key];
         winPercentages.push({
             rosterID: key,
             manager: currentManagers[key],
-            percentage: round((leagueRosterRecord.wins + leagueRosterRecord.ties / 2) / (leagueRosterRecord.wins + leagueRosterRecord.ties + leagueRosterRecord.losses) * 100),
-            wins: leagueRosterRecord.wins,
-            ties: leagueRosterRecord.ties,
-            losses: leagueRosterRecord.losses,
+            percentage: round((leagueRosterStatistic.wins + leagueRosterStatistic.ties / 2) / (leagueRosterStatistic.wins + leagueRosterStatistic.ties + leagueRosterStatistic.losses) * 100),
+            wins: leagueRosterStatistic.wins,
+            ties: leagueRosterStatistic.ties,
+            losses: leagueRosterStatistic.losses,
         })
 
         let lineupIQ = {
             rosterID: key,
             manager: currentManagers[key],
-            fpts: round(leagueRosterRecord.fptsFor),
+            fpts: round(leagueRosterStatistic.fptsFor),
         }
 
-        if(leagueRosterRecord.potentialPoints) {
-            lineupIQ.iq = round(leagueRosterRecord.fptsFor / leagueRosterRecord.potentialPoints * 100);
-            lineupIQ.potentialPoints = round(leagueRosterRecord.potentialPoints);
+        if(leagueRosterStatistic.potentialPoints) {
+            lineupIQ.iq = round(leagueRosterStatistic.fptsFor / leagueRosterStatistic.potentialPoints * 100);
+            lineupIQ.potentialPoints = round(leagueRosterStatistic.potentialPoints);
         }
 
         lineupIQs.push(lineupIQ)
@@ -53,11 +53,11 @@
         fptsHistories.push({
             rosterID: key,
             manager: currentManagers[key],
-            fptsFor: round(leagueRosterRecord.fptsFor),
-            fptsAgainst: round(leagueRosterRecord.fptsAgainst),
+            fptsFor: round(leagueRosterStatistic.fptsFor),
+            fptsAgainst: round(leagueRosterStatistic.fptsAgainst),
         })
     
-        if(leagueRosterRecord.ties > 0) showTies = true;
+        if(leagueRosterStatistic.ties > 0) showTies = true;
     }
 
     winPercentages.sort((a, b) => b.percentage - a.percentage);
@@ -69,7 +69,7 @@
 
 <RecordsAndRankings
     {currentManagers}
-    weekRecords={leagueWeekRecords}
+    weekRecords={leagueWeekStatistics}
     seasonLongRecords={mostSeasonLongPoints}
     {showTies}
     {winPercentages}
