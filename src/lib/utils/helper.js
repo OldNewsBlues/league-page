@@ -16,7 +16,7 @@ import { predictScores } from './helperFunctions/predictOptimalScore';
 import { getBrackets } from './helperFunctions/leagueBrackets';
 import { getBlogPosts } from './helperFunctions/getBlogPosts';
 import { getLeagueStandings } from './helperFunctions/leagueStandings';
-import { getLeagueRecords } from './helperFunctions/leagueStatistics';
+import { getLeagueStatistics } from './helperFunctions/leagueStatistics';
 
 export {
     enableBlog,
@@ -51,4 +51,5 @@ export {
     getAuthor,
     parseDate,
     getAvatar,
+    getLeagueStatistics,
 }
