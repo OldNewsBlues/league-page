@@ -1,6 +1,6 @@
 <script>
     import {round} from '$lib/utils/helper'
-  	import RecordsAndRankings from './RecordsAndRankings.svelte';
+  	import StatisticsAndRankings from './StatisticsAndRankings.svelte';
 
     export let leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, transactionTotals;
 
@@ -67,10 +67,10 @@
     waiversData.sort((a, b) => b.waivers - a.waivers);
 </script>
 
-<RecordsAndRankings
+<StatisticsAndRankings
     {currentManagers}
-    weekRecords={leagueWeekStatistics}
-    seasonLongRecords={mostSeasonLongPoints}
+    weekStatistics={leagueWeekStatistics}
+    seasonLongStatistics={mostSeasonLongPoints}
     {showTies}
     {winPercentages}
     {fptsHistories}
