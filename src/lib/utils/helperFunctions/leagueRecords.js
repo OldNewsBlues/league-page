@@ -243,7 +243,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			year,
 			biggestBlowouts,
 			closestMatchups,
-			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
+			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10),
 			seasonPointsLows: seasonPointsLow.sort((a, b) => a.fpts - b.fpts).slice(0, 10)
 		}
 
