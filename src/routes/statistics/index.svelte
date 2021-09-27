@@ -2,7 +2,7 @@
 	import { getLeagueStatistics, getLeagueTransactions, waitForAll } from '$lib/utils/helper';
     export async function load() {
         const statisticsInfo = waitForAll(
-			getLeagueStatistics(),
+			getLeagueStatistics(false),
 			getLeagueTransactions(false),
 		)
 	
