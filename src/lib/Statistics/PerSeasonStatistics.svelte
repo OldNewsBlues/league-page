@@ -1,7 +1,7 @@
 <script>
     import {round} from '$lib/utils/helper'
   	import StatisticsAndRankings from './StatisticsAndRankings.svelte';
-    export let leagueRosterStatistics, seasonWeekStatistics, currentManagers, currentYear, lastYear, transactionTotals;
+    export let leagueRosterStatistics, seasonWeekStatistics, currentManagers, currentYear, lastYear, transactionTotals; //Jesse
     const yearsObj = {};
     const years = [];
     let loopYear = currentYear;
