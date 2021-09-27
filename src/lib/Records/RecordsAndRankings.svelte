@@ -440,7 +440,7 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">PF (PPG)</Cell>
+                <Cell class="header">{"PF (PPG)"}</Cell>
             </Row>
         </Head>
         <Body>
