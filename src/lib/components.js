@@ -15,7 +15,7 @@ import PowerRankings from './PowerRankings/index.svelte';
 import HomePost from './BlogPosts/HomePost.svelte';
 import Posts from './BlogPosts/Posts.svelte';
 import Standings from './Standings/index.svelte';
-import Statistics from './Statistics/index.svelte'; //Jesse
+import Statistics from './Statistics/index.svelte'; //Jesse pls
 
 export {
     Nav,
