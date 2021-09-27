@@ -1,3 +1,4 @@
+
 import { getLeagueData } from './leagueData';
 import { leagueID } from '$lib/utils/leagueInfo';
 import { getNflState } from './nflState';
@@ -7,14 +8,25 @@ import { waitForAll } from './multiPromise';
 import { get } from 'svelte/store';
 import {records} from '$lib/stores';
 
-export const getLeagueRecords = async () => {
+export const getLeagueRecords = async (refresh = false) => {
 	if(get(records).seasonWeekRecords) {
 		return get(records);
 	}
+
+	// if this isn't a refresh data call, check if there are already transactions stored in localStorage
+	if(!refresh) {
+		let localRecords = await JSON.parse(localStorage.getItem("records"));
+		// check if transactions have been saved to localStorage before
+		if(localRecords) {
+			localRecords.stale = true;
+			return localRecords;
+		}
+	}
+
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
-		week = nflState.week - 1;  // ORIGINAL CODE HAD nflState.week - 1
+		week = nflState.week - 1;
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
@@ -26,10 +38,14 @@ export const getLeagueRecords = async () => {
 	let currentYear;
 	let lastYear;
 
+	let allTimeMatchupDifferentials = [];
+
 	let leagueRosterRecords = {}; // every full season stat point (for each year and all years combined)
 	let seasonWeekRecords = []; // highest weekly points within a single season
 	let leagueWeekRecords = []; // highest weekly points within a single season
 	let mostSeasonLongPoints = []; // 10 highest full season points
+	let allTimeBiggestBlowouts = []; // 10 biggest blowouts
+	let allTimeClosestMatchups = []; // 10 closest matchups
 
 	while(curSeason && curSeason != 0) {
 		const [rosterRes, users, leagueData] = await waitForAll(
@@ -43,8 +59,8 @@ export const getLeagueRecords = async () => {
 		// on first run, week is provided above from nflState,
 		// after that get the final week of regular season from leagueData
 		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
- 			week = leagueData.settings.playoff_week_start - 1
-		} 
+			week = leagueData.settings.playoff_week_start - 1;
+		}
 
 		lastYear = year;
 	
@@ -144,22 +160,69 @@ export const getLeagueRecords = async () => {
 		curSeason = leagueData.previous_league_id;
 
 		const seasonPointsRecord = [];
+		let matchupDifferentials = [];
+		
 		// process all the matchups
-		for(let matchupWeek = 0; matchupWeek < matchupsData.length; matchupWeek++) { // OC started with 0
+		for(let matchupWeek = 0; matchupWeek < matchupsData.length; matchupWeek++) {
+			let matchups = {};
 			for(const matchup of matchupsData[matchupWeek]) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
 					fpts: matchup.points,
-					week: matchupWeek + 1, // OC HAD + 1 with week originally set to nflState - 1 at top
+					week: matchupWeek + 1,
 					year,
 					rosterID: matchup.roster_id
 				}
 				seasonPointsRecord.push(entry);
 				leagueWeekRecords.push(entry);
+				// add each entry to the matchup object
+				if(!matchups[matchup.matchup_id]) {
+					matchups[matchup.matchup_id] = [];
+				}
+				matchups[matchup.matchup_id].push(entry);
+			}
+
+			// create matchup differentials from matchups obj
+			for(const matchupKey in matchups) {
+				const matchup = matchups[matchupKey];
+				let home = matchup[0];
+				let away = matchup[1];
+				if(matchup[0].fpts < matchup[1].fpts) {
+					home = matchup[1];
+					away = matchup[0];
+				}
+				const matchupDifferential = {
+					year: home.year,
+					week: home.week,
+					home: {
+						manager: home.manager,
+						fpts: home.fpts,
+						rosterID: home.rosterID,
+					},
+					away: {
+						manager: away.manager,
+						fpts: away.fpts,
+						rosterID: away.rosterID,
+					},
+					differential: home.fpts - away.fpts
+				}
+				allTimeMatchupDifferentials.push(matchupDifferential);
+				matchupDifferentials.push(matchupDifferential);
 			}
 		}
+
+		matchupDifferentials = matchupDifferentials.sort((a, b) => b.differential - a.differential);
+		const biggestBlowouts = matchupDifferentials.slice(0, 10);
+
+		const closestMatchups = [];
+		for(let i = 0; i < 10; i++) {
+			closestMatchups.push(matchupDifferentials.pop());
+		}
+
 		const interSeasonEntry = {
 			year,
+			biggestBlowouts,
+			closestMatchups,
 			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
 		}
 
@@ -171,10 +234,19 @@ export const getLeagueRecords = async () => {
 		};
 	}
 
+	allTimeMatchupDifferentials = allTimeMatchupDifferentials.sort((a, b) => b.differential - a.differential)
+	allTimeBiggestBlowouts = allTimeMatchupDifferentials.slice(0, 10);
+
+	for(let i = 0; i < 10; i++) {
+		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
+	}
+
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 
 	const recordsData = {
+		allTimeBiggestBlowouts,
+		allTimeClosestMatchups,
 		mostSeasonLongPoints,
 		leagueWeekRecords,
 		seasonWeekRecords,
@@ -183,6 +255,9 @@ export const getLeagueRecords = async () => {
 		currentYear,
 		lastYear
 	};
+
+	// update localStorage
+	localStorage.setItem("records", JSON.stringify(recordsData));
 
 	records.update(() => recordsData);
 
