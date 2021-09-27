@@ -1,15 +1,40 @@
 <script>
+    import { getLeagueStatistics, getLeagueTransactions } from '$lib/utils/helper';
+
     import AllTimeStatistics from './AllTimeStatistics.svelte';
     import PerSeasonStatistics from './PerSeasonStatistics.svelte';
+
     export let leagueStatistics, totals, stale;
+
     const refreshTransactions = async () => {
         const newTransactions = await getLeagueTransactions(false, true);
         totals = newTransactions.totals;
     }
+
+    let {leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, seasonWeekStatistics, currentYear, lastYear} = leagueStatistics;
+
+    const refreshStatistics = async () => {
+        const newStatistics = await getLeagueStatistics(true);
+
+        // update values with new data
+        leagueStatistics = newStatistics;
+        leagueRosterStatistics = newStatistics.leagueRosterStatistics;
+        leagueWeekStatistics = newStatistics.leagueWeekStatistics;
+        currentManagers = newStatistics.currentManagers;
+        mostSeasonLongPoints = newStatistics.mostSeasonLongPoints;
+        seasonWeekStatistics = newStatistics.seasonWeekRecords;
+        currentYear = newStatistics.currentYear;
+        lastYear = newStatistics.lastYear;
+    }
+
     if(stale) {
         refreshTransactions();
     }
-    const {leagueRosterStatistics, leagueWeekStatistics, currentManagers, mostSeasonLongPoints, seasonWeekStatistics, currentYear, lastYear} = leagueStatistics;
+
+    if(leagueStatistics.stale) {
+        refreshStatistics();
+    }
+
 </script>
 
 <style>
@@ -18,6 +43,7 @@
         width: 100%;
         max-width: 1200px;
     }
+
     .empty {
         margin: 10em 0 4em;
         text-align: center;
