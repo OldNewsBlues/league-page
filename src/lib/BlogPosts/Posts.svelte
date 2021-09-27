@@ -5,21 +5,15 @@
     import LinearProgress from "@smui/linear-progress";
     import { onMount } from "svelte";
     import Post from "./Post.svelte";
-
     export let postsData, usersData, rostersData, queryPage = 1, filterKey = '';
-
     let page = queryPage - 1;
-
     const lang = "en-US";
-
     let loading = true;
     let allPosts = [];
     let posts = [];
     let users = {};
     let rosters = [];
-
     let categories;
-
     const filterPosts = (ap, fk) => {
         if(ap.length && fk != '') {
             posts = ap.filter(p => p.fields.type[lang] == fk);
@@ -27,9 +21,7 @@
             posts = ap;
         }
     }
-
     $: filterPosts(allPosts, filterKey);
-
     onMount(async ()=> {
         const startPostData = await postsData;
         users = await usersData;
@@ -37,13 +29,11 @@
         rosters = rostersInfo.rosters;
         allPosts = startPostData.posts;
         loading = false;
-
         const categoryMap = new Set();
         for(const post of startPostData.posts) {
             categoryMap.add(post.fields.type[lang]);
         }
         categories = [...categoryMap];
-
         if(!startPostData.fresh) {
             const blogResponse = await getBlogPosts(true);
             allPosts = blogResponse.posts;
@@ -54,17 +44,12 @@
             categories = [...categoryMap];
         }
     })
-
     const perPage = 10;
     $: total = posts.length;
-
     let el;
     $: top = el?.getBoundingClientRect() ? el?.getBoundingClientRect().bottom  : 0
-
     $: displayPosts = posts.slice(page * perPage, (page + 1) * perPage);
-
     let direction = 1;
-
     const changePage = (dest) => {
         if(dest + 1 > queryPage) {
             direction = 1;
@@ -73,7 +58,6 @@
         }
         setTimeout(() => {goto(`/blog?page=${dest + 1}&filter=${filterKey}`, {noscroll: true,  keepfocus: true})}, 800);
     }
-
 	$: changePage(page);
 </script>
 
@@ -98,39 +82,31 @@
         font-size: 0.8em;
         padding: 0.25em 1em;
     }
-
     .noUnderline {
         margin: 0.5em;
         text-decoration: none;
     }
-
     .filterClear {
         background-color: #920505;
     }
-
     .filterClear:hover {
         background-color: #720404;
     }
-
     .filterLink {
         background-color: #00316b;
     }
-
     .filterLink:not(.noHover):hover {
         background-color: #0082c3;
     }
-
     .noHover {
         cursor: default;
     }
-
     .filterButtons {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         margin: 1em 0 3em;
     }
-
     .filteringBy {
         font-size: 1em;
     }
@@ -140,7 +116,7 @@
 
 {#if loading}
     <div class="loading" >
-        <p>Loading league transactions...</p>
+        <p>Loading league blog posts...</p>
         <LinearProgress indeterminate />
     </div>
 {:else}
