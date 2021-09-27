@@ -93,6 +93,7 @@ export const getLeagueRecords = async (refresh = false) => {
 					fptsFor: 0,
 					fptsAgainst: 0,
 					potentialPoints: 0,
+					fptspg: 0, //Jesse PPG
 					years: []
 				}
 			}
@@ -100,6 +101,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fpts = roster.settings.fpts + (roster.settings.fpts_decimal / 100);
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
+			const fptspg = fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties); //Jesse PPG
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -108,6 +110,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].fptsFor += fpts;
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
+			leagueRosterRecords[rosterID].fptspg += fptspg; //Jesse PPG
 
 			// add singleSeason info [`${year}fptsFor`]
 			const singleYearInfo = {
@@ -117,6 +120,7 @@ export const getLeagueRecords = async (refresh = false) => {
 				fpts,
 				fptsAgainst,
 				potentialPoints,
+				fptspg, //Jesse PPG
 				manager: originalManagers[rosterID],
 				year
 			}
@@ -126,6 +130,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			mostSeasonLongPoints.push({
 				rosterID,
 				fpts,
+				fptspg,
 				year,
 				manager: originalManagers[rosterID]
 			})
@@ -225,7 +230,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			year,
 			biggestBlowouts,
 			closestMatchups,
-			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
+			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 12)
 		}
 
 		if(interSeasonEntry.seasonPointsRecords.length > 0) {
@@ -243,8 +248,8 @@ export const getLeagueRecords = async (refresh = false) => {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
 	}
 
-	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
-	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
+	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 12);
+	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 12);
 
 	const recordsData = {
 		allTimeBiggestBlowouts,
