@@ -405,16 +405,16 @@
                     <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
                 </Row>
                 <Row>
-                    <Cell class="header"></Cell>
+                    <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">FPTS</Cell>
+                    <Cell class="header">PF</Cell>
                 </Row>
             </Head>
             <Body>
                 {#each weekStatistics as leagueWeekStatistic, ix}
                     <Row>
-                        <Cell>{ix + 1}</Cell>
+                        <Cell class="rank">{ix + 1}</Cell>
                         <Cell class="cellName" on:click={() => gotoManager(leagueWeekStatistic.rosterID)}>
                             {leagueWeekStatistic.manager.name}
                             {#if !allTime  && cleanName(leagueWeekStatistic.manager.name) != cleanName(currentManagers[leagueWeekStatistic.rosterID].name)}
@@ -435,18 +435,18 @@
                 <Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
             </Row>
             <Row>
-                <Cell class="header"></Cell>
+                <Cell class="header rank"></Cell>
                 <Cell class="header">Manager</Cell>
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">FPTS</Cell>
+                <Cell class="header">PF</Cell>
             </Row>
         </Head>
         <Body>
             {#each seasonLongStatistics as mostSeasonLongPoint, ix}
                 <Row>
-                    <Cell>{ix + 1}</Cell>
+                    <Cell class="rank">{ix + 1}</Cell>
                     <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
                         {mostSeasonLongPoint.manager.name}
                         {#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
