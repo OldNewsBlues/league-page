@@ -422,7 +422,7 @@
                             {/if}
                         </Cell>
                         <Cell>{allTime ? leagueWeekRecord.year + " - " : "" } {leagueWeekRecord.week}</Cell>
-                        <Cell>{leagueWeekRecord.fpts}</Cell>
+                        <Cell>{round(leagueWeekRecord.fpts)}</Cell>
                     </Row>
                 {/each}
             </Body>
