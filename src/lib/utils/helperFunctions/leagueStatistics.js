@@ -11,6 +11,17 @@ export const getLeagueStatistics = async () => {
 	if(get(statisticsStore).seasonWeekStatistics) {
 		return get(statisticsStore);
 	}
+	
+	// if this isn't a refresh data call, check if there are already transactions stored in localStorage
+	if(!refresh) {
+		let localStatistics = await JSON.parse(localStorage.getItem("statisticsStore"));
+		// check if transactions have been saved to localStorage before
+		if(localStatistics) {
+			localStatistics.stale = true;
+			return localStatistics;
+		}
+	}
+	
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
