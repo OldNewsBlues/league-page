@@ -1,5 +1,5 @@
 <script>
-    import Button, { Group, Label } from '@smui/button';
+    import Button, { Group, Label } from '@smui/button'; //x
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager } from '$lib/utils/helper';
 	
