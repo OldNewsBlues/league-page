@@ -1,6 +1,6 @@
 <script>
     import {round} from '$lib/utils/helper'
-  	import RecordsAndRankings from './RecordsAndRankings.svelte';
+  	import RecordsAndRankings from './RecordsAndRankings.svelte'; //f
 
     export let leagueRosterRecords, seasonWeekRecords, seasonWeekLows, currentManagers, currentYear, lastYear, transactionTotals;
 
