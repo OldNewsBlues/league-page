@@ -408,7 +408,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Total Points</Cell>
+                    <Cell class="header">PF</Cell>
                 </Row>
             </Head>
             <Body>
@@ -421,7 +421,7 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " " : "" }Week {leagueWeekRecord.week}</Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " - " : "" } {leagueWeekRecord.week}</Cell>
                         <Cell>{leagueWeekRecord.fpts}</Cell>
                     </Row>
                 {/each}
@@ -639,8 +639,8 @@
                     <Row>
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
-                        <Cell class="header">Points For</Cell>
-                        <Cell class="header">Points Against</Cell>
+                        <Cell class="header">PF</Cell>
+                        <Cell class="header">PA</Cell>
                     </Row>
                 </Head>
                 <Body>
