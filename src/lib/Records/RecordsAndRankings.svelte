@@ -2,7 +2,7 @@
     import Button, { Group, Label } from '@smui/button';
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager, round } from '$lib/utils/helper';
-    import { Icon } from '@smui/tab'; //Jesse not top 10
+    import { Icon } from '@smui/tab'; //Jesse not top 10 n
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
