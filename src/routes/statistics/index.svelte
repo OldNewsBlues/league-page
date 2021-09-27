@@ -15,7 +15,7 @@
 </script>
 
 <script>
-	import LinearProgress from '@smui/linear-progress';
+	import LinearProgress from '@smui/linear-progress'; //Jes
 	import { Statistics } from '$lib/components';
     export let statisticsInfo;
 </script>
