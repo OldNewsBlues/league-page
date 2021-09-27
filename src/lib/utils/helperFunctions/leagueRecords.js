@@ -101,7 +101,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fpts = roster.settings.fpts + (roster.settings.fpts_decimal / 100);
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
-			const fptspg = fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties); //Jesse PPG
+			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties); //Jesse PPG
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -248,7 +248,7 @@ export const getLeagueRecords = async (refresh = false) => {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
 	}
 
-	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 12);
+	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 12);
 
 	const recordsData = {
