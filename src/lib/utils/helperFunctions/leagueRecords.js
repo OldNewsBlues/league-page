@@ -1,4 +1,3 @@
-
 import { getLeagueData } from './leagueData';
 import { leagueID } from '$lib/utils/leagueInfo';
 import { getNflState } from './nflState';
