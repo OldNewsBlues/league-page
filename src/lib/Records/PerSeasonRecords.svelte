@@ -55,12 +55,14 @@
             }
 
 			const fpts = round(season.fpts);
+			const fptspg = fpts / (season.wins + season.losses + season.ties) //Jesse PPG
 
             // add season-long scoring record
             yearsObj[season.year].seasonLongRecords.push({
                 manager: season.manager,
 				rosterID,
 				fpts,
+		    		fptspg, //Jesse PPG
 				year: null,
 			})
 
