@@ -3,7 +3,7 @@
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager } from '$lib/utils/helper';
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-    export let tradesData, waiversData, weekStatistics, seasonLongStatistics, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekStatistics, seasonLongStatistics, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false; //Jesse
     const lineupIQGraph = {
         stats: lineupIQs,
         x: "Manager",
@@ -332,7 +332,7 @@
 </style>
 <h4>{prefix} Records</h4>
 <div class="fullFlex">
-    {#if weekStatistics && weekStatistics.length}
+    {#if weekStatistics && weekStatistics.length} 
         <DataTable class="recordTable">
             <Head>
                 <Row>
