@@ -397,322 +397,316 @@
 
 <h4>{prefix} Records</h4>
 
-{#if loading}
-	<div class="loading">
-		<p>Loading Statistics...</p>
-		<LinearProgress indeterminate />
-	</div>
-{:else}
-	<div class="fullFlex">
-	    {#if weekStatistics && weekStatistics.length} 
-		<DataTable class="recordTable">
+<div class="fullFlex">
+    {#if weekStatistics && weekStatistics.length} 
+	<DataTable class="recordTable">
+	    <Head>
+		<Row>
+		    <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
+		</Row>
+		<Row>
+		    <Cell class="header rank"></Cell>
+		    <Cell class="header">Manager</Cell>
+		    <Cell class="header">Week</Cell>
+		    <Cell class="header">PF</Cell>
+		</Row>
+	    </Head>
+	    <Body>
+		{#each weekStatistics as leagueWeekStatistic, ix}
+		    <Row>
+			<Cell class="rank">{ix + 1}</Cell>
+			<Cell class="cellName" on:click={() => gotoManager(leagueWeekStatistic.rosterID)}>
+			    {leagueWeekStatistic.manager.name}
+			    {#if !allTime  && cleanName(leagueWeekStatistic.manager.name) != cleanName(currentManagers[leagueWeekStatistic.rosterID].name)}
+				<div class="curRecordManager">({currentManagers[leagueWeekStatistic.rosterID].name})</div>
+			    {/if}
+			</Cell>
+			<Cell>{allTime ? leagueWeekStatistic.year + " –" : "" } {leagueWeekStatistic.week}</Cell>
+			<Cell>{round(leagueWeekStatistic.fpts)}</Cell>
+		    </Row>
+		{/each}
+	    </Body>
+	</DataTable>
+    {/if}
+
+    <DataTable class="recordTable">
+	<Head>
+	    <Row>
+		<Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
+	    </Row>
+	    <Row>
+		<Cell class="header rank"></Cell>
+		<Cell class="header">Manager</Cell>
+		{#if allTime}
+		    <Cell class="header">Year</Cell>
+		{/if}
+		<Cell class="header">PF</Cell>
+	    </Row>
+	</Head>
+	<Body>
+	    {#each seasonLongStatistics as mostSeasonLongPoint, ix}
+		<Row>
+		    <Cell class="rank">{ix + 1}</Cell>
+		    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
+			{mostSeasonLongPoint.manager.name}
+			{#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
+			    <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+			{/if}
+		    </Cell>
+		    {#if allTime}
+			<Cell>{mostSeasonLongPoint.year}</Cell>
+		    {/if}
+		    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		</Row>
+	    {/each}
+	</Body>
+    </DataTable>
+
+    {#if blowouts && blowouts.length}
+	<DataTable class="recordTable">
+	    <Head>
+		<Row>
+		    <Cell class="header" colspan=4>{prefix} Largest Blowouts</Cell>
+		</Row>
+		<Row>
+		    <Cell class="header rank"></Cell>
+		    <Cell class="header">Matchup</Cell>
+		    <Cell class="header">Week</Cell>
+		    <Cell class="header">Differential</Cell>
+		</Row>
+	    </Head>
+	    <Body>
+		{#each blowouts as blowout, ix}
+		    <Row>
+			<Cell class="rank">{ix + 1}</Cell>
+			<Cell class="cellName center differentialName">
+			    <div class="center" on:click={() => gotoManager(blowout.home.rosterID)}>
+				{blowout.home.manager.name} ({round(blowout.home.fpts)})
+				{#if !allTime  && cleanName(blowout.home.manager.name) != cleanName(currentManagers[blowout.home.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[blowout.home.rosterID].name})</div>
+				{/if}
+			    </div>
+			    vs
+			    <div class="center" on:click={() => gotoManager(blowout.away.rosterID)}>
+				{blowout.away.manager.name} ({round(blowout.away.fpts)})
+				{#if !allTime  && cleanName(blowout.away.manager.name) != cleanName(currentManagers[blowout.away.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[blowout.away.rosterID].name})</div>
+				{/if}
+			    </div>
+			</Cell>
+			<Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
+			<Cell>{round(blowout.differential)}</Cell>
+		    </Row>
+		{/each}
+	    </Body>
+	</DataTable>
+    {/if}
+
+    {#if closestMatchups && closestMatchups.length}
+	<DataTable class="recordTable">
+	    <Head>
+		<Row>
+		    <Cell class="header" colspan=4>{prefix} Narrowest Wins</Cell>
+		</Row>
+		<Row>
+		    <Cell class="header rank"></Cell>
+		    <Cell class="header">Matchup</Cell>
+		    <Cell class="header">Week</Cell>
+		    <Cell class="header">Differential</Cell>
+		</Row>
+	    </Head>
+	    <Body>
+		{#each closestMatchups as closestMatchup, ix}
+		    <Row>
+			<Cell class="rank">{ix + 1}</Cell>
+			<Cell class="cellName center differentialName">
+			    <div class="center" on:click={() => gotoManager(closestMatchup.home.rosterID)}>
+				{closestMatchup.home.manager.name} ({round(closestMatchup.home.fpts)})
+				{#if !allTime  && cleanName(closestMatchup.home.manager.name) != cleanName(currentManagers[closestMatchup.home.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[closestMatchup.home.rosterID].name})</div>
+				{/if}
+			    </div>
+			    vs
+			    <div class="center" on:click={() => gotoManager(closestMatchup.away.rosterID)}>
+				{closestMatchup.away.manager.name} ({round(closestMatchup.away.fpts)})
+				{#if !allTime  && cleanName(closestMatchup.away.manager.name) != cleanName(currentManagers[closestMatchup.away.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[closestMatchup.away.rosterID].name})</div>
+				{/if}
+			    </div>
+			</Cell>
+			<Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
+			<Cell>{round(closestMatchup.differential)}</Cell>
+		    </Row>
+		{/each}
+	    </Body>
+	</DataTable>
+    {/if}	
+</div>
+
+<h4>{prefix} Rankings</h4>
+
+<BarChart maxWidth={innerWidth} {graphs} bind:curGraph={curGraph} />
+
+<div class="rankingHolder">
+    <div class="rankingInner" style="margin-left: -{100 * curTable}%;">
+	{#if lineupIQs[0]?.potentialPoints}
+	    <div class="rankingTableWrapper">
+		<DataTable class="rankingTable">
 		    <Head>
 			<Row>
-			    <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
+			    <Cell class="header" colspan=5>
+				{prefix} Lineup IQ Rankings
+				<div class="subTitle">
+				    The percentage of potential points each manager has captured
+				</div>
+			    </Cell>
 			</Row>
 			<Row>
-			    <Cell class="header rank"></Cell>
+			    <Cell class="header"></Cell>
 			    <Cell class="header">Manager</Cell>
-			    <Cell class="header">Week</Cell>
-			    <Cell class="header">PF</Cell>
+			    <Cell class="header">Lineup IQ</Cell>
+			    <Cell class="header">Points</Cell>
+			    <Cell class="header">Potential Points</Cell>
 			</Row>
 		    </Head>
 		    <Body>
-			{#each weekStatistics as leagueWeekStatistic, ix}
+			{#each lineupIQs as lineupIQ, ix}
 			    <Row>
-				<Cell class="rank">{ix + 1}</Cell>
-				<Cell class="cellName" on:click={() => gotoManager(leagueWeekStatistic.rosterID)}>
-				    {leagueWeekStatistic.manager.name}
-				    {#if !allTime  && cleanName(leagueWeekStatistic.manager.name) != cleanName(currentManagers[leagueWeekStatistic.rosterID].name)}
-					<div class="curRecordManager">({currentManagers[leagueWeekStatistic.rosterID].name})</div>
+				<Cell>{ix + 1}</Cell>
+				<Cell class="cellName" on:click={() => gotoManager(lineupIQ.rosterID)}>
+				    {lineupIQ.manager.name}
+				    {#if !allTime  && cleanName(lineupIQ.manager.name) != cleanName(currentManagers[lineupIQ.rosterID].name)}
+					<div class="curRecordManager">({currentManagers[lineupIQ.rosterID].name})</div>
 				    {/if}
 				</Cell>
-				<Cell>{allTime ? leagueWeekStatistic.year + " –" : "" } {leagueWeekStatistic.week}</Cell>
-				<Cell>{round(leagueWeekStatistic.fpts)}</Cell>
+				<Cell>{lineupIQ.iq}%</Cell>
+				<Cell>{lineupIQ.fpts}</Cell>
+				<Cell>{lineupIQ.potentialPoints}</Cell>
 			    </Row>
 			{/each}
 		    </Body>
 		</DataTable>
-	    {/if}
+	    </div>
+	{/if}
 
-	    <DataTable class="recordTable">
+	<div class="rankingTableWrapper">
+	    <DataTable class="rankingTable">
 		<Head>
 		    <Row>
-			<Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
+			<Cell class="header" colspan=6>{prefix} Win Percentages Rankings</Cell>
 		    </Row>
 		    <Row>
-			<Cell class="header rank"></Cell>
+			<Cell class="header"></Cell>
 			<Cell class="header">Manager</Cell>
-			{#if allTime}
-			    <Cell class="header">Year</Cell>
+			<Cell class="header">Win %</Cell>
+			<Cell class="header">Wins</Cell>
+			{#if showTies}
+			    <Cell class="header">Ties</Cell>
 			{/if}
-			<Cell class="header">PF</Cell>
+			<Cell class="header">Losses</Cell>
 		    </Row>
 		</Head>
 		<Body>
-		    {#each seasonLongStatistics as mostSeasonLongPoint, ix}
+		    {#each winPercentages as winPercentage, ix}
 			<Row>
-			    <Cell class="rank">{ix + 1}</Cell>
-			    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
-				{mostSeasonLongPoint.manager.name}
-				{#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
-				    <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+			    <Cell>{ix + 1}</Cell>
+			    <Cell class="cellName" on:click={() => gotoManager(winPercentage.rosterID)}>
+				{winPercentage.manager.name}
+				{#if !allTime  && cleanName(winPercentage.manager.name) != cleanName(currentManagers[winPercentage.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[winPercentage.rosterID].name})</div>
 				{/if}
 			    </Cell>
-			    {#if allTime}
-				<Cell>{mostSeasonLongPoint.year}</Cell>
+			    <Cell>{winPercentage.percentage}%</Cell>
+			    <Cell>{winPercentage.wins}</Cell>
+			    {#if showTies}
+				<Cell>{winPercentage.ties}</Cell>
 			    {/if}
-			    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+			    <Cell>{winPercentage.losses}</Cell>
 			</Row>
 		    {/each}
 		</Body>
 	    </DataTable>
-
-	    {#if blowouts && blowouts.length}
-		<DataTable class="recordTable">
-		    <Head>
-			<Row>
-			    <Cell class="header" colspan=4>{prefix} Largest Blowouts</Cell>
-			</Row>
-			<Row>
-			    <Cell class="header rank"></Cell>
-			    <Cell class="header">Matchup</Cell>
-			    <Cell class="header">Week</Cell>
-			    <Cell class="header">Differential</Cell>
-			</Row>
-		    </Head>
-		    <Body>
-			{#each blowouts as blowout, ix}
-			    <Row>
-				<Cell class="rank">{ix + 1}</Cell>
-				<Cell class="cellName center differentialName">
-				    <div class="center" on:click={() => gotoManager(blowout.home.rosterID)}>
-					{blowout.home.manager.name} ({round(blowout.home.fpts)})
-					{#if !allTime  && cleanName(blowout.home.manager.name) != cleanName(currentManagers[blowout.home.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[blowout.home.rosterID].name})</div>
-					{/if}
-				    </div>
-				    vs
-				    <div class="center" on:click={() => gotoManager(blowout.away.rosterID)}>
-					{blowout.away.manager.name} ({round(blowout.away.fpts)})
-					{#if !allTime  && cleanName(blowout.away.manager.name) != cleanName(currentManagers[blowout.away.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[blowout.away.rosterID].name})</div>
-					{/if}
-				    </div>
-				</Cell>
-				<Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
-				<Cell>{round(blowout.differential)}</Cell>
-			    </Row>
-			{/each}
-		    </Body>
-		</DataTable>
-	    {/if}
-
-	    {#if closestMatchups && closestMatchups.length}
-		<DataTable class="recordTable">
-		    <Head>
-			<Row>
-			    <Cell class="header" colspan=4>{prefix} Narrowest Wins</Cell>
-			</Row>
-			<Row>
-			    <Cell class="header rank"></Cell>
-			    <Cell class="header">Matchup</Cell>
-			    <Cell class="header">Week</Cell>
-			    <Cell class="header">Differential</Cell>
-			</Row>
-		    </Head>
-		    <Body>
-			{#each closestMatchups as closestMatchup, ix}
-			    <Row>
-				<Cell class="rank">{ix + 1}</Cell>
-				<Cell class="cellName center differentialName">
-				    <div class="center" on:click={() => gotoManager(closestMatchup.home.rosterID)}>
-					{closestMatchup.home.manager.name} ({round(closestMatchup.home.fpts)})
-					{#if !allTime  && cleanName(closestMatchup.home.manager.name) != cleanName(currentManagers[closestMatchup.home.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[closestMatchup.home.rosterID].name})</div>
-					{/if}
-				    </div>
-				    vs
-				    <div class="center" on:click={() => gotoManager(closestMatchup.away.rosterID)}>
-					{closestMatchup.away.manager.name} ({round(closestMatchup.away.fpts)})
-					{#if !allTime  && cleanName(closestMatchup.away.manager.name) != cleanName(currentManagers[closestMatchup.away.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[closestMatchup.away.rosterID].name})</div>
-					{/if}
-				    </div>
-				</Cell>
-				<Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
-				<Cell>{round(closestMatchup.differential)}</Cell>
-			    </Row>
-			{/each}
-		    </Body>
-		</DataTable>
-	    {/if}	
 	</div>
 
-	<h4>{prefix} Rankings</h4>
-
-	<BarChart maxWidth={innerWidth} {graphs} bind:curGraph={curGraph} />
-
-	<div class="rankingHolder">
-	    <div class="rankingInner" style="margin-left: -{100 * curTable}%;">
-		{#if lineupIQs[0]?.potentialPoints}
-		    <div class="rankingTableWrapper">
-			<DataTable class="rankingTable">
-			    <Head>
-				<Row>
-				    <Cell class="header" colspan=5>
-					{prefix} Lineup IQ Rankings
-					<div class="subTitle">
-					    The percentage of potential points each manager has captured
-					</div>
-				    </Cell>
-				</Row>
-				<Row>
-				    <Cell class="header"></Cell>
-				    <Cell class="header">Manager</Cell>
-				    <Cell class="header">Lineup IQ</Cell>
-				    <Cell class="header">Points</Cell>
-				    <Cell class="header">Potential Points</Cell>
-				</Row>
-			    </Head>
-			    <Body>
-				{#each lineupIQs as lineupIQ, ix}
-				    <Row>
-					<Cell>{ix + 1}</Cell>
-					<Cell class="cellName" on:click={() => gotoManager(lineupIQ.rosterID)}>
-					    {lineupIQ.manager.name}
-					    {#if !allTime  && cleanName(lineupIQ.manager.name) != cleanName(currentManagers[lineupIQ.rosterID].name)}
-						<div class="curRecordManager">({currentManagers[lineupIQ.rosterID].name})</div>
-					    {/if}
-					</Cell>
-					<Cell>{lineupIQ.iq}%</Cell>
-					<Cell>{lineupIQ.fpts}</Cell>
-					<Cell>{lineupIQ.potentialPoints}</Cell>
-				    </Row>
-				{/each}
-			    </Body>
-			</DataTable>
-		    </div>
-		{/if}
-
-		<div class="rankingTableWrapper">
-		    <DataTable class="rankingTable">
-			<Head>
-			    <Row>
-				<Cell class="header" colspan=6>{prefix} Win Percentages Rankings</Cell>
-			    </Row>
-			    <Row>
-				<Cell class="header"></Cell>
-				<Cell class="header">Manager</Cell>
-				<Cell class="header">Win %</Cell>
-				<Cell class="header">Wins</Cell>
-				{#if showTies}
-				    <Cell class="header">Ties</Cell>
+	<div class="rankingTableWrapper">
+	    <DataTable class="rankingTable">
+		<Head>
+		    <Row>
+			<Cell class="header" colspan=4>
+			    {prefix} Fantasy Points Rankings
+			</Cell>
+		    </Row>
+		    <Row>
+			<Cell class="header"></Cell>
+			<Cell class="header">Manager</Cell>
+			<Cell class="header">{"PF"}</Cell>
+			<Cell class="header">{"PA"}</Cell>
+		    </Row>
+		</Head>
+		<Body>
+		    {#each fptsHistories as fptsHistory, ix}
+			<Row>
+			    <Cell>{ix + 1}</Cell>
+			    <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
+				{fptsHistory.manager.name}
+				{#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
 				{/if}
-				<Cell class="header">Losses</Cell>
-			    </Row>
-			</Head>
-			<Body>
-			    {#each winPercentages as winPercentage, ix}
-				<Row>
-				    <Cell>{ix + 1}</Cell>
-				    <Cell class="cellName" on:click={() => gotoManager(winPercentage.rosterID)}>
-					{winPercentage.manager.name}
-					{#if !allTime  && cleanName(winPercentage.manager.name) != cleanName(currentManagers[winPercentage.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[winPercentage.rosterID].name})</div>
-					{/if}
-				    </Cell>
-				    <Cell>{winPercentage.percentage}%</Cell>
-				    <Cell>{winPercentage.wins}</Cell>
-				    {#if showTies}
-					<Cell>{winPercentage.ties}</Cell>
-				    {/if}
-				    <Cell>{winPercentage.losses}</Cell>
-				</Row>
-			    {/each}
-			</Body>
-		    </DataTable>
-		</div>
-
-		<div class="rankingTableWrapper">
-		    <DataTable class="rankingTable">
-			<Head>
-			    <Row>
-				<Cell class="header" colspan=4>
-				    {prefix} Fantasy Points Rankings
-				</Cell>
-			    </Row>
-			    <Row>
-				<Cell class="header"></Cell>
-				<Cell class="header">Manager</Cell>
-				<Cell class="header">{"PF"}</Cell>
-				<Cell class="header">{"PA"}</Cell>
-			    </Row>
-			</Head>
-			<Body>
-			    {#each fptsHistories as fptsHistory, ix}
-				<Row>
-				    <Cell>{ix + 1}</Cell>
-				    <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
-					{fptsHistory.manager.name}
-					{#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
-					{/if}
-				    </Cell>
-				    <Cell>{fptsHistory.fptsFor}</Cell>
-				    <Cell>{fptsHistory.fptsAgainst}</Cell>
-				</Row>
-			    {/each}
-			</Body>
-		    </DataTable>
-		</div>
-
-		<div class="rankingTableWrapper">
-		    <DataTable class="rankingTable">
-			<Head>
-			    <Row>
-				<Cell class="header" colspan=4>
-				    {prefix} Transaction Totals
-				</Cell>
-			    </Row>
-			    <Row>
-				<Cell class="header"></Cell>
-				<Cell class="header">Manager</Cell>
-				<Cell class="header">Trades</Cell>
-				<Cell class="header">Waivers</Cell>
-			    </Row>
-			</Head>
-			<Body>
-			    {#each transactions as transaction, ix}
-				<Row>
-				    <Cell>{ix + 1}</Cell>
-				    <Cell class="cellName" on:click={() => gotoManager(transaction.rosterID)}>
-					{transaction.manager.name}
-					{#if !allTime  && cleanName(transaction.manager.name) != cleanName(currentManagers[transaction.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[transaction.rosterID].name})</div>
-					{/if}
-				    </Cell>
-				    <Cell>{transaction.trades}</Cell>
-				    <Cell>{transaction.waivers}</Cell>
-				</Row>
-			    {/each}
-			</Body>
-		    </DataTable>
-		</div>
-
-	    </div>
+			    </Cell>
+			    <Cell>{fptsHistory.fptsFor}</Cell>
+			    <Cell>{fptsHistory.fptsAgainst}</Cell>
+			</Row>
+		    {/each}
+		</Body>
+	    </DataTable>
 	</div>
 
-	<div class="buttonHolder">
-	    <Group variant="outlined">
-		{#each tables as table, ix}
-		    <Button class="selectionButtons" on:click={() => curTable = ix} variant="{curTable == ix ? "raised" : "outlined"}">
-			<Label>{table}</Label>
-		    </Button>
-		{/each}
-	    </Group>
+	<div class="rankingTableWrapper">
+	    <DataTable class="rankingTable">
+		<Head>
+		    <Row>
+			<Cell class="header" colspan=4>
+			    {prefix} Transaction Totals
+			</Cell>
+		    </Row>
+		    <Row>
+			<Cell class="header"></Cell>
+			<Cell class="header">Manager</Cell>
+			<Cell class="header">Trades</Cell>
+			<Cell class="header">Waivers</Cell>
+		    </Row>
+		</Head>
+		<Body>
+		    {#each transactions as transaction, ix}
+			<Row>
+			    <Cell>{ix + 1}</Cell>
+			    <Cell class="cellName" on:click={() => gotoManager(transaction.rosterID)}>
+				{transaction.manager.name}
+				{#if !allTime  && cleanName(transaction.manager.name) != cleanName(currentManagers[transaction.rosterID].name)}
+				    <div class="curRecordManager">({currentManagers[transaction.rosterID].name})</div>
+				{/if}
+			    </Cell>
+			    <Cell>{transaction.trades}</Cell>
+			    <Cell>{transaction.waivers}</Cell>
+			</Row>
+		    {/each}
+		</Body>
+	    </DataTable>
 	</div>
-{/if}
+
+    </div>
+</div>
+
+<div class="buttonHolder">
+    <Group variant="outlined">
+	{#each tables as table, ix}
+	    <Button class="selectionButtons" on:click={() => curTable = ix} variant="{curTable == ix ? "raised" : "outlined"}">
+		<Label>{table}</Label>
+	    </Button>
+	{/each}
+    </Group>
+</div>
+
 {#if !last}
     <hr />
 {/if}
