@@ -186,5 +186,5 @@ export const getLeagueStatistics = async () => {
 
 	statisticsStore.update(() => statisticsData);
 
-	return statisticsData;
+	return statisticsData; //Jesse
 }
