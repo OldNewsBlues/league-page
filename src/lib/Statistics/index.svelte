@@ -1,5 +1,5 @@
 <script>
-    import { getLeagueStatistics, getLeagueTransactions } from '$lib/utils/helper';
+    import { getLeagueStatistics, getLeagueTransactions } from '$lib/utils/helper'; //j
 
     import AllTimeStatistics from './AllTimeStatistics.svelte';
     import PerSeasonStatistics from './PerSeasonStatistics.svelte';
