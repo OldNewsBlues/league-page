@@ -5,11 +5,11 @@ import { getLeagueRosters } from "./leagueRosters"
 import { getLeagueUsers } from "./leagueUsers"
 import { waitForAll } from './multiPromise';
 import { get } from 'svelte/store';
-import {records} from '$lib/stores';
+import {statisticsStore} from '$lib/stores';
 
-export const getLeagueRecords = async () => {
-	if(get(records).seasonWeekRecords) {
-		return get(records);
+export const getLeagueStatistics = async () => {
+	if(get(statisticsStore).seasonWeekRecords) {
+		return get(statisticsStore);
 	}
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
@@ -184,7 +184,7 @@ export const getLeagueRecords = async () => {
 		lastYear
 	};
 
-	records.update(() => recordsData);
+	statisticsStore.update(() => recordsData);
 
 	return recordsData;
 }
