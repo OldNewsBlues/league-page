@@ -2,11 +2,8 @@
     import Button, { Group, Label } from '@smui/button';
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager } from '$lib/utils/helper';
-
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-
-    export let tradesData, waiversData, weekStatistics, seasonLongStatistics, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false;
-
+    export let tradesData, waiversData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, prefix, currentManagers, allTime=false, last=false;
     const lineupIQGraph = {
         stats: lineupIQs,
         x: "Manager",
@@ -16,7 +13,6 @@
         field: "iq",
         short: "Lineup IQ"
     }
-
     const potentialPointsGraph = {
         stats: lineupIQs,
         x: "Manager",
@@ -27,7 +23,6 @@
         secondField: "fpts",
         short: "Potential Points"
     }
-
     const winsGraph = {
         stats: winPercentages,
         x: "Manager",
@@ -37,7 +32,6 @@
         field: "wins",
         short: "Wins"
     }
-
     const winPercentagesGraph = {
         stats: winPercentages,
         x: "Manager",
@@ -47,7 +41,6 @@
         field: "percentage",
         short: "Win Percentage"
     }
-
     const fptsHistoriesGraph = {
         stats: fptsHistories,
         x: "Manager",
@@ -57,7 +50,6 @@
         field: "fptsFor",
         short: "Fantasy Points"
     }
-
     for(let i = 1; i <= waiversData.length; i++) {
         if(!tradesData.find(t => t.rosterID == i)) {
             tradesData.push({
@@ -67,7 +59,6 @@
             })
         }
     }
-
     const tradesGraph = {
         stats: tradesData,
         x: "Manager",
@@ -77,7 +68,6 @@
         field: "trades",
         short: "Trades"
     }
-
     const waiversGraph = {
         stats: waiversData,
         x: "Manager",
@@ -89,7 +79,6 @@
     }
     
     const graphs = [];
-
     if(lineupIQs[0]?.potentialPoints) {
         graphs.push(generateGraph(lineupIQGraph));
     }
@@ -101,9 +90,7 @@
     }
     graphs.push(generateGraph(tradesGraph));
     graphs.push(generateGraph(waiversGraph));
-
     const transactions = [];
-
     for(let i = 1; i <= waiversData.length; i++) {
         const waiver = waiversData.find(w => w.rosterID == i);
         const trades = tradesData.find(t => t.rosterID == i)?.trades || 0;
@@ -116,10 +103,8 @@
             waivers,
         })
     }
-
     let curTable = 0;
     let curGraph = 0;
-
     let iqOffset = 0;
     const tables = [
         "Win Percentages",
@@ -153,7 +138,6 @@
                 break;
         }
     }
-
     const changeGraph = (newTable) => {
         switch (newTable) {
             case 0 - iqOffset:
@@ -182,73 +166,59 @@
                 break;
         }
     }
-
     $: changeTable(curGraph);
     $: changeGraph(curTable);
     
     let innerWidth;
-
 </script>
-
 <svelte:window bind:innerWidth={innerWidth} />
-
 <style>
     :global(.header) {
         text-align: center;
     }
-
     :global(.recordTable) {
         box-shadow: 0px 3px 3px -2px var(--boxShadowOne), 0px 3px 4px 0px var(--boxShadowTwo), 0px 1px 8px 0px var(--boxShadowThree);
         margin: 2em;
     }
-
     :global(.rankingTable) {
         display: table;
         box-shadow: 0px 3px 3px -2px var(--boxShadowOne), 0px 3px 4px 0px var(--boxShadowTwo), 0px 1px 8px 0px var(--boxShadowThree);
         margin: 2em auto 0.5em;
     }
-
     .fullFlex {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
         margin: 3em auto 5em;
     }
-
     .rankingHolder {
         display: block;
         width: 100%;
         overflow-x: hidden;
     }
-
     .subTitle {
         font-style: italic;
         font-size: 0.7em;
         color: #888;
         line-height: 1.2em;
     }
-
     h5 {
         text-align: center;
         margin: 2em 0 1em;
     }
-
     h4 {
         text-align: center;
         margin: 2em 0 1em;
     }
-
     .curRecordManager {
         font-style: italic;
         color: #999;
         font-size: 0.8em;
         line-height: 1.1em;
     }
-
     .rankingTableWrapper {
         width: 25%;
     }
-
     .rankingInner {
         position: relative;
         display: flex;
@@ -256,43 +226,34 @@
         width: 400%;
 		transition: margin-left 0.8s;
     }
-
     .buttonHolder {
         text-align: center;
         margin: 2em 0 4em;
     }
-
     :global(.cellName) {
         cursor: pointer;
         line-height: 1.2em;
     }
-
     /* Start button resizing */
-
     @media (max-width: 540px) {
         :global(.buttonHolder .selectionButtons) {
             font-size: 0.6em;
         }
     }
-
     @media (max-width: 415px) {
         :global(.buttonHolder .selectionButtons) {
             font-size: 0.5em;
             padding: 0 6px;
         }
     }
-
     @media (max-width: 315px) {
         :global(.buttonHolder .selectionButtons) {
             font-size: 0.45em;
             padding: 0 3px;
         }
     }
-
     /* End button resizing */
-
     /* Start record table resizing */
-
     @media (max-width: 490px) {
         :global(.recordTable th) {
             font-size: 0.8em;
@@ -303,7 +264,6 @@
             padding: 1px 12px;
         }
     }
-
     @media (max-width: 390px) {
         :global(.recordTable th) {
             font-size: 0.6em;
@@ -314,7 +274,6 @@
             padding: 1px 12px;
         }
     }
-
     @media (max-width: 320px) {
         :global(.recordTable th) {
             font-size: 0.5em;
@@ -325,11 +284,8 @@
             padding: 1px 8px;
         }
     }
-
     /* END record table resizing */
-
     /* Start ranking table resizing */
-
     @media (max-width: 570px) {
         :global(.rankingTable th) {
             font-size: 0.8em;
@@ -344,7 +300,6 @@
             padding: 1px 12px;
         }
     }
-
     @media (max-width: 410px) {
         :global(.rankingTable th) {
             font-size: 0.6em;
@@ -359,7 +314,6 @@
             padding: 1px 12px;
         }
     }
-
     @media (max-width: 340px) {
         :global(.rankingTable th) {
             font-size: 0.55em;
@@ -374,14 +328,11 @@
             padding: 1px 6px;
         }
     }
-
     /* END ranking table resizing */
 </style>
-
 <h4>{prefix} Records</h4>
-
 <div class="fullFlex">
-    {#if weekStatistics && weekStatistics.length}
+    {#if weekRecords && weekRecords.length}
         <DataTable class="recordTable">
             <Head>
                 <Row>
@@ -395,23 +346,22 @@
                 </Row>
             </Head>
             <Body>
-                {#each weekStatistics as leagueWeekStatistic, ix}
+                {#each weekRecords as leagueWeekRecord, ix}
                     <Row>
                         <Cell>{ix + 1}</Cell>
-                        <Cell class="cellName" on:click={() => gotoManager(leagueWeekStatistic.rosterID)}>
-                            {leagueWeekStatistic.manager.name}
-                            {#if !allTime  && cleanName(leagueWeekStatistic.manager.name) != cleanName(currentManagers[leagueWeekStatistic.rosterID].name)}
-                                <div class="curRecordManager">({currentManagers[leagueWeekStatistic.rosterID].name})</div>
+                        <Cell class="cellName" on:click={() => gotoManager(leagueWeekRecord.rosterID)}>
+                            {leagueWeekRecord.manager.name}
+                            {#if !allTime  && cleanName(leagueWeekRecord.manager.name) != cleanName(currentManagers[leagueWeekRecord.rosterID].name)}
+                                <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekStatistic.year + " –" : "" } {leagueWeekStatistic.week}</Cell>
-                        <Cell>{leagueWeekStatistic.fpts}</Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " –" : "" } {leagueWeekRecord.week}</Cell>
+                        <Cell>{leagueWeekRecord.fpts}</Cell>
                     </Row>
                 {/each}
             </Body>
         </DataTable>
     {/if}
-
     <DataTable class="recordTable">
         <Head>
             <Row>
@@ -428,7 +378,7 @@
             </Row>
         </Head>
         <Body>
-            {#each seasonLongStatistics as mostSeasonLongPoint, ix}
+            {#each seasonLongRecords as mostSeasonLongPoint, ix}
                 <Row>
                     <Cell>{ix + 1}</Cell>
                     <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
@@ -447,11 +397,8 @@
         </Body>
     </DataTable>
 </div>
-
 <h4>{prefix} Rankings</h4>
-
 <BarChart maxWidth={innerWidth} {graphs} bind:curGraph={curGraph} />
-
 <div class="rankingHolder">
     <div class="rankingInner" style="margin-left: -{100 * curTable}%;">
         {#if lineupIQs[0]?.potentialPoints}
@@ -493,7 +440,6 @@
                 </DataTable>
             </div>
         {/if}
-
         <div class="rankingTableWrapper">
             <DataTable class="rankingTable">
                 <Head>
@@ -532,7 +478,6 @@
                 </Body>
             </DataTable>
         </div>
-
         <div class="rankingTableWrapper">
             <DataTable class="rankingTable">
                 <Head>
@@ -565,7 +510,6 @@
                 </Body>
             </DataTable>
         </div>
-
         <div class="rankingTableWrapper">
             <DataTable class="rankingTable">
                 <Head>
@@ -598,10 +542,8 @@
                 </Body>
             </DataTable>
         </div>
-
     </div>
 </div>
-
 <div class="buttonHolder">
     <Group variant="outlined">
         {#each tables as table, ix}
@@ -611,7 +553,6 @@
         {/each}
     </Group>
 </div>
-
 {#if !last}
     <hr />
 {/if}
