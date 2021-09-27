@@ -16,7 +16,7 @@ import { predictScores } from './helperFunctions/predictOptimalScore';
 import { getBrackets } from './helperFunctions/leagueBrackets';
 import { getBlogPosts } from './helperFunctions/getBlogPosts';
 import { getLeagueStandings } from './helperFunctions/leagueStandings';
-import { getLeagueStatistics } from './helperFunctions/leagueStatistics'; //Jesse
+import { getLeagueStatistics } from './helperFunctions/leagueStatistics'; //Jesse pls
 
 export {
     enableBlog,
