@@ -41,7 +41,7 @@
             <LinearProgress indeterminate />
         </div>
     {:then [leagueRecords, {totals, stale}]}
-        <Records {leagueRecords} {totals} {stale} />
+        <Statistics {leagueRecords} {totals} {stale} />
     {:catch error}
         <!-- promise was rejected -->
         <p>Something went wrong: {error.message}</p>
