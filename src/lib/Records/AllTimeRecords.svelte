@@ -1,12 +1,15 @@
 <script>
     import {round} from '$lib/utils/helper'
   	import RecordsAndRankings from './RecordsAndRankings.svelte';
-    export let leagueRosterRecords, leagueWeekRecords, currentManagers, mostSeasonLongPoints, transactionTotals;
+
+    export let leagueRosterRecords, leagueWeekRecords, allTimeBiggestBlowouts, allTimeClosestMatchups, currentManagers, mostSeasonLongPoints, transactionTotals;
+
     let winPercentages = [];
     let lineupIQs = [];
     const fptsHistories = [];
     const tradesData = [];
     const waiversData = [];
+
     let showTies = false;
     
     for(const rosterID in transactionTotals.allTime) {
@@ -21,6 +24,8 @@
             waivers: transactionTotals.allTime[rosterID].waiver,
         })
     }
+
+
     for(const key in leagueRosterRecords) {
         const leagueRosterRecord = leagueRosterRecords[key];
         winPercentages.push({
@@ -31,15 +36,18 @@
             ties: leagueRosterRecord.ties,
             losses: leagueRosterRecord.losses,
         })
+
         let lineupIQ = {
             rosterID: key,
             manager: currentManagers[key],
             fpts: round(leagueRosterRecord.fptsFor),
         }
+
         if(leagueRosterRecord.potentialPoints) {
             lineupIQ.iq = round(leagueRosterRecord.fptsFor / leagueRosterRecord.potentialPoints * 100);
             lineupIQ.potentialPoints = round(leagueRosterRecord.potentialPoints);
         }
+
         lineupIQs.push(lineupIQ)
     
         fptsHistories.push({
@@ -51,6 +59,7 @@
     
         if(leagueRosterRecord.ties > 0) showTies = true;
     }
+
     winPercentages.sort((a, b) => b.percentage - a.percentage);
     lineupIQs.sort((a, b) => b.iq - a.iq);
     fptsHistories.sort((a, b) => b.fptsFor - a.fptsFor);
@@ -60,6 +69,8 @@
 
 <RecordsAndRankings
     {currentManagers}
+    blowouts={allTimeBiggestBlowouts}
+    closestMatchups={allTimeClosestMatchups}
     weekRecords={leagueWeekRecords}
     seasonLongRecords={mostSeasonLongPoints}
     {showTies}
