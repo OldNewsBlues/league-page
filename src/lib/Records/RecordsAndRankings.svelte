@@ -456,7 +456,7 @@
                     {#if allTime}
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
-                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+                    <Cell>round({mostSeasonLongPoint.fpts})</Cell>
                 </Row>
             {/each}
         </Body>
