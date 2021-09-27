@@ -266,6 +266,10 @@
         cursor: pointer;
         line-height: 1.2em;
     }
+	
+    :global(.differentialName) {
+        padding: 0.7em 0;
+    }
     
     .center {
         text-align: center;
@@ -458,6 +462,85 @@
         </Body>
     </DataTable>
 	
+    {#if blowouts && blowouts.length}
+        <DataTable class="recordTable">
+            <Head>
+                <Row>
+                    <Cell class="header" colspan=4>{prefix} Largest Blowouts</Cell>
+                </Row>
+                <Row>
+                    <Cell class="header rank"></Cell>
+                    <Cell class="header">Matchup</Cell>
+                    <Cell class="header">Week</Cell>
+                    <Cell class="header">Differential</Cell>
+                </Row>
+            </Head>
+            <Body>
+                {#each blowouts as blowout, ix}
+                    <Row>
+                        <Cell class="rank">{ix + 1}</Cell>
+                        <Cell class="cellName center differentialName">
+                            <div class="center" on:click={() => gotoManager(blowout.home.rosterID)}>
+                                {blowout.home.manager.name} ({round(blowout.home.fpts)})
+                                {#if !allTime  && cleanName(blowout.home.manager.name) != cleanName(currentManagers[blowout.home.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[blowout.home.rosterID].name})</div>
+                                {/if}
+                            </div>
+                            vs
+                            <div class="center" on:click={() => gotoManager(blowout.away.rosterID)}>
+                                {blowout.away.manager.name} ({round(blowout.away.fpts)})
+                                {#if !allTime  && cleanName(blowout.away.manager.name) != cleanName(currentManagers[blowout.away.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[blowout.away.rosterID].name})</div>
+                                {/if}
+                            </div>
+                        </Cell>
+                        <Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
+                        <Cell>{round(blowout.differential)}</Cell>
+                    </Row>
+                {/each}
+            </Body>
+        </DataTable>
+    {/if}
+	
+    {#if closestMatchups && closestMatchups.length}
+        <DataTable class="recordTable">
+            <Head>
+                <Row>
+                    <Cell class="header" colspan=4>{prefix} Narrowest Wins</Cell>
+                </Row>
+                <Row>
+                    <Cell class="header rank"></Cell>
+                    <Cell class="header">Matchup</Cell>
+                    <Cell class="header">Week</Cell>
+                    <Cell class="header">Differential</Cell>
+                </Row>
+            </Head>
+            <Body>
+                {#each closestMatchups as closestMatchup, ix}
+                    <Row>
+                        <Cell class="rank">{ix + 1}</Cell>
+                        <Cell class="cellName center differentialName">
+                            <div class="center" on:click={() => gotoManager(closestMatchup.home.rosterID)}>
+                                {closestMatchup.home.manager.name} ({round(closestMatchup.home.fpts)})
+                                {#if !allTime  && cleanName(closestMatchup.home.manager.name) != cleanName(currentManagers[closestMatchup.home.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[closestMatchup.home.rosterID].name})</div>
+                                {/if}
+                            </div>
+                            vs
+                            <div class="center" on:click={() => gotoManager(closestMatchup.away.rosterID)}>
+                                {closestMatchup.away.manager.name} ({round(closestMatchup.away.fpts)})
+                                {#if !allTime  && cleanName(closestMatchup.away.manager.name) != cleanName(currentManagers[closestMatchup.away.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[closestMatchup.away.rosterID].name})</div>
+                                {/if}
+                            </div>
+                        </Cell>
+                        <Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
+                        <Cell>{round(closestMatchup.differential)}</Cell>
+                    </Row>
+                {/each}
+            </Body>
+        </DataTable>
+    {/if}	
 </div>
 
 <h4>{prefix} Rankings</h4>
