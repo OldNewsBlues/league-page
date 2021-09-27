@@ -7,11 +7,11 @@ import { waitForAll } from './multiPromise';
 import { get } from 'svelte/store';
 import {statisticsStore} from '$lib/stores';
 
-export const getLeagueStatistics = async () => {
+export const getLeagueStatistics = async (refresh = false) => {
 	if(get(statisticsStore).seasonWeekStatistics) {
 		return get(statisticsStore);
 	}
-	
+
 	// if this isn't a refresh data call, check if there are already transactions stored in localStorage
 	if(!refresh) {
 		let localStatistics = await JSON.parse(localStorage.getItem("statisticsStore"));
@@ -21,11 +21,11 @@ export const getLeagueStatistics = async () => {
 			return localStatistics;
 		}
 	}
-	
+
 	const nflState = await getNflState().catch((err) => { console.error(err); });
 	let week = 0;
 	if(nflState.season_type == 'regular') {
-		week = nflState.week - 1;  // ORIGINAL CODE HAD nflState.week - 1
+		week = nflState.week - 1;
 	} else if(nflState.season_type == 'post') {
 		week = 18;
 	}
@@ -37,10 +37,14 @@ export const getLeagueStatistics = async () => {
 	let currentYear;
 	let lastYear;
 
+	let allTimeMatchupDifferentials = [];
+
 	let leagueRosterStatistics = {}; // every full season stat point (for each year and all years combined)
 	let seasonWeekStatistics = []; // highest weekly points within a single season
 	let leagueWeekStatistics = []; // highest weekly points within a single season
 	let mostSeasonLongPoints = []; // 10 highest full season points
+	let allTimeBiggestBlowouts = []; // 10 biggest blowouts
+	let allTimeClosestMatchups = []; // 10 closest matchups
 
 	while(curSeason && curSeason != 0) {
 		const [rosterRes, users, leagueData] = await waitForAll(
@@ -54,8 +58,8 @@ export const getLeagueStatistics = async () => {
 		// on first run, week is provided above from nflState,
 		// after that get the final week of regular season from leagueData
 		if(leagueData.status == 'complete' || week > leagueData.settings.playoff_week_start - 1) {
- 			week = leagueData.settings.playoff_week_start - 1
-		} 
+			week = leagueData.settings.playoff_week_start - 1;
+		}
 
 		lastYear = year;
 	
@@ -156,9 +160,11 @@ export const getLeagueStatistics = async () => {
 		curSeason = leagueData.previous_league_id;
 
 		const seasonPointsStatistic = [];
+		let matchupDifferentials = [];
+		
 		// process all the matchups
 		for(const matchupWeek of matchupsData) {
-			let matchups = {}
+			let matchups = {};
 			for(const matchup of matchupWeek) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
@@ -174,27 +180,75 @@ export const getLeagueStatistics = async () => {
 					matchups[matchup.matchup_id] = [];
 				}
 				matchups[matchup.matchup_id].push(entry);
+				
+			}
+			startWeek--;
 
+			// create matchup differentials from matchups obj
+			for(const matchupKey in matchups) {
+				const matchup = matchups[matchupKey];
+				let home = matchup[0];
+				let away = matchup[1];
+				if(matchup[0].fpts < matchup[1].fpts) {
+					home = matchup[1];
+					away = matchup[0];
+				}
+				const matchupDifferential = {
+					year: home.year,
+					week: home.week,
+					home: {
+						manager: home.manager,
+						fpts: home.fpts,
+						rosterID: home.rosterID,
+					},
+					away: {
+						manager: away.manager,
+						fpts: away.fpts,
+						rosterID: away.rosterID,
+					},
+					differential: home.fpts - away.fpts
+				}
+				allTimeMatchupDifferentials.push(matchupDifferential);
+				matchupDifferentials.push(matchupDifferential);
+			}
 		}
-		startWeek--;
-			
+
+		matchupDifferentials = matchupDifferentials.sort((a, b) => b.differential - a.differential);
+		const biggestBlowouts = matchupDifferentials.slice(0, 10);
+
+		const closestMatchups = [];
+		for(let i = 0; i < 10; i++) {
+			closestMatchups.push(matchupDifferentials.pop());
+		}
+
 		const interSeasonEntry = {
 			year,
+			biggestBlowouts,
+			closestMatchups,
 			seasonPointsStatistics: seasonPointsStatistic.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
 		}
 
-		if(interSeasonEntry.seasonPointsStatistics.length > 0) {
+		if(interSeasonEntry.seasonPointsRecords.length > 0) {
 			if(!currentYear) {
 				currentYear = year;
 			}
-			seasonPointsStatistics.push(interSeasonEntry)
+			seasonWeekStatistics.push(interSeasonEntry)
 		};
+	}
+
+	allTimeMatchupDifferentials = allTimeMatchupDifferentials.sort((a, b) => b.differential - a.differential)
+	allTimeBiggestBlowouts = allTimeMatchupDifferentials.slice(0, 10);
+
+	for(let i = 0; i < 10; i++) {
+		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
 	}
 
 	leagueWeekStatistics = leagueWeekStatistics.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 
 	const statisticsData = {
+		allTimeBiggestBlowouts,
+		allTimeClosestMatchups,
 		mostSeasonLongPoints,
 		leagueWeekStatistics,
 		seasonWeekStatistics,
@@ -204,7 +258,10 @@ export const getLeagueStatistics = async () => {
 		lastYear
 	};
 
+	// update localStorage
+	localStorage.setItem("statisticsStore", JSON.stringify(statisticsData));
+
 	statisticsStore.update(() => statisticsData);
 
-	return statisticsData; //Jesse
+	return statisticsData;
 }
