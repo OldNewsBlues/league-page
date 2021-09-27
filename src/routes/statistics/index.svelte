@@ -16,7 +16,7 @@
 
 <script>
 	import LinearProgress from '@smui/linear-progress';
-	import { Records } from '$lib/components';
+	import { Statistics } from '$lib/components';
     export let recordsInfo;
 </script>
 
