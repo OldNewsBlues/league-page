@@ -6,7 +6,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
-    export let tradesData, waiversData, weekRecords, seasonLongRecords, weekLows, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
@@ -184,34 +184,34 @@
         }
     }
     
-    const changeRecordDisplay = (r) => { //Jesse Not top 10
-    	if(r == 'recordhighs') {
-        	displayRecord = 0;
-        } else if(recorddisplay == 'recordhighs') {
-        	displayRecord = 1;
-        }
-        recorddisplay = r;
-    }
+//     const changeRecordDisplay = (r) => { //Jesse Not top 10
+//     	if(r == 'recordhighs') {
+//         	displayRecord = 0;
+//         } else if(recorddisplay == 'recordhighs') {
+//         	displayRecord = 1;
+//         }
+//         recorddisplay = r;
+//     }
     
-    let recorddisplay = 'recordhighs';
+//     let recorddisplay = 'recordhighs';
     
-    const changeRecordYearDisplay = (r) => { //Jesse Not top 10
-        if(r == 'recordyearhighs') {
-        	displayRecordYear = 0;
-        } else if(recordyeardisplay == 'recordhighs') {
-            displayRecordYear = 1;
-        }
-        recordyeardisplay = r;
-    }
+//     const changeRecordYearDisplay = (r) => { //Jesse Not top 10
+//         if(r == 'recordyearhighs') {
+//         	displayRecordYear = 0;
+//         } else if(recordyeardisplay == 'recordhighs') {
+//             displayRecordYear = 1;
+//         }
+//         recordyeardisplay = r;
+//     }
     
-    let recordyeardisplay = 'recordyearhighs';
+//     let recordyeardisplay = 'recordyearhighs';
 
     $: changeTable(curGraph);
     $: changeGraph(curTable);
     
     let innerWidth;
-    let displayRecord = 0; //Jesse not top 10
-    let displayRecordYear = 0;
+//     let displayRecord = 0; //Jesse not top 10
+//     let displayRecordYear = 0;
 
 </script>
 
@@ -426,17 +426,9 @@
     {#if weekRecords && weekRecords.length}
         <DataTable class="recordTable">
             <Head>
-		<Row>
-			{#if displayRecord = 0}
-				<Icon class="material-icons changeRecordDisplay" on:click={() => changeRecordDisplay(displayRecord + 1)}>chevron_left</Icon>
-				<Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
-				<Icon class="material-icons changeRecordDisplay" on:click={() => changeRecordDisplay(displayRecord + 1)}>chevron_right</Icon>
-			{:else}
-				<Icon class="material-icons changeRecordDisplay" on:click={() => changeRecordDisplay(displayRecord - 1)}>chevron_left</Icon>
-				<Cell class="header" colspan=4>{prefix} Single-Week Scoring Lows</Cell>
-				<Icon class="material-icons changeRecordDisplay" on:click={() => changeRecordDisplay(displayRecord - 1)}>chevron_right</Icon>
-			{/if}
-		</Row>
+                <Row>
+                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
+                </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
@@ -445,51 +437,26 @@
                 </Row>
             </Head>
             <Body>
-		{#if displayRecord = 0}
-                	{#each weekRecords as leagueWeekRecord, ix}
-                    		<Row>
-					<Cell class="rank">{ix + 1}</Cell>
-					<Cell class="cellName" on:click={() => gotoManager(leagueWeekRecord.rosterID)}>
-                            			{leagueWeekRecord.manager.name}
-                            			{#if !allTime  && cleanName(leagueWeekRecord.manager.name) != cleanName(currentManagers[leagueWeekRecord.rosterID].name)}
-                                			<div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
-                            			{/if}
-                        		</Cell>
-					<Cell>{allTime ? leagueWeekRecord.year + " - " : "" } {leagueWeekRecord.week}</Cell>
-					<Cell>{round(leagueWeekRecord.fpts)}</Cell>
-                    		</Row>
-                	{/each}
-	        {:else}
-                	{#each weekLows as leagueWeekLow, ix}
-                    		<Row>
-					<Cell class="rank">{ix + 1}</Cell>
-					<Cell class="cellName" on:click={() => gotoManager(leagueWeekLow.rosterID)}>
-                            			{leagueWeekLow.manager.name}
-                            			{#if !allTime  && cleanName(leagueWeekLow.manager.name) != cleanName(currentManagers[leagueWeekLow.rosterID].name)}
-                                			<div class="curRecordManager">({currentManagers[leagueWeekLow.rosterID].name})</div>
-                            			{/if}
-                        		</Cell>
-					<Cell>{allTime ? leagueWeekLow.year + " - " : "" } {leagueWeekLow.week}</Cell>
-					<Cell>{round(leagueWeekRecord.fpts)}</Cell>
-                    		</Row>
-                	{/each}		
-		{/if}
+                {#each weekRecords as leagueWeekRecord, ix}
+                    <Row>
+                        <Cell class="rank">{ix + 1}</Cell>
+                        <Cell class="cellName" on:click={() => gotoManager(leagueWeekRecord.rosterID)}>
+                            {leagueWeekRecord.manager.name}
+                            {#if !allTime  && cleanName(leagueWeekRecord.manager.name) != cleanName(currentManagers[leagueWeekRecord.rosterID].name)}
+                                <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
+                            {/if}
+                        </Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " – " : "" } {leagueWeekRecord.week}</Cell>
+                        <Cell>{round(leagueWeekRecord.fpts)}</Cell>
+                    </Row>
+                {/each}
             </Body>
         </DataTable>
     {/if}
-
     <DataTable class="recordTable">
         <Head>
             <Row>
-		    {#if displayRecordYear = 0}
-			 <Icon class="material-icons changeRecordYearDisplay" on:click={() => changeRecordDisplay(displayRecordYear + 1)}>chevron_left</Icon>
-			 <Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
-			 <Icon class="material-icons changeRecordYearDisplay" on:click={() => changeRecordDisplay(displayRecordYear + 1)}>chevron_right</Icon>
-		    {:else}
-				<Icon class="material-icons changeRecordYearDisplay" on:click={() => changeRecordYearDisplay(displayRecordYear - 1)}>chevron_left</Icon>
-				<Cell class="header" colspan=4>{prefix} Season-Long Scoring Lows</Cell>
-				<Icon class="material-icons changeRecordYearDisplay" on:click={() => changeRecordYearDisplay(displayRecordYear - 1)}>chevron_right</Icon>
-		    {/if}
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -497,45 +464,64 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">{"PF (PPG)"}</Cell>
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
             </Row>
         </Head>
         <Body>
-		{#if displayRecordYear = 0}
-            		{#each seasonLongRecords as mostSeasonLongPoint, ix}
-                		<Row>
-				    <Cell class="rank">{ix + 1}</Cell>
-				    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
-                        	    	{mostSeasonLongPoint.manager.name}
-					{#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
-					{/if}
-                    		    </Cell>
-                    		    {#if allTime}
-                        		<Cell>{mostSeasonLongPoint.year}</Cell>
-                    		    {/if}
-                    		    <Cell>{round(mostSeasonLongPoint.fpts) + "   (" + round(mostSeasonLongPoint.fptspg) + ")"}</Cell>
-                		</Row>
-            		{/each}
-		{:else}
-			{#each seasonLongLows as leastSeasonLongPoint, ix}
-                		<Row>
-				    <Cell class="rank">{ix + 1}</Cell>
-				    <Cell class="cellName" on:click={() => gotoManager(leastSeasonLongPoint.rosterID)}>
-                        	    	{leastSeasonLongPoint.manager.name}
-					{#if !allTime  && cleanName(leastSeasonLongPoint.manager.name) != cleanName(currentManagers[leastSeasonLongPoint.rosterID].name)}
-					    <div class="curRecordManager">({currentManagers[leastSeasonLongPoint.rosterID].name})</div>
-					{/if}
-                    		    </Cell>
-                    		    {#if allTime}
-                        		<Cell>{leastSeasonLongPoint.year}</Cell>
-                    		    {/if}
-                    		    <Cell>{round(leastSeasonLongPoint.fpts) + "   (" + round(leastSeasonLongPoint.fptspg) + ")"}</Cell>
-                		</Row>
-            		{/each}
-		{/if}
+            {#each seasonLongRecords as mostSeasonLongPoint, ix}
+                <Row>
+                    <Cell class="rank">{ix + 1}</Cell>
+                    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
+                        {mostSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+                        {/if}
+                    </Cell>
+                    {#if allTime}
+                        <Cell>{mostSeasonLongPoint.year}</Cell>
+                    {/if}
+                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
+                </Row>
+            {/each}
         </Body>
     </DataTable>
+	
+<!--     <DataTable class="recordTable">
+        <Head>
+            <Row>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Lows</Cell>
+            </Row>
+            <Row>
+                <Cell class="header rank"></Cell>
+                <Cell class="header">Manager</Cell>
+                {#if allTime}
+                    <Cell class="header">Year</Cell>
+                {/if}
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
+            </Row>
+        </Head>
+        <Body>
+            {#each seasonLongLows as leastSeasonLongPoint, ix}
+                <Row>
+                    <Cell class="rank">{ix + 1}</Cell>
+                    <Cell class="cellName" on:click={() => gotoManager(leastSeasonLongPoint.rosterID)}>
+                        {mostSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(leastSeasonLongPoint.manager.name) != cleanName(currentManagers[leastSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[leastSeasonLongPoint.rosterID].name})</div>
+                        {/if}
+                    </Cell>
+                    {#if allTime}
+                        <Cell>{leastSeasonLongPoint.year}</Cell>
+                    {/if}
+                    <Cell>{leastSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(leastSeasonLongPoint.fptspg)}</Cell>
+                </Row>
+            {/each}
+        </Body>
+    </DataTable> -->
 
     {#if blowouts && blowouts.length}
         <DataTable class="recordTable">
