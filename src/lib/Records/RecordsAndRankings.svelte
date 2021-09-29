@@ -142,6 +142,7 @@
 //     }
 	
     let displayDiff = [];
+    let curDiff = 'largblow';
     
     const changeVictorie = () => {
         if(curDiff == 'largblow') {
@@ -151,9 +152,7 @@
 	}
     }		
     
-    let curDiff = 'largblow';
-    
-   // $: changeVictorie(curDiff);
+   $: changeVictorie(curDiff);
 		
 	
     let curTable = 0;
