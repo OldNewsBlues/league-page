@@ -2,7 +2,7 @@
     import {round} from '$lib/utils/helper'
   	import RecordsAndRankings from './RecordsAndRankings.svelte'; //j
 
-    export let leagueRosterRecords, seasonWeekRecords, seasonWeekLows, currentManagers, currentYear, lastYear, transactionTotals;
+    export let leagueRosterRecords, seasonWeekRecords, currentManagers, currentYear, lastYear, transactionTotals;
 
     const yearsObj = {};
     const years = [];
@@ -11,7 +11,7 @@
     while(loopYear >= lastYear) {
         yearsObj[loopYear] = {
             seasonLongRecords: [],
-	    seasonLongLows: [],
+	    //seasonLongLows: [],
             winPercentages: [],
             lineupIQs: [],
             fptsHistories: [],
@@ -31,9 +31,9 @@
         yearsObj[seasonWeekRecord.year].closestMatchups = seasonWeekRecord.closestMatchups;
     }
 	
-    for(const seasonWeekLow of seasonWeekLows) {
-        yearsObj[seasonWeekLow.year].weekLows = seasonWeekLow.seasonPointsLows;
-    }
+//     for(const seasonWeekLow of seasonWeekLows) {
+//         yearsObj[seasonWeekLow.year].weekLows = seasonWeekLow.seasonPointsLows;
+//     }
     
     for(const season in transactionTotals.seasons) {
         if(!yearsObj[season]) continue;
@@ -71,13 +71,13 @@
 				year: null,
 			})
 		
-	    // add season-long scoring low
-            yearsObj[season.year].seasonLongLows.push({
-                manager: season.manager,
-				rosterID,
-				fpts,
-				year: null,
-			})
+// 	    // add season-long scoring low
+//             yearsObj[season.year].seasonLongLows.push({
+//                 manager: season.manager,
+// 				rosterID,
+// 				fpts,
+// 				year: null,
+// 			})
 
             // add win percentage rankings
             yearsObj[season.year].winPercentages.push({
@@ -115,7 +115,7 @@
     for(const key in yearsObj) {
         // sort records
         yearsObj[key].seasonLongRecords = yearsObj[key].seasonLongRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
-	yearsObj[key].seasonLongLows = yearsObj[key].seasonLongLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+// 	yearsObj[key].seasonLongLows = yearsObj[key].seasonLongLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
         
         // sort rankings
         yearsObj[key].winPercentages.sort((a, b) => b.percentage - a.percentage);
@@ -131,14 +131,12 @@
     years.sort((a, b) => b.year - a.year);
 </script>
 
-{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, weekLows, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
+{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, weekLows, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
     <RecordsAndRankings
         {waiversData}
         {tradesData}
         {weekRecords}
         {seasonLongRecords}
-	{weekLows}
-	{seasonLongLows}
         {showTies}
         {winPercentages}
         {fptsHistories}
