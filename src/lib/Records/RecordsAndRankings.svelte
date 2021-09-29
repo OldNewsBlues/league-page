@@ -456,7 +456,7 @@
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=4>{prefix} Season-Long Scoring Records</Cell>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -465,6 +465,7 @@
                     <Cell class="header">Year</Cell>
                 {/if}
                 <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
             </Row>
         </Head>
         <Body>
@@ -481,6 +482,7 @@
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
                     <Cell>{round(mostSeasonLongPoint.fpts)}</Cell>
+		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
         </Body>
@@ -604,8 +606,8 @@
                                     {/if}
                                 </Cell>
                                 <Cell>{lineupIQ.iq}%</Cell>
-                                <Cell>{lineupIQ.fpts}</Cell>
-                                <Cell>{lineupIQ.potentialPoints}</Cell>
+                                <Cell>{round(lineupIQ.fpts)}</Cell>
+                                <Cell>{round(lineupIQ.potentialPoints)}</Cell>
                             </Row>
                         {/each}
                     </Body>
