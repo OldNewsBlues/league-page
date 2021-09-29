@@ -151,9 +151,9 @@
 	}
     }		
     
-    let curDiff == 'larblow';
+    let curDiff = 'largblow';
     
-    $: changeVictorie(curDiff);
+   // $: changeVictorie(curDiff);
 		
 	
     let curTable = 0;
