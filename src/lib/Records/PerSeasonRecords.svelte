@@ -55,7 +55,7 @@
             }
 
 			const fpts = round(season.fpts);
-			const fptspg = fpts / (season.wins + season.losses + season.ties) //Jesse PPG
+			const fptspg = season.fpts / (season.wins + season.losses + season.ties) //Jesse PPG
 
             // add season-long scoring record
             yearsObj[season.year].seasonLongRecords.push({
@@ -116,7 +116,7 @@
     years.sort((a, b) => b.year - a.year);
 </script>
 
-{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, weekLows, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
+{#each years as {waiversData, tradesData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
     <RecordsAndRankings
         {waiversData}
         {tradesData}
