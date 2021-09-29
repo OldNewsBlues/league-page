@@ -115,7 +115,7 @@
     for(const key in yearsObj) {
         // sort records
         yearsObj[key].seasonLongRecords = yearsObj[key].seasonLongRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
-	yearsObj[key].seasonLongLows = yearsObj[key].seasonLongRecords.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+	//yearsObj[key].seasonLongLows = yearsObj[key].seasonLongRecords.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
         
         // sort rankings
         yearsObj[key].winPercentages.sort((a, b) => b.percentage - a.percentage);
