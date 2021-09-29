@@ -20,9 +20,6 @@
         leagueRecords = newRecords;
         leagueRosterRecords = newRecords.leagueRosterRecords;
         leagueWeekRecords = newRecords.leagueWeekRecords;
-        //leagueWeekLows = newRecords.leagueWeekLows;
-	//leastSeasonLongPoints = newRecords.leastSeasonLongPoints;
-	//seasonWeekLows = newRecords.seasonWeekLows;
         allTimeClosestMatchups = newRecords.allTimeClosestMatchups;
         allTimeBiggestBlowouts = newRecords.allTimeBiggestBlowouts;
         currentManagers = newRecords.currentManagers;
