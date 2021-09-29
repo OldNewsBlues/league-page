@@ -6,7 +6,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
-    export let tradesData, waiversData, weekRecords, seasonLongRecords, weekLows, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
@@ -483,6 +483,41 @@
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
 		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
+                </Row>
+            {/each}
+        </Body>
+    </DataTable>
+	
+    <DataTable class="recordTable">
+        <Head>
+            <Row>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Lows</Cell>
+            </Row>
+            <Row>
+                <Cell class="header rank"></Cell>
+                <Cell class="header">Manager</Cell>
+                {#if allTime}
+                    <Cell class="header">Year</Cell>
+                {/if}
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
+            </Row>
+        </Head>
+        <Body>
+            {#each seasonLongLows as leastSeasonLongPoint, ix}
+                <Row>
+                    <Cell class="rank">{ix + 1}</Cell>
+                    <Cell class="cellName" on:click={() => gotoManager(leastSeasonLongPoint.rosterID)}>
+                        {mostSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(leastSeasonLongPoint.manager.name) != cleanName(currentManagers[leastSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[leastSeasonLongPoint.rosterID].name})</div>
+                        {/if}
+                    </Cell>
+                    {#if allTime}
+                        <Cell>{leastSeasonLongPoint.year}</Cell>
+                    {/if}
+                    <Cell>{leastSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(leastSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
         </Body>
