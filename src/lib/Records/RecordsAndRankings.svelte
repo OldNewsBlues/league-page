@@ -488,7 +488,7 @@
         </Body>
     </DataTable>
 	
-    <DataTable class="recordTable">
+<!--     <DataTable class="recordTable">
         <Head>
             <Row>
                 <Cell class="header" colspan=5>{prefix} Season-Long Scoring Lows</Cell>
@@ -521,7 +521,7 @@
                 </Row>
             {/each}
         </Body>
-    </DataTable>
+    </DataTable> -->
 
     {#if blowouts && blowouts.length}
         <DataTable class="recordTable">
