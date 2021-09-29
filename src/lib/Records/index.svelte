@@ -11,7 +11,7 @@
         totals = newTransactions.totals;
     }
 
-    let {leagueRosterRecords, leagueWeekRecords, leagueWeekLows, leastSeasonLongPoints, seasonWeekLows, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
+    let {leagueRosterRecords, leagueWeekRecords, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
 
     const refreshRecords = async () => {
         const newRecords = await getLeagueRecords(true);
