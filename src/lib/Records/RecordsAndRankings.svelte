@@ -481,7 +481,7 @@
                     {#if allTime}
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
-                    <Cell>{round(mostSeasonLongPoint.fpts)}</Cell>
+                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
 		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
@@ -606,8 +606,8 @@
                                     {/if}
                                 </Cell>
                                 <Cell>{lineupIQ.iq}%</Cell>
-                                <Cell>{round(lineupIQ.fpts)}</Cell>
-                                <Cell>{round(lineupIQ.potentialPoints)}</Cell>
+                                <Cell>{lineupIQ.fpts}</Cell>
+                                <Cell>{lineupIQ.potentialPoints}</Cell>
                             </Row>
                         {/each}
                     </Body>
