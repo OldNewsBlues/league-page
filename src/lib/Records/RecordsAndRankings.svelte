@@ -6,7 +6,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
-    export let tradesData, waiversData, weekRecords, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
@@ -183,35 +183,11 @@
                 break;
         }
     }
-    
-//     const changeRecordDisplay = (r) => { //Jesse Not top 10
-//     	if(r == 'recordhighs') {
-//         	displayRecord = 0;
-//         } else if(recorddisplay == 'recordhighs') {
-//         	displayRecord = 1;
-//         }
-//         recorddisplay = r;
-//     }
-    
-//     let recorddisplay = 'recordhighs';
-    
-//     const changeRecordYearDisplay = (r) => { //Jesse Not top 10
-//         if(r == 'recordyearhighs') {
-//         	displayRecordYear = 0;
-//         } else if(recordyeardisplay == 'recordhighs') {
-//             displayRecordYear = 1;
-//         }
-//         recordyeardisplay = r;
-//     }
-    
-//     let recordyeardisplay = 'recordyearhighs';
 
     $: changeTable(curGraph);
     $: changeGraph(curTable);
     
     let innerWidth;
-//     let displayRecord = 0; //Jesse not top 10
-//     let displayRecordYear = 0;
 
 </script>
 
@@ -487,41 +463,6 @@
             {/each}
         </Body>
     </DataTable>
-	
-<!--     <DataTable class="recordTable">
-        <Head>
-            <Row>
-                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Lows</Cell>
-            </Row>
-            <Row>
-                <Cell class="header rank"></Cell>
-                <Cell class="header">Manager</Cell>
-                {#if allTime}
-                    <Cell class="header">Year</Cell>
-                {/if}
-                <Cell class="header">PF</Cell>
-		<Cell class="header">PPG</Cell>
-            </Row>
-        </Head>
-        <Body>
-            {#each seasonLongLows as leastSeasonLongPoint, ix}
-                <Row>
-                    <Cell class="rank">{ix + 1}</Cell>
-                    <Cell class="cellName" on:click={() => gotoManager(leastSeasonLongPoint.rosterID)}>
-                        {mostSeasonLongPoint.manager.name}
-                        {#if !allTime  && cleanName(leastSeasonLongPoint.manager.name) != cleanName(currentManagers[leastSeasonLongPoint.rosterID].name)}
-                            <div class="curRecordManager">({currentManagers[leastSeasonLongPoint.rosterID].name})</div>
-                        {/if}
-                    </Cell>
-                    {#if allTime}
-                        <Cell>{leastSeasonLongPoint.year}</Cell>
-                    {/if}
-                    <Cell>{leastSeasonLongPoint.fpts}</Cell>
-		    <Cell>{round(leastSeasonLongPoint.fptspg)}</Cell>
-                </Row>
-            {/each}
-        </Body>
-    </DataTable> -->
 
     {#if blowouts && blowouts.length}
         <DataTable class="recordTable">
