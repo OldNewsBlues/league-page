@@ -122,7 +122,7 @@
     let curGraph = 0;
     let curDiff = 0;
 
-    let recordOffset = 0
+    let recordOffset = 0;
     let iqOffset = 0;
     const tables = [
         "Win Percentages",
@@ -196,16 +196,16 @@
     }
     const changeRecord = (newRecord) => {
     	switch (newRecord) {
-		case 0 - recordOffset:
-			curDiff = 0;
-			break;
-		case 1 - recordOffset:
-		case 2 - recordOffset:
-			curDiff = 1 - recordOffset
-			break:
-		default:
-			curDiff = 0;
-			break;
+	    case 0 - recordOffset:
+		curDiff = 0;
+		break;
+	    case 1 - recordOffset:
+	    case 2 - recordOffset:
+		curDiff = 1 - recordOffset
+		break:
+	    default:
+		curDiff = 0;
+		break;
 	}
     }
 
