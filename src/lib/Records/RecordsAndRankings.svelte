@@ -201,8 +201,8 @@
 		break;
 	    case 1 - recordOffset:
 	    case 2 - recordOffset:
-		curDiff = 1 - recordOffset
-		break:
+		curDiff = 1 - recordOffset;
+		break;
 	    default:
 		curDiff = 0;
 		break;
