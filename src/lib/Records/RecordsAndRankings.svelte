@@ -118,19 +118,41 @@
         })
     }
 
-    let curTable = 0;
-    let curGraph = 0;
     let curDiff = 0;
 
     let recordOffset = 0;
+    const victories = [
+        "Narrowest Wins",
+    ]
+    if(blowouts && blowouts.length && closestMatchups && closestMatchups.length) {
+        recordOffset = 1;
+    } else {
+        victories.unshift('Largest Blowouts');
+    }
+    const changeVictorie = (newVictorie) => {
+    	switch (newVictorie) {
+	    case 0 - recordOffset:
+		curDiff = 0;
+		break;
+	    case 1 - recordOffset:
+		curDiff = 1 - recordOffset;
+		break;
+	    default:
+		curDiff = 0;
+		break;
+	}
+    }
+    
+    $: changeVictorie(curDiff);
+	
+    let curTable = 0;
+    let curGraph = 0;
+	
     let iqOffset = 0;
     const tables = [
         "Win Percentages",
         "Points",
         "Transactions",
-    ]
-    const victories = [
-        "Narrowest Wins",
     ]
     if(!lineupIQs[0]?.potentialPoints) {
         iqOffset = 1;
@@ -188,26 +210,6 @@
                 break;
         }
     }
-    
-    if(!blowout[0]?.differential) {
-        recordOffset = 1;
-    } else {
-        victories.unshift('Largest Blowouts');
-    }
-    const changeRecord = (newRecord) => {
-    	switch (newRecord) {
-	    case 0 - recordOffset:
-		curDiff = 0;
-		break;
-	    case 1 - recordOffset:
-	    case 2 - recordOffset:
-		curDiff = 1 - recordOffset;
-		break;
-	    default:
-		curDiff = 0;
-		break;
-	}
-    }
 
     
 //     const changeRecordDisplay = (r) => { //Jesse Not top 10
@@ -234,7 +236,6 @@
 
     $: changeTable(curGraph);
     $: changeGraph(curTable);
-    $: changeRecord(curDiff);
     
     let innerWidth;
 //     let displayRecord = 0; //Jesse not top 10
@@ -562,7 +563,7 @@
 	    
 	{#if closestMatchups && closestMatchups.length}
 	    <div class="rankingTableWrapper">
-		<DataTable class="recordTable">
+		<DataTable class="rankingTable">
 		    <Head>
 			<Row>
 			    <Cell class="header" colspan=4>{prefix} Narrowest Wins</Cell>
