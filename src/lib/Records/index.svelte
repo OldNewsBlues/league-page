@@ -20,9 +20,6 @@
         leagueRecords = newRecords;
         leagueRosterRecords = newRecords.leagueRosterRecords;
         leagueWeekRecords = newRecords.leagueWeekRecords;
-        leagueWeekLows = newRecords.leagueWeekLows;
-	    leastSeasonLongPoints = newRecords.leastSeasonLongPoints;
-	    seasonWeekLows = newRecords.seasonWeekLows;
         allTimeClosestMatchups = newRecords.allTimeClosestMatchups;
         allTimeBiggestBlowouts = newRecords.allTimeBiggestBlowouts;
         currentManagers = newRecords.currentManagers;
@@ -57,9 +54,9 @@
 
 <div class="rankingsWrapper">
     {#if leagueWeekRecords.length}
-        <AllTimeRecords transactionTotals={totals} {allTimeClosestMatchups} {allTimeBiggestBlowouts} {leagueRosterRecords} {leagueWeekRecords} {leagueWeekLows} {leastSeasonLongPoints} {currentManagers} {mostSeasonLongPoints} />
+        <AllTimeRecords transactionTotals={totals} {allTimeClosestMatchups} {allTimeBiggestBlowouts} {leagueRosterRecords} {leagueWeekRecords} {currentManagers} {mostSeasonLongPoints} />
     {:else}
         <p class="empty">No records <i>yet</i>...</p>
     {/if}
-    <PerSeasonRecords transactionTotals={totals} {leagueRosterRecords} {seasonWeekRecords} {seasonWeekLows} {currentManagers} {currentYear} {lastYear} />
+    <PerSeasonRecords transactionTotals={totals} {leagueRosterRecords} {seasonWeekRecords} {currentManagers} {currentYear} {lastYear} />
 </div>
