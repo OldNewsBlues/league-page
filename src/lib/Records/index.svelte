@@ -11,7 +11,7 @@
         totals = newTransactions.totals;
     }
 
-    let {leagueRosterRecords, leagueWeekRecords, leagueWeekLows, leastSeasonLongPoints, seasonWeekLows, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
+    let {leagueRosterRecords, leagueWeekRecords, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
 
     const refreshRecords = async () => {
         const newRecords = await getLeagueRecords(true);
@@ -20,9 +20,9 @@
         leagueRecords = newRecords;
         leagueRosterRecords = newRecords.leagueRosterRecords;
         leagueWeekRecords = newRecords.leagueWeekRecords;
-        leagueWeekLows = newRecords.leagueWeekLows;
-	    leastSeasonLongPoints = newRecords.leastSeasonLongPoints;
-	    seasonWeekLows = newRecords.seasonWeekLows;
+        //leagueWeekLows = newRecords.leagueWeekLows;
+	//leastSeasonLongPoints = newRecords.leastSeasonLongPoints;
+	//seasonWeekLows = newRecords.seasonWeekLows;
         allTimeClosestMatchups = newRecords.allTimeClosestMatchups;
         allTimeBiggestBlowouts = newRecords.allTimeBiggestBlowouts;
         currentManagers = newRecords.currentManagers;
@@ -57,7 +57,7 @@
 
 <div class="rankingsWrapper">
     {#if leagueWeekRecords.length}
-        <AllTimeRecords transactionTotals={totals} {allTimeClosestMatchups} {allTimeBiggestBlowouts} {leagueRosterRecords} {leagueWeekRecords} {leagueWeekLows} {leastSeasonLongPoints} {currentManagers} {mostSeasonLongPoints} />
+        <AllTimeRecords transactionTotals={totals} {allTimeClosestMatchups} {allTimeBiggestBlowouts} {leagueRosterRecords} {leagueWeekRecords} {currentManagers} {mostSeasonLongPoints} />
     {:else}
         <p class="empty">No records <i>yet</i>...</p>
     {/if}
