@@ -120,12 +120,17 @@
 
     let curTable = 0;
     let curGraph = 0;
+    let curDiff = 0;
 
+    let recordOffset = 0
     let iqOffset = 0;
     const tables = [
         "Win Percentages",
         "Points",
         "Transactions",
+    ]
+    const victories = [
+        "Narrowest Wins",
     ]
     if(!lineupIQs[0]?.potentialPoints) {
         iqOffset = 1;
@@ -184,6 +189,27 @@
         }
     }
     
+    if(!blowout[0]?.differential) {
+        recordOffset = 1;
+    } else {
+        victories.unshift('Largest Blowouts');
+    }
+    const changeRecord = (newRecord) => {
+    	switch (newRecord) {
+		case 0 - recordOffset:
+			curDiff = 0;
+			break;
+		case 1 - recordOffset:
+		case 2 - recordOffset:
+			curDiff = 1 - recordOffset
+			break:
+		default:
+			curDiff = 0;
+			break;
+	}
+    }
+
+    
 //     const changeRecordDisplay = (r) => { //Jesse Not top 10
 //     	if(r == 'recordhighs') {
 //         	displayRecord = 0;
@@ -208,6 +234,7 @@
 
     $: changeTable(curGraph);
     $: changeGraph(curTable);
+    $: changeRecord(curDiff);
     
     let innerWidth;
 //     let displayRecord = 0; //Jesse not top 10
@@ -487,48 +514,107 @@
             {/each}
         </Body>
     </DataTable>
+</div>
 
-    {#if blowouts && blowouts.length}
-        <DataTable class="recordTable">
-            <Head>
-                <Row>
-                    <Cell class="header" colspan=4>{prefix} Largest Blowouts</Cell>
-                </Row>
-                <Row>
-                    <Cell class="header rank"></Cell>
-                    <Cell class="header">Matchup</Cell>
-                    <Cell class="header">Week</Cell>
-                    <Cell class="header">Diff</Cell>
-                </Row>
-            </Head>
-            <Body>
-                {#each blowouts as blowout, ix}
-                    <Row>
-                        <Cell class="rank">{ix + 1}</Cell>
-                        <Cell class="cellName center differentialName">
-                            <div class="center" on:click={() => gotoManager(blowout.home.rosterID)}>
-                                {blowout.home.manager.name} ({round(blowout.home.fpts)})
-                                {#if !allTime  && cleanName(blowout.home.manager.name) != cleanName(currentManagers[blowout.home.rosterID].name)}
-                                    <div class="curRecordManager">({currentManagers[blowout.home.rosterID].name})</div>
-                                {/if}
-                            </div>
-                            vs
-                            <div class="center" on:click={() => gotoManager(blowout.away.rosterID)}>
-                                {blowout.away.manager.name} ({round(blowout.away.fpts)})
-                                {#if !allTime  && cleanName(blowout.away.manager.name) != cleanName(currentManagers[blowout.away.rosterID].name)}
-                                    <div class="curRecordManager">({currentManagers[blowout.away.rosterID].name})</div>
-                                {/if}
-                            </div>
-                        </Cell>
-                        <Cell>{allTime ? blowout.year + " - " : "" } {blowout.week}</Cell>
-                        <Cell>{round(blowout.differential)}</Cell>
-                    </Row>
-                {/each}
-            </Body>
-        </DataTable>
-    {/if}
+<div class="rankingHolder">
+    <div class="rankingInner" style="margin-left: -{100 * curDiff}%;">
+    	{#if blowouts && blowouts.length}
+		<div class="rankingTableWrapper">
+			<DataTable class="rankingTable">
+			    <Head>
+				<Row>
+				    <Cell class="header" colspan=4>{prefix} Largest Blowouts</Cell>
+				</Row>
+				<Row>
+				    <Cell class="header rank"></Cell>
+				    <Cell class="header">Matchup</Cell>
+				    <Cell class="header">Week</Cell>
+				    <Cell class="header">Diff</Cell>
+				</Row>
+			    </Head>
+			    <Body>
+				{#each blowouts as blowout, ix}
+				    <Row>
+					<Cell class="rank">{ix + 1}</Cell>
+					<Cell class="cellName center differentialName">
+					    <div class="center" on:click={() => gotoManager(blowout.home.rosterID)}>
+						{blowout.home.manager.name} ({round(blowout.home.fpts)})
+						{#if !allTime  && cleanName(blowout.home.manager.name) != cleanName(currentManagers[blowout.home.rosterID].name)}
+						    <div class="curRecordManager">({currentManagers[blowout.home.rosterID].name})</div>
+						{/if}
+					    </div>
+					    vs
+					    <div class="center" on:click={() => gotoManager(blowout.away.rosterID)}>
+						{blowout.away.manager.name} ({round(blowout.away.fpts)})
+						{#if !allTime  && cleanName(blowout.away.manager.name) != cleanName(currentManagers[blowout.away.rosterID].name)}
+						    <div class="curRecordManager">({currentManagers[blowout.away.rosterID].name})</div>
+						{/if}
+					    </div>
+					</Cell>
+					<Cell>{allTime ? blowout.year + " - " : "" } {blowout.week}</Cell>
+					<Cell>{round(blowout.differential)}</Cell>
+				    </Row>
+				{/each}
+			    </Body>
+			</DataTable>
+		</div>
+    	{/if}
+	    
+	{#if closestMatchups && closestMatchups.length}
+	    <div class="rankingTableWrapper">
+		<DataTable class="recordTable">
+		    <Head>
+			<Row>
+			    <Cell class="header" colspan=4>{prefix} Narrowest Wins</Cell>
+			</Row>
+			<Row>
+			    <Cell class="header rank"></Cell>
+			    <Cell class="header">Matchup</Cell>
+			    <Cell class="header">Week</Cell>
+			    <Cell class="header">Diff</Cell>
+			</Row>
+		    </Head>
+		    <Body>
+			{#each closestMatchups as closestMatchup, ix}
+			    <Row>
+				<Cell class="rank">{ix + 1}</Cell>
+				<Cell class="cellName center differentialName">
+				    <div class="center" on:click={() => gotoManager(closestMatchup.home.rosterID)}>
+					{closestMatchup.home.manager.name} ({round(closestMatchup.home.fpts)})
+					{#if !allTime  && cleanName(closestMatchup.home.manager.name) != cleanName(currentManagers[closestMatchup.home.rosterID].name)}
+					    <div class="curRecordManager">({currentManagers[closestMatchup.home.rosterID].name})</div>
+					{/if}
+				    </div>
+				    vs
+				    <div class="center" on:click={() => gotoManager(closestMatchup.away.rosterID)}>
+					{closestMatchup.away.manager.name} ({round(closestMatchup.away.fpts)})
+					{#if !allTime  && cleanName(closestMatchup.away.manager.name) != cleanName(currentManagers[closestMatchup.away.rosterID].name)}
+					    <div class="curRecordManager">({currentManagers[closestMatchup.away.rosterID].name})</div>
+					{/if}
+				    </div>
+				</Cell>
+				<Cell>{allTime ? closestMatchup.year + " - " : "" } {closestMatchup.week}</Cell>
+				<Cell>{round(closestMatchup.differential)}</Cell>
+			    </Row>
+			{/each}
+		    </Body>
+		</DataTable>
+	    </div>
+	{/if}
+    </div>
+</div>
 
-    {#if closestMatchups && closestMatchups.length}
+<div class="buttonHolder">
+    <Group variant="outlined">
+        {#each victories as victorie, ix}
+            <Button class="selectionButtons" on:click={() => curDiff = ix} variant="{curDiff == ix ? "raised" : "outlined"}">
+                <Label>{victorie}</Label>
+            </Button>
+        {/each}
+    </Group>
+</div>
+
+<!--     {#if closestMatchups && closestMatchups.length}
         <DataTable class="recordTable">
             <Head>
                 <Row>
@@ -567,7 +653,7 @@
             </Body>
         </DataTable>
     {/if}
-</div>
+</div> -->
 
 <h4>{prefix} Rankings</h4>
 
