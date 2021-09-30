@@ -1,6 +1,6 @@
 <script>
     import {round} from '$lib/utils/helper'
-  	import RecordsAndRankings from './RecordsAndRankings.svelte'; //j
+  	import RecordsAndRankings from './RecordsAndRankings.svelte';
 
     export let leagueRosterRecords, seasonWeekRecords, currentManagers, currentYear, lastYear, transactionTotals;
 
@@ -55,14 +55,12 @@
             }
 
 			const fpts = round(season.fpts);
-			const fptspg = season.fpts / (season.wins + season.losses + season.ties) //Jesse PPG
 
             // add season-long scoring record
             yearsObj[season.year].seasonLongRecords.push({
                 manager: season.manager,
 				rosterID,
 				fpts,
-		    		fptspg, //Jesse PPG
 				year: null,
 			})
 
@@ -101,7 +99,8 @@
 
     for(const key in yearsObj) {
         // sort records
-        yearsObj[key].seasonLongRecords = yearsObj[key].seasonLongRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);        
+        yearsObj[key].seasonLongRecords = yearsObj[key].seasonLongRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
+        
         // sort rankings
         yearsObj[key].winPercentages.sort((a, b) => b.percentage - a.percentage);
         yearsObj[key].lineupIQs.sort((a, b) => b.iq - a.iq);
