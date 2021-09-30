@@ -2,7 +2,6 @@
     import Button, { Group, Label } from '@smui/button';
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager, round } from '$lib/utils/helper';
-    import { Icon } from '@smui/tab'; //Jesse not top 10 n
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
@@ -403,13 +402,13 @@
         <DataTable class="recordTable">
             <Head>
                 <Row>
-                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
+                    <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
                 </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">PF</Cell>
+                    <Cell class="header">Total Points</Cell>
                 </Row>
             </Head>
             <Body>
@@ -422,17 +421,18 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " – " : "" } {leagueWeekRecord.week}</Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " " : "" }Week {leagueWeekRecord.week}</Cell>
                         <Cell>{round(leagueWeekRecord.fpts)}</Cell>
                     </Row>
                 {/each}
             </Body>
         </DataTable>
     {/if}
+
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
+                <Cell class="header" colspan=4>{prefix} Season-long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -440,8 +440,7 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">PF</Cell>
-		<Cell class="header">PPG</Cell>
+                <Cell class="header">Total Points</Cell>
             </Row>
         </Head>
         <Body>
@@ -458,7 +457,6 @@
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
-		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
         </Body>
@@ -474,7 +472,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Diff</Cell>
+                    <Cell class="header">Differential</Cell>
                 </Row>
             </Head>
             <Body>
@@ -496,7 +494,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? blowout.year + " - " : "" } {blowout.week}</Cell>
+                        <Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
                         <Cell>{round(blowout.differential)}</Cell>
                     </Row>
                 {/each}
@@ -514,7 +512,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Diff</Cell>
+                    <Cell class="header">Differential</Cell>
                 </Row>
             </Head>
             <Body>
@@ -536,7 +534,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? closestMatchup.year + " - " : "" } {closestMatchup.week}</Cell>
+                        <Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
                         <Cell>{round(closestMatchup.differential)}</Cell>
                     </Row>
                 {/each}
@@ -566,9 +564,9 @@
                         <Row>
                             <Cell class="header"></Cell>
                             <Cell class="header">Manager</Cell>
-                            <Cell class="header">IQ</Cell>
-                            <Cell class="header">PF</Cell>
-                            <Cell class="header">Potential PF</Cell>
+                            <Cell class="header">Lineup IQ</Cell>
+                            <Cell class="header">Points</Cell>
+                            <Cell class="header">Potential Points</Cell>
                         </Row>
                     </Head>
                     <Body>
@@ -601,11 +599,11 @@
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
                         <Cell class="header">Win %</Cell>
-                        <Cell class="header">W</Cell>
+                        <Cell class="header">Wins</Cell>
                         {#if showTies}
-                            <Cell class="header">T</Cell>
+                            <Cell class="header">Ties</Cell>
                         {/if}
-                        <Cell class="header">L</Cell>
+                        <Cell class="header">Losses</Cell>
                     </Row>
                 </Head>
                 <Body>
@@ -641,8 +639,8 @@
                     <Row>
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
-                        <Cell class="header">PF</Cell>
-                        <Cell class="header">PA</Cell>
+                        <Cell class="header">Points For</Cell>
+                        <Cell class="header">Points Against</Cell>
                     </Row>
                 </Head>
                 <Body>
