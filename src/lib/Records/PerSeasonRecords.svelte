@@ -55,7 +55,7 @@
             }
 
 			const fpts = round(season.fpts);
-			const fptspg = round(season.fpts / (season.wins + season.losses + season.ties));
+			const fptspg = season.fpts / (season.wins + season.losses + season.ties);
 
             // add season-long scoring record
             yearsObj[season.year].seasonLongRecords.push({
