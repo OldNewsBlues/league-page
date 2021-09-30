@@ -55,7 +55,7 @@
             manager: currentManagers[key],
             fptsFor: round(leagueRosterRecord.fptsFor),
             fptsAgainst: round(leagueRosterRecord.fptsAgainst),
-            fptsPerGame: round(season.fpts / (season.wins + season.losses + season.ties)),
+            fptsPerGame: round(leagueRosterRecord.fptsFor / (leagueRosterRecord.wins + leagueRosterRecord.losses + leagueRosterRecord.ties)),
         })
     
         if(leagueRosterRecord.ties > 0) showTies = true;
