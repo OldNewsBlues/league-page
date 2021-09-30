@@ -95,6 +95,7 @@
                 manager: season.manager,
                 fptsFor: round(season.fpts),
                 fptsAgainst: round(season.fptsAgainst),
+		fptsPerGame: round(season.fpts / (season.wins + season.losses + season.ties)),
             })
         }
     }
