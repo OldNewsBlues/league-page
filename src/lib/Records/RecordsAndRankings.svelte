@@ -634,7 +634,7 @@
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
-                        <Cell class="header" colspan=4>
+                        <Cell class="header" colspan=5>
                             {prefix} Fantasy Points Rankings
                         </Cell>
                     </Row>
@@ -643,6 +643,7 @@
                         <Cell class="header">Manager</Cell>
                         <Cell class="header">PF</Cell>
                         <Cell class="header">PA</Cell>
+			<Cell class="header">PPG</Cell>
                     </Row>
                 </Head>
                 <Body>
@@ -657,6 +658,7 @@
                             </Cell>
                             <Cell>{fptsHistory.fptsFor}</Cell>
                             <Cell>{fptsHistory.fptsAgainst}</Cell>
+			    <Cell>{fptsHistory.fptsPerGame}</Cell>
                         </Row>
                     {/each}
                 </Body>
