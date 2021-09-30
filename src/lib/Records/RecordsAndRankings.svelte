@@ -402,13 +402,13 @@
         <DataTable class="recordTable">
             <Head>
                 <Row>
-                    <Cell class="header" colspan=4>{prefix} Single Week Scoring Records</Cell>
+                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
                 </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Total Points</Cell>
+                    <Cell class="header">PF</Cell>
                 </Row>
             </Head>
             <Body>
@@ -421,7 +421,7 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " " : "" }Week {leagueWeekRecord.week}</Cell>
+                        <Cell>{allTime ? leagueWeekRecord.year + " – " : "" } {leagueWeekRecord.week}</Cell>
                         <Cell>{round(leagueWeekRecord.fpts)}</Cell>
                     </Row>
                 {/each}
@@ -432,7 +432,7 @@
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=4>{prefix} Season-long Scoring Records</Cell>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -440,7 +440,8 @@
                 {#if allTime}
                     <Cell class="header">Year</Cell>
                 {/if}
-                <Cell class="header">Total Points</Cell>
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
             </Row>
         </Head>
         <Body>
@@ -457,6 +458,7 @@
                         <Cell>{mostSeasonLongPoint.year}</Cell>
                     {/if}
                     <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
         </Body>
@@ -472,7 +474,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Differential</Cell>
+                    <Cell class="header">Diff</Cell>
                 </Row>
             </Head>
             <Body>
@@ -494,7 +496,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? blowout.year + " " : "" }Week {blowout.week}</Cell>
+                        <Cell>{allTime ? blowout.year + " – " : "" } {blowout.week}</Cell>
                         <Cell>{round(blowout.differential)}</Cell>
                     </Row>
                 {/each}
@@ -512,7 +514,7 @@
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Matchup</Cell>
                     <Cell class="header">Week</Cell>
-                    <Cell class="header">Differential</Cell>
+                    <Cell class="header">Diff</Cell>
                 </Row>
             </Head>
             <Body>
@@ -534,7 +536,7 @@
                                 {/if}
                             </div>
                         </Cell>
-                        <Cell>{allTime ? closestMatchup.year + " " : "" }Week {closestMatchup.week}</Cell>
+                        <Cell>{allTime ? closestMatchup.year + " – " : "" } {closestMatchup.week}</Cell>
                         <Cell>{round(closestMatchup.differential)}</Cell>
                     </Row>
                 {/each}
@@ -564,9 +566,9 @@
                         <Row>
                             <Cell class="header"></Cell>
                             <Cell class="header">Manager</Cell>
-                            <Cell class="header">Lineup IQ</Cell>
-                            <Cell class="header">Points</Cell>
-                            <Cell class="header">Potential Points</Cell>
+                            <Cell class="header">IQ</Cell>
+                            <Cell class="header">PF</Cell>
+                            <Cell class="header">Poss. PF</Cell>
                         </Row>
                     </Head>
                     <Body>
@@ -599,11 +601,11 @@
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
                         <Cell class="header">Win %</Cell>
-                        <Cell class="header">Wins</Cell>
+                        <Cell class="header">W</Cell>
                         {#if showTies}
-                            <Cell class="header">Ties</Cell>
+                            <Cell class="header">T</Cell>
                         {/if}
-                        <Cell class="header">Losses</Cell>
+                        <Cell class="header">L</Cell>
                     </Row>
                 </Head>
                 <Body>
@@ -639,8 +641,8 @@
                     <Row>
                         <Cell class="header"></Cell>
                         <Cell class="header">Manager</Cell>
-                        <Cell class="header">Points For</Cell>
-                        <Cell class="header">Points Against</Cell>
+                        <Cell class="header">PF</Cell>
+                        <Cell class="header">PA</Cell>
                     </Row>
                 </Head>
                 <Body>
