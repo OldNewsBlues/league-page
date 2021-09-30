@@ -1,5 +1,5 @@
 <script>
-    import { getLeagueRecords, getLeagueTransactions } from '$lib/utils/helper'; //j
+    import { getLeagueRecords, getLeagueTransactions } from '$lib/utils/helper';
 
     import AllTimeRecords from './AllTimeRecords.svelte';
     import PerSeasonRecords from './PerSeasonRecords.svelte';
@@ -58,5 +58,5 @@
     {:else}
         <p class="empty">No records <i>yet</i>...</p>
     {/if}
-    <PerSeasonRecords transactionTotals={totals} {leagueRosterRecords} {seasonWeekRecords} {seasonWeekLows} {currentManagers} {currentYear} {lastYear} />
+    <PerSeasonRecords transactionTotals={totals} {leagueRosterRecords} {seasonWeekRecords} {currentManagers} {currentYear} {lastYear} />
 </div>
