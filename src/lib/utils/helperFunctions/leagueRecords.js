@@ -5,7 +5,7 @@ import { getLeagueRosters } from "./leagueRosters"
 import { getLeagueUsers } from "./leagueUsers"
 import { waitForAll } from './multiPromise';
 import { get } from 'svelte/store';
-import {records} from '$lib/stores'; //pa
+import {records} from '$lib/stores';
 
 export const getLeagueRecords = async (refresh = false) => {
 	if(get(records).seasonWeekRecords) {
@@ -93,7 +93,6 @@ export const getLeagueRecords = async (refresh = false) => {
 					fptsFor: 0,
 					fptsAgainst: 0,
 					potentialPoints: 0,
-					fptspg: 0, //Jesse PPG
 					years: []
 				}
 			}
@@ -101,7 +100,6 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fpts = roster.settings.fpts + (roster.settings.fpts_decimal / 100);
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
-			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties); //Jesse PPG
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -110,7 +108,6 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].fptsFor += fpts;
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
-			leagueRosterRecords[rosterID].fptspg += fptspg; //Jesse PPG
 
 			// add singleSeason info [`${year}fptsFor`]
 			const singleYearInfo = {
@@ -120,7 +117,6 @@ export const getLeagueRecords = async (refresh = false) => {
 				fpts,
 				fptsAgainst,
 				potentialPoints,
-				fptspg, //Jesse PPG
 				manager: originalManagers[rosterID],
 				year
 			}
@@ -130,7 +126,6 @@ export const getLeagueRecords = async (refresh = false) => {
 			mostSeasonLongPoints.push({
 				rosterID,
 				fpts,
-				fptspg,
 				year,
 				manager: originalManagers[rosterID]
 			})
@@ -165,7 +160,6 @@ export const getLeagueRecords = async (refresh = false) => {
 		curSeason = leagueData.previous_league_id;
 
 		const seasonPointsRecord = [];
-// 		const seasonPointsLow = []; //Jesse Not top 10
 		let matchupDifferentials = [];
 		
 		// process all the matchups
@@ -186,7 +180,7 @@ export const getLeagueRecords = async (refresh = false) => {
 					matchups[matchup.matchup_id] = [];
 				}
 				matchups[matchup.matchup_id].push(entry);
-				
+
 			}
 			startWeek--;
 
@@ -231,7 +225,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			year,
 			biggestBlowouts,
 			closestMatchups,
-			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10),
+			seasonPointsRecords: seasonPointsRecord.sort((a, b) => b.fpts - a.fpts).slice(0, 10)
 		}
 
 		if(interSeasonEntry.seasonPointsRecords.length > 0) {
