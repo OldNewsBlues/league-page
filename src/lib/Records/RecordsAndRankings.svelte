@@ -463,6 +463,76 @@
             {/each}
         </Body>
     </DataTable>
+<!-- 	NEW TABLES -->
+    <DataTable class="recordTable">
+        <Head>
+            <Row>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
+            </Row>
+            <Row>
+                <Cell class="header rank"></Cell>
+                <Cell class="header">Manager</Cell>
+                {#if allTime}
+                    <Cell class="header">Year</Cell>
+                {/if}
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
+            </Row>
+        </Head>
+        <Body>
+            {#each seasonLongRecords as mostSeasonLongPoint, ix}
+                <Row>
+                    <Cell class="rank">{ix + 1}</Cell>
+                    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
+                        {mostSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+                        {/if}
+                    </Cell>
+                    {#if allTime}
+                        <Cell>{mostSeasonLongPoint.year}</Cell>
+                    {/if}
+                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
+                </Row>
+            {/each}
+        </Body>
+    </DataTable>
+	
+    <DataTable class="recordTable">
+        <Head>
+            <Row>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
+            </Row>
+            <Row>
+                <Cell class="header rank"></Cell>
+                <Cell class="header">Manager</Cell>
+                {#if allTime}
+                    <Cell class="header">Year</Cell>
+                {/if}
+                <Cell class="header">PF</Cell>
+		<Cell class="header">PPG</Cell>
+            </Row>
+        </Head>
+        <Body>
+            {#each seasonLongRecords as mostSeasonLongPoint, ix}
+                <Row>
+                    <Cell class="rank">{ix + 1}</Cell>
+                    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
+                        {mostSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+                        {/if}
+                    </Cell>
+                    {#if allTime}
+                        <Cell>{mostSeasonLongPoint.year}</Cell>
+                    {/if}
+                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
+                </Row>
+            {/each}
+        </Body>
+    </DataTable>
 
     {#if blowouts && blowouts.length}
         <DataTable class="recordTable">
