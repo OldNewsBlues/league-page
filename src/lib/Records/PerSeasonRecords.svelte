@@ -56,7 +56,7 @@
                 yearsObj[season.year].showTies = true;
             }
 
-			const fpts = round(season.fpts);
+			const fpts = season.fpts;
 			const fptspg = season.fpts / (season.wins + season.losses + season.ties);
 
             // add season-long scoring record
