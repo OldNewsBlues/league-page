@@ -176,7 +176,7 @@ export const getLeagueRecords = async (refresh = false) => {
 		curSeason = leagueData.previous_league_id;
 
 		const seasonPointsRecord = [];
-		const seasonPointsLow = []
+		const seasonPointsLow = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
