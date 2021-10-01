@@ -255,12 +255,12 @@ export const getLeagueRecords = async (refresh = false) => {
 			seasonWeekRecords.push(interSeasonEntry);
 		};
 		
-		if(interSeasonEntry.seasonPointsLows.length > 0) {
-			if(!currentYear) {
-				currentYear = year;
-			}
-			seasonWeekRecords.push(interSeasonEntry);
-		};
+// 		if(interSeasonEntry.seasonPointsLows.length > 0) {
+// 			if(!currentYear) {
+// 				currentYear = year;
+// 			}
+// 			seasonWeekRecords.push(interSeasonEntry);
+// 		};
 	}
 
 	allTimeMatchupDifferentials = allTimeMatchupDifferentials.sort((a, b) => b.differential - a.differential)
