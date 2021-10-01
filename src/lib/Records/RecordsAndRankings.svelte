@@ -402,11 +402,14 @@
         <DataTable class="recordTable">
             <Head>
                 <Row>
-                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Records</Cell>
+                    <Cell class="header" colspan=5>{prefix} Single-Week Scoring Records</Cell>
                 </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
+		    {if allTime}
+			<Cell class="header">Year</Cell>
+		    {/if}
                     <Cell class="header">Week</Cell>
                     <Cell class="header">PF</Cell>
                 </Row>
@@ -421,7 +424,10 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekRecord.year + " – " : "" } {leagueWeekRecord.week}</Cell>
+			{if allTime}
+			    <Cell>{leagueWeekLow.year}</Cell>
+			{/if}
+                        <Cell>{leagueWeekRecord.week}</Cell>
                         <Cell>{round(leagueWeekRecord.fpts)}</Cell>
                     </Row>
                 {/each}
@@ -454,7 +460,7 @@
                             {/if}
                         </Cell>
                         <Cell>{mostSeasonLongPoint.year}</Cell>
-                        <Cell>{mostSeasonLongPoint.fpts}</Cell>
+                        <Cell>{round(mostSeasonLongPoint.fpts)}</Cell>
 	      	        <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
                     </Row>
                 {/each}
@@ -466,11 +472,14 @@
         <DataTable class="recordTable">
             <Head>
                 <Row>
-                    <Cell class="header" colspan=4>{prefix} Single-Week Scoring Lows</Cell>
+                    <Cell class="header" colspan=5>{prefix} Single-Week Scoring Lows</Cell>
                 </Row>
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
+		    {if allTime}
+			<Cell class="header">Year</Cell>
+		    {/if}
                     <Cell class="header">Week</Cell>
                     <Cell class="header">PF</Cell>
                 </Row>
@@ -485,7 +494,10 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekLow.rosterID].name})</div>
                             {/if}
                         </Cell>
-                        <Cell>{allTime ? leagueWeekLow.year + " – " : "" } {leagueWeekLow.week}</Cell>
+			{if allTime}
+			    <Cell>{leagueWeekLow.year}</Cell>
+			{/if}
+                        <Cell>{leagueWeekLow.week}</Cell>
                         <Cell>{round(leagueWeekLow.fpts)}</Cell>
                     </Row>
                 {/each}
@@ -518,7 +530,7 @@
                             {/if}
                         </Cell>
                         <Cell>{leastSeasonLongPoint.year}</Cell>
-                        <Cell>{leastSeasonLongPoint.fpts}</Cell>
+                        <Cell>{round(leastSeasonLongPoint.fpts)}</Cell>
 	    	        <Cell>{round(leastSeasonLongPoint.fptspg)}</Cell>
                     </Row>
                 {/each}
