@@ -467,7 +467,7 @@
             </Body>
         </DataTable>
     {/if}
-<!-- 	NEW LOWCOM TABLES -->
+<!-- 	NEW LOWCOMCOM TABLES -->
     {#if weekRecords && weekRecords.length}
         <DataTable class="recordTable">
             <Head>
