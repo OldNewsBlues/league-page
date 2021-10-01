@@ -255,12 +255,6 @@ export const getLeagueRecords = async (refresh = false) => {
 			seasonWeekRecords.push(interSeasonEntry);
 		};
 		
-// 		if(interSeasonEntry.seasonPointsLows.length > 0) {
-// 			if(!currentYear) {
-// 				currentYear = year;
-// 			}
-// 			seasonWeekRecords.push(interSeasonEntry);
-// 		};
 	}
 
 	allTimeMatchupDifferentials = allTimeMatchupDifferentials.sort((a, b) => b.differential - a.differential)
@@ -273,7 +267,12 @@ export const getLeagueRecords = async (refresh = false) => {
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
-	leastSeasonLongPoints = leastSeasonLongPoints.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+	
+	if(leagueData.status == 'complete' || nflState.week > leagueData.settings.playoff_week_start - 1) {
+		leastSeasonLongPoints = leastSeasonLongPoints.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+	} else {
+		leastSeasonLongPoints = leastSeasonLongPoints.filter(leastSeasonLongPoints => leastSeasonLongPoints.year != parseInt(leagueData.season)).sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+        }
 
 	const recordsData = {
 		allTimeBiggestBlowouts,
