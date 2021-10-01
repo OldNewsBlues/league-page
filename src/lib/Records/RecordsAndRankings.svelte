@@ -3,7 +3,7 @@
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager, round } from '$lib/utils/helper';
 
-  	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table'; //fptsSeasonBest, fptsWeekBest,vvv
 
     export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
@@ -58,45 +58,47 @@
         short: "Fantasy Points"
     }
     
-    const fptsSeasonHighGraph = {
-        stats: fptsHistories,
+    const fptsSeasonBestGraph = {
+        stats: fptsHistories, //fptsSeasonBest
         x: "Manager",
         y: "Fantasy Points",
         stat: "",
-        header: "Team High Scores (Season Long)",
+        header: "Team High / Low Scores (Season Long)",
         field: "fptsFor",
-        short: "Season Highs"
+	secondField: "fptsFor",
+        short: "Season Records"
     }
 	
-    const fptsSeasonLowGraph = {
-        stats: fptsHistories,
+    const fptsWeekBestGraph = {
+        stats: fptsHistories, //fptsWeekBest
         x: "Manager",
         y: "Fantasy Points",
         stat: "",
-        header: "Team Low Scores (Season Long)",
+        header: "Team High / Low Scores (Single Week)",
         field: "fptsFor",
-        short: "Season Lows"
+	secondField: "fptsFor",	    
+        short: "Weekly Records"
     }
 		
-    const fptsWeekHighGraph = {
-        stats: fptsHistories,
-        x: "Manager",
-        y: "Fantasy Points",
-        stat: "",
-        header: "Team High Scores (Single Week)",
-        field: "fptsFor",
-        short: "Weekly Highs"
-    }
+//     const fptsWeekHighGraph = {
+//         stats: fptsWeekHigh,
+//         x: "Manager",
+//         y: "Fantasy Points",
+//         stat: "",
+//         header: "Team High Scores (Single Week)",
+//         field: "fptsFor",
+//         short: "Weekly Highs"
+//     }
     
-    const fptsWeekLowGraph = {
-        stats: fptsHistories,
-        x: "Manager",
-        y: "Fantasy Points",
-        stat: "",
-        header: "Team Low Scores (Single Week)",
-        field: "fptsFor",
-        short: "Weekly Lows"
-    }
+//     const fptsWeekLowGraph = {
+//         stats: fptsWeekLow,
+//         x: "Manager",
+//         y: "Fantasy Points",
+//         stat: "",
+//         header: "Team Low Scores (Single Week)",
+//         field: "fptsFor",
+//         short: "Weekly Lows"
+//     }
 
     for(let i = 1; i <= waiversData.length; i++) {
         if(!tradesData.find(t => t.rosterID == i)) {
@@ -141,10 +143,10 @@
     }
     graphs.push(generateGraph(tradesGraph));
     graphs.push(generateGraph(waiversGraph));
-    graphs.push(generateGraph(fptsSeasonHighGraph));
-    graphs.push(generateGraph(fptsSeasonLowGraph));
-    graphs.push(generateGraph(fptsWeekHighGraph));
-    graphs.push(generateGraph(fptsWeekLowGraph));
+    graphs.push(generateGraph(fptsSeasonBestGraph));
+    graphs.push(generateGraph(fptsWeekBestGraph));
+//     graphs.push(generateGraph(fptsWeekHighGraph));
+//     graphs.push(generateGraph(fptsWeekLowGraph));
 
     const transactions = [];
 
@@ -169,10 +171,10 @@
         "Win Percentages",
         "Points",
         "Transactions",
-	"Season Highs",
-	"Season Lows",
-	"Weekly Highs",
-	"Weekly Lows",
+	"Season Records",
+	"Weekly Records",
+// 	"Weekly Highs",
+// 	"Weekly Lows",
     ]
     if(!lineupIQs[0]?.potentialPoints) {
         iqOffset = 1;
@@ -197,17 +199,23 @@
                 curTable = 3 - iqOffset;
                 break;
 	    case 7 - (2 * iqOffset):
-		curTable = 4 - iqOffset;
-		break;
+		if(curTable == 4 - iqOffset || curTable == 5 - iqOffset) {
+		    break;
+		}
+		curTable == 4 - iqOffset;
+		break;			
 	    case 8 - (2 * iqOffset):
-		curTable = 5 - iqOffset;
+		if(curTable == 6 - iqOffset || curTable == 7 - iqOffset) {
+		    break;
+		}
+		curTable == 6 - iqOffset;
 		break;
-	    case 9 - (2 * iqOffset):
-		curTable = 6 - iqOffset;
-		break;
-	    case 10 - (2 * iqOffset):
-		curTable = 7 - iqOffset;
-		break;
+// 	    case 9 - (2 * iqOffset):
+// 		curTable = 6 - iqOffset;
+// 		break;
+// 	    case 10 - (2 * iqOffset):
+// 		curTable = 7 - iqOffset;
+// 		break;
             default:
                 curTable = 0;
                 break;
@@ -238,17 +246,19 @@
                 curGraph = 5 - (2 * iqOffset);
                 break;
 	    case 4 - iqOffset:
+	    case 5 - iqOffset:
                 curGraph = 7 - (2 * iqOffset);
                 break;
-	    case 5 - iqOffset:
+	    case 6 - iqOffset:
+	    case 7 - iqOffset:
                 curGraph = 8 - (2 * iqOffset);
                 break;
-	    case 6 - iqOffset:
-                curGraph = 9 - (2 * iqOffset);
-                break;
-	    case 7 - iqOffset:
-                curGraph = 10 - (2 * iqOffset);
-                break;
+// 	    case 6 - iqOffset:
+//                 curGraph = 9 - (2 * iqOffset);
+//                 break;
+// 	    case 7 - iqOffset:
+//                 curGraph = 10 - (2 * iqOffset);
+//                 break;
             default:
                 curGraph = 0;
                 break;
