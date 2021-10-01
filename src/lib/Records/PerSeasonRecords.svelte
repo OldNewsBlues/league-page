@@ -15,6 +15,7 @@
             winPercentages: [],
             lineupIQs: [],
             fptsHistories: [],
+	    fptsSeasonBest: [],
             tradesData: [],
             waiversData: [],
             blowouts: [],
@@ -108,6 +109,14 @@
 		fptsPerGame: round(season.fpts / (season.wins + season.losses + season.ties)),
             })
         }
+    	    // add fantasy points highs and lows
+        fptsSeasonBest.push({	  
+            rosterID,
+	    manager: leagueRosterRecords[rosterID].manager,
+	    fptsSeasonHigh: leagueRosterRecords[rosterID].sort((a, b) => b.fpts - a.fpts).slice(0, 1),
+	    fptsSeasonLow: leagueRosterRecords[rosterID].sort((a, b) => a.fpts - b.fpts).slice(0, 1),
+	    fptsSeasonPerGame: round(leagueRosterRecords[rosterID].fpts / (leagueRosterRecords[rosterID].wins + leagueRosterRecords[rosterID].losses + leagueRosterRecords[rosterID].ties)),
+        }
     }
 
     for(const key in yearsObj) {
@@ -129,7 +138,7 @@
     years.sort((a, b) => b.year - a.year);
 </script>
 
-{#each years as {waiversData, tradesData, weekRecords, weekLows, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
+{#each years as {waiversData, tradesData, weekRecords, weekLows, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, fptsSeasonBest, lineupIQs, year, blowouts, closestMatchups}, ix}
     <RecordsAndRankings
         {waiversData}
         {tradesData}
@@ -140,6 +149,7 @@
         {showTies}
         {winPercentages}
         {fptsHistories}
+	{fptsSeasonBest}
         {lineupIQs}
         {blowouts}
         {closestMatchups}
