@@ -171,8 +171,8 @@
         "Win Percentages",
         "Points",
         "Transactions",
-	"Season Records",
-	"Weekly Records",
+	"Season Highs",
+	"Season Lows",
 	"Weekly Highs",
 	"Weekly Lows",
     ]
@@ -339,7 +339,7 @@
         position: relative;
         display: flex;
         flex-wrap: nowrap;
-        width: 800%;
+        width: 750%;
 		transition: margin-left 0.8s;
     }
 
