@@ -271,7 +271,7 @@ export const getLeagueRecords = async (refresh = false) => {
 	if(leagueData.status == 'complete' || nflState.week > leagueData.settings.playoff_week_start - 1) {
 		leastSeasonLongPoints = leastSeasonLongPoints.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
 	} else {
-		leastSeasonLongPoints = leastSeasonLongPoints.filter(leastSeasonLongPoints => leastSeasonLongPoints.year != parseInt(leagueData.season)).sort((a, b) => a.fpts - b.fpts).slice(0, 10);
+		leastSeasonLongPoints = leastSeasonLongPoints.filter(leastSeasonLongPoint => leastSeasonLongPoint.year != parseInt(leagueData.season)).sort((a, b) => a.fpts - b.fpts).slice(0, 10);
         }
 
 	const recordsData = {
