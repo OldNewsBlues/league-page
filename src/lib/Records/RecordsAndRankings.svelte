@@ -173,8 +173,8 @@
         "Transactions",
 	"Season Records",
 	"Weekly Records",
-// 	"Weekly Highs",
-// 	"Weekly Lows",
+	"Weekly Highs",
+	"Weekly Lows",
     ]
     if(!lineupIQs[0]?.potentialPoints) {
         iqOffset = 1;
@@ -202,13 +202,13 @@
 		if(curTable == 4 - iqOffset || curTable == 5 - iqOffset) {
 		    break;
 		}
-		curTable == 4 - iqOffset;
+		curTable = 4 - iqOffset;
 		break;			
 	    case 8 - (2 * iqOffset):
 		if(curTable == 6 - iqOffset || curTable == 7 - iqOffset) {
 		    break;
 		}
-		curTable == 6 - iqOffset;
+		curTable = 6 - iqOffset;
 		break;
 // 	    case 9 - (2 * iqOffset):
 // 		curTable = 6 - iqOffset;
