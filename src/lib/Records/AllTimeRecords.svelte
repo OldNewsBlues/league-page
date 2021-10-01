@@ -75,7 +75,8 @@
     weekRecords={leagueWeekRecords}
     weekLows={leagueWeekLows}
     seasonLongRecords={mostSeasonLongPoints}
-    seasonLongLows={leastSeasonLongPoints}
+<!--     seasonLongLows={leastSeasonLongPoints} -->
+    {leastSeasonLongPoints}   
     {showTies}
     {winPercentages}
     {fptsHistories}
