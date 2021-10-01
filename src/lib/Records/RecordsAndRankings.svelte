@@ -330,6 +330,10 @@
     .rankingTableWrapper {
         width: 25%;
     }
+	
+    .rankingTableWrapperSmall {
+        width: 12.5%;
+    }
 
     .rankingInner {
         position: relative;
@@ -866,7 +870,7 @@
             </DataTable>
         </div>
 	    
-        <div class="rankingTableWrapper">
+        <div class="rankingTableWrapperSmall">
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
@@ -901,7 +905,7 @@
             </DataTable>
         </div>
 	    
-        <div class="rankingTableWrapper">
+        <div class="rankingTableWrapperSmall">
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
@@ -936,7 +940,7 @@
             </DataTable>
         </div>
 	    
-        <div class="rankingTableWrapper">
+        <div class="rankingTableWrapperSmall">
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
@@ -975,7 +979,7 @@
             </DataTable>
         </div>
 	    
-        <div class="rankingTableWrapper">
+        <div class="rankingTableWrapperSmall">
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
