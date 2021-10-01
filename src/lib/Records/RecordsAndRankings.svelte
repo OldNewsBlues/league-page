@@ -5,7 +5,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
 
-    export let tradesData, waiversData, weekRecords, seasonLongRecords, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
@@ -502,7 +502,7 @@
     <DataTable class="recordTable">
         <Head>
             <Row>
-                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Records</Cell>
+                <Cell class="header" colspan=5>{prefix} Season-Long Scoring Lows</Cell>
             </Row>
             <Row>
                 <Cell class="header rank"></Cell>
@@ -515,20 +515,20 @@
             </Row>
         </Head>
         <Body>
-            {#each seasonLongRecords as mostSeasonLongPoint, ix}
+            {#each seasonLongLows as leastSeasonLongPoint, ix}
                 <Row>
                     <Cell class="rank">{ix + 1}</Cell>
-                    <Cell class="cellName" on:click={() => gotoManager(mostSeasonLongPoint.rosterID)}>
-                        {mostSeasonLongPoint.manager.name}
-                        {#if !allTime  && cleanName(mostSeasonLongPoint.manager.name) != cleanName(currentManagers[mostSeasonLongPoint.rosterID].name)}
-                            <div class="curRecordManager">({currentManagers[mostSeasonLongPoint.rosterID].name})</div>
+                    <Cell class="cellName" on:click={() => gotoManager(leastSeasonLongPoint.rosterID)}>
+                        {leastSeasonLongPoint.manager.name}
+                        {#if !allTime  && cleanName(leastSeasonLongPoint.manager.name) != cleanName(currentManagers[leastSeasonLongPoint.rosterID].name)}
+                            <div class="curRecordManager">({currentManagers[leastSeasonLongPoint.rosterID].name})</div>
                         {/if}
                     </Cell>
                     {#if allTime}
-                        <Cell>{mostSeasonLongPoint.year}</Cell>
+                        <Cell>{leastSeasonLongPoint.year}</Cell>
                     {/if}
-                    <Cell>{mostSeasonLongPoint.fpts}</Cell>
-		    <Cell>{round(mostSeasonLongPoint.fptspg)}</Cell>
+                    <Cell>{leastSeasonLongPoint.fpts}</Cell>
+		    <Cell>{round(leastSeasonLongPoint.fptspg)}</Cell>
                 </Row>
             {/each}
         </Body>
