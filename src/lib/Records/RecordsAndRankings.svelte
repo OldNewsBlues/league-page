@@ -464,7 +464,7 @@
         </Body>
     </DataTable>
 <!-- 	NEW TABLES -->
-<!--     {#if weekLows && weekLows.length} -->
+    {#if weekLows && weekLows.length}
         <DataTable class="recordTable">
             <Head>
                 <Row>
@@ -493,8 +493,8 @@
                 {/each}
             </Body>
         </DataTable>
-<!--     {/if}
-	 -->
+    {/if}
+
     <DataTable class="recordTable">
         <Head>
             <Row>
