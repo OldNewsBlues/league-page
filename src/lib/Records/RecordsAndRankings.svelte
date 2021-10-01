@@ -467,7 +467,7 @@
             </Body>
         </DataTable>
     {/if}
-<!-- 	NEW TABLES -->
+<!-- 	NEW LOW TABLES -->
     {#if weekRecords && weekRecords.length}
         <DataTable class="recordTable">
             <Head>
