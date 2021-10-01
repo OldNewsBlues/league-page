@@ -325,7 +325,7 @@
         position: relative;
         display: flex;
         flex-wrap: nowrap;
-        width: 400%;
+        width: 800%;
 		transition: margin-left 0.8s;
     }
 
