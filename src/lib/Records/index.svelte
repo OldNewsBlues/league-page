@@ -11,7 +11,7 @@
         totals = newTransactions.totals;
     }
 
-    let {leagueRosterRecords, leagueWeekRecords, leagueweekLows, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, leastSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
+    let {leagueRosterRecords, leagueWeekRecords, leagueWeekLows, allTimeClosestMatchups, allTimeBiggestBlowouts, currentManagers, mostSeasonLongPoints, leastSeasonLongPoints, seasonWeekRecords, currentYear, lastYear} = leagueRecords;
 
     const refreshRecords = async () => {
         const newRecords = await getLeagueRecords(true);
@@ -20,7 +20,7 @@
         leagueRecords = newRecords;
         leagueRosterRecords = newRecords.leagueRosterRecords;
         leagueWeekRecords = newRecords.leagueWeekRecords;
-        leagueweekLows = newRecords.leagueweekLows;
+        leagueWeekLows = newRecords.leagueWeekLows;
         allTimeClosestMatchups = newRecords.allTimeClosestMatchups;
         allTimeBiggestBlowouts = newRecords.allTimeBiggestBlowouts;
         currentManagers = newRecords.currentManagers;
