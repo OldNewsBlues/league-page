@@ -115,8 +115,8 @@
 	    manager: leagueRosterRecords[rosterID].manager,
 	    fptsSeasonHigh: leagueRosterRecords[rosterID].sort((a, b) => b.fpts - a.fpts).slice(0, 1),
 	    fptsSeasonLow: leagueRosterRecords[rosterID].sort((a, b) => a.fpts - b.fpts).slice(0, 1),
-	    fptsSeasonPerGame: round(leagueRosterRecords[rosterID].fpts / (leagueRosterRecords[rosterID].wins + leagueRosterRecords[rosterID].losses + leagueRosterRecords[rosterID].ties)),
-        }
+	    fptsSeasonPerGame: round(leagueRosterRecords[rosterID].fptspg,
+        })
     }
 
     for(const key in yearsObj) {
