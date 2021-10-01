@@ -24,6 +24,7 @@
         allTimeBiggestBlowouts = newRecords.allTimeBiggestBlowouts;
         currentManagers = newRecords.currentManagers;
         mostSeasonLongPoints = newRecords.mostSeasonLongPoints;
+        leastSeasonLongPoints = newRecords.leastSeasonLongPoints;
         seasonWeekRecords = newRecords.seasonWeekRecords;
         currentYear = newRecords.currentYear;
         lastYear = newRecords.lastYear;
