@@ -861,7 +861,7 @@
                 <Head>
                     <Row>
                         <Cell class="header" colspan=5>
-                            {prefix} Team High Scores (Season Long)
+                            {prefix} {"Team High Scores (Season Long)"}
                         </Cell>
                     </Row>
                     <Row>
@@ -896,7 +896,7 @@
                 <Head>
                     <Row>
                         <Cell class="header" colspan=5>
-                            {prefix} Team Low Scores (Season Long)
+                            {prefix} {"Team Low Scores (Season Long)"}
                         </Cell>
                     </Row>
                     <Row>
@@ -931,7 +931,7 @@
                 <Head>
                     <Row>
                         <Cell class="header" colspan=5>
-                            {prefix} Team High Scores (Single Week)
+                            {prefix} {"Team High Scores (Single Week)"}
                         </Cell>
                     </Row>
                     <Row>
@@ -970,7 +970,7 @@
                 <Head>
                     <Row>
                         <Cell class="header" colspan=5>
-                            {prefix} Team Low Scores (Single Week)
+                            {prefix} {"Team Low Scores (Single Week)"}
                         </Cell>
                     </Row>
                     <Row>
