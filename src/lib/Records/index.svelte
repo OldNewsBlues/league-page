@@ -55,7 +55,7 @@
 </style>
 
 <div class="rankingsWrapper">
-    {#if leagueWeekRecords.length}
+    {#if leagueWeekRecords.length && leagueWeekLows.length}
         <AllTimeRecords transactionTotals={totals} {allTimeClosestMatchups} {allTimeBiggestBlowouts} {leagueRosterRecords} {leagueWeekRecords} {leagueWeekLows} {currentManagers} {mostSeasonLongPoints} {leastSeasonLongPoints} />
     {:else}
         <p class="empty">No records <i>yet</i>...</p>
