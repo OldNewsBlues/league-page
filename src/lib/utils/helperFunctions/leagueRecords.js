@@ -259,7 +259,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			if(!currentYear) {
 				currentYear = year;
 			}
-			seasonWeekLows.push(interSeasonEntry);
+			seasonWeekRecords.push(interSeasonEntry);
 		};
 	}
 
@@ -281,7 +281,6 @@ export const getLeagueRecords = async (refresh = false) => {
 		mostSeasonLongPoints,
 		leastSeasonLongPoints,
 		leagueWeekLows,
-		seasonWeekLows,
 		leagueWeekRecords,
 		seasonWeekRecords,
 		leagueRosterRecords,
