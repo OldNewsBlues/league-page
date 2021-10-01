@@ -328,18 +328,18 @@
     }
 
     .rankingTableWrapper {
-        width: 25%;
+        width: 133.33%;
     }
 	
     .rankingTableWrapperSmall {
-        width: 12.5%;
+        width: 66.66%;
     }
 
     .rankingInner {
         position: relative;
         display: flex;
         flex-wrap: nowrap;
-        width: 750%;
+        width: 800%;
 		transition: margin-left 0.8s;
     }
 
