@@ -57,6 +57,46 @@
         field: "fptsFor",
         short: "Fantasy Points"
     }
+    
+    const fptsSeasonHighGraph = {
+        stats: fptsHistories,
+        x: "Manager",
+        y: "Fantasy Points",
+        stat: "",
+        header: "Team High Scores (Season Long)",
+        field: "fptsFor",
+        short: "Season Highs"
+    }
+	
+    const fptsSeasonLowGraph = {
+        stats: fptsHistories,
+        x: "Manager",
+        y: "Fantasy Points",
+        stat: "",
+        header: "Team Low Scores (Season Long)",
+        field: "fptsFor",
+        short: "Season Lows"
+    }
+		
+    const fptsWeekHighGraph = {
+        stats: fptsHistories,
+        x: "Manager",
+        y: "Fantasy Points",
+        stat: "",
+        header: "Team High Scores (Single Week)",
+        field: "fptsFor",
+        short: "Weekly Highs"
+    }
+    
+    const fptsWeekLowGraph = {
+        stats: fptsHistories,
+        x: "Manager",
+        y: "Fantasy Points",
+        stat: "",
+        header: "Team Low Scores (Single Week)",
+        field: "fptsFor",
+        short: "Weekly Lows"
+    }
 
     for(let i = 1; i <= waiversData.length; i++) {
         if(!tradesData.find(t => t.rosterID == i)) {
@@ -101,6 +141,10 @@
     }
     graphs.push(generateGraph(tradesGraph));
     graphs.push(generateGraph(waiversGraph));
+    graphs.push(generateGraph(fptsSeasonHighGraph));
+    graphs.push(generateGraph(fptsSeasonLowGraph));
+    graphs.push(generateGraph(fptsWeekHighGraph));
+    graphs.push(generateGraph(fptsWeekLowGraph));
 
     const transactions = [];
 
@@ -125,6 +169,10 @@
         "Win Percentages",
         "Points",
         "Transactions",
+	"Season Highs",
+	"Season Lows",
+	"Weekly Highs",
+	"Weekly Lows",
     ]
     if(!lineupIQs[0]?.potentialPoints) {
         iqOffset = 1;
@@ -148,6 +196,18 @@
             case 6 - (2 * iqOffset):
                 curTable = 3 - iqOffset;
                 break;
+	    case 7 - (2 * iqOffset):
+		curTable = 4 - iqOffset;
+		break;
+	    case 8 - (2 * iqOffset):
+		curTable = 5 - iqOffset;
+		break;
+	    case 9 - (2 * iqOffset):
+		curTable = 6 - iqOffset;
+		break;
+	    case 10 - (2 * iqOffset):
+		curTable = 7 - iqOffset;
+		break;
             default:
                 curTable = 0;
                 break;
@@ -176,6 +236,18 @@
                     break;
                 }
                 curGraph = 5 - (2 * iqOffset);
+                break;
+	    case 4 - iqOffset:
+                curGraph = 7 - (2 * iqOffset);
+                break;
+	    case 5 - iqOffset:
+                curGraph = 8 - (2 * iqOffset);
+                break;
+	    case 6 - iqOffset:
+                curGraph = 9 - (2 * iqOffset);
+                break;
+	    case 7 - iqOffset:
+                curGraph = 10 - (2 * iqOffset);
                 break;
             default:
                 curGraph = 0;
@@ -778,6 +850,154 @@
                             </Cell>
                             <Cell class="center">{transaction.trades}</Cell>
                             <Cell class="center">{transaction.waivers}</Cell>
+                        </Row>
+                    {/each}
+                </Body>
+            </DataTable>
+        </div>
+	    
+        <div class="rankingTableWrapper">
+            <DataTable class="rankingTable">
+                <Head>
+                    <Row>
+                        <Cell class="header" colspan=5>
+                            {prefix} Team High Scores (Season Long)
+                        </Cell>
+                    </Row>
+                    <Row>
+                        <Cell class="header"></Cell>
+                        <Cell class="header">Manager</Cell>
+                        <Cell class="header">Year</Cell>
+                        <Cell class="header">PF</Cell>
+			<Cell class="header">PPG</Cell>
+                    </Row>
+                </Head>
+                <Body>
+                    {#each fptsHistories as fptsHistory, ix}
+                        <Row>
+                            <Cell>{ix + 1}</Cell>
+                            <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
+                                {fptsHistory.manager.name}
+                                {#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
+                                {/if}
+                            </Cell>
+                            <Cell class="center">{fptsHistory.fptsFor}</Cell>
+                            <Cell class="center">{fptsHistory.fptsAgainst}</Cell>
+			    <Cell class="center">{fptsHistory.fptsPerGame}</Cell>
+                        </Row>
+                    {/each}
+                </Body>
+            </DataTable>
+        </div>
+	    
+        <div class="rankingTableWrapper">
+            <DataTable class="rankingTable">
+                <Head>
+                    <Row>
+                        <Cell class="header" colspan=5>
+                            {prefix} Team Low Scores (Season Long)
+                        </Cell>
+                    </Row>
+                    <Row>
+                        <Cell class="header"></Cell>
+                        <Cell class="header">Manager</Cell>
+                        <Cell class="header">Year</Cell>
+                        <Cell class="header">PF</Cell>
+			<Cell class="header">PPG</Cell>
+                    </Row>
+                </Head>
+                <Body>
+                    {#each fptsHistories as fptsHistory, ix}
+                        <Row>
+                            <Cell>{ix + 1}</Cell>
+                            <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
+                                {fptsHistory.manager.name}
+                                {#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
+                                {/if}
+                            </Cell>
+                            <Cell class="center">{fptsHistory.fptsFor}</Cell>
+                            <Cell class="center">{fptsHistory.fptsAgainst}</Cell>
+			    <Cell class="center">{fptsHistory.fptsPerGame}</Cell>
+                        </Row>
+                    {/each}
+                </Body>
+            </DataTable>
+        </div>
+	    
+        <div class="rankingTableWrapper">
+            <DataTable class="rankingTable">
+                <Head>
+                    <Row>
+                        <Cell class="header" colspan=5>
+                            {prefix} Team High Scores (Single Week)
+                        </Cell>
+                    </Row>
+                    <Row>
+                        <Cell class="header"></Cell>
+                        <Cell class="header">Manager</Cell>
+		        {#if allTime}
+			    <Cell class="header">Year</Cell>
+		        {/if}
+                        <Cell class="header">Week</Cell>
+			<Cell class="header">PF</Cell>
+                    </Row>
+                </Head>
+                <Body>
+                    {#each fptsHistories as fptsHistory, ix}
+                        <Row>
+                            <Cell>{ix + 1}</Cell>
+                            <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
+                                {fptsHistory.manager.name}
+                                {#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
+                                {/if}
+                            </Cell>
+		            {#if allTime}				
+                                <Cell class="center">{fptsHistory.fptsFor}</Cell>
+			    {/if}
+                            <Cell class="center">{fptsHistory.fptsAgainst}</Cell>
+			    <Cell class="center">{fptsHistory.fptsPerGame}</Cell>
+                        </Row>
+                    {/each}
+                </Body>
+            </DataTable>
+        </div>
+	    
+        <div class="rankingTableWrapper">
+            <DataTable class="rankingTable">
+                <Head>
+                    <Row>
+                        <Cell class="header" colspan=5>
+                            {prefix} Team Low Scores (Single Week)
+                        </Cell>
+                    </Row>
+                    <Row>
+                        <Cell class="header"></Cell>
+                        <Cell class="header">Manager</Cell>
+		        {#if allTime}
+			    <Cell class="header">Year</Cell>
+		        {/if}
+                        <Cell class="header">Week</Cell>
+			<Cell class="header">PF</Cell>
+                    </Row>
+                </Head>
+                <Body>
+                    {#each fptsHistories as fptsHistory, ix}
+                        <Row>
+                            <Cell>{ix + 1}</Cell>
+                            <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
+                                {fptsHistory.manager.name}
+                                {#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
+                                {/if}
+                            </Cell>
+		            {#if allTime}				
+                                <Cell class="center">{fptsHistory.fptsFor}</Cell>
+			    {/if}
+                            <Cell class="center">{fptsHistory.fptsAgainst}</Cell>
+			    <Cell class="center">{fptsHistory.fptsPerGame}</Cell>
                         </Row>
                     {/each}
                 </Body>
