@@ -407,7 +407,7 @@
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
-		    {if allTime}
+		    {#if allTime}
 			<Cell class="header">Year</Cell>
 		    {/if}
                     <Cell class="header">Week</Cell>
@@ -424,7 +424,7 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekRecord.rosterID].name})</div>
                             {/if}
                         </Cell>
-			{if allTime}
+			{#if allTime}
 			    <Cell>{leagueWeekLow.year}</Cell>
 			{/if}
                         <Cell>{leagueWeekRecord.week}</Cell>
@@ -477,7 +477,7 @@
                 <Row>
                     <Cell class="header rank"></Cell>
                     <Cell class="header">Manager</Cell>
-		    {if allTime}
+		    {#if allTime}
 			<Cell class="header">Year</Cell>
 		    {/if}
                     <Cell class="header">Week</Cell>
@@ -494,7 +494,7 @@
                                 <div class="curRecordManager">({currentManagers[leagueWeekLow.rosterID].name})</div>
                             {/if}
                         </Cell>
-			{if allTime}
+			{#if allTime}
 			    <Cell>{leagueWeekLow.year}</Cell>
 			{/if}
                         <Cell>{leagueWeekLow.week}</Cell>
