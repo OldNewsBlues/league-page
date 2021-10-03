@@ -276,7 +276,7 @@ export const getLeagueRecords = async (refresh = false) => {
 	}
 	
 	indivSeasonRecords = indivSeasonRecords.sort((a, b) => b.fpts - a.fpts);
-	const allTimeIndivSeason = [];
+	let allTimeIndivSeason = [];
 	for(const rosterID in indivSeasonRecords) {
 		const indivSeasonRecord = indivSeasonRecords[rosterID].slice(0, 1);
 		allTimeIndivSeason.push(indivSeasonRecord);
