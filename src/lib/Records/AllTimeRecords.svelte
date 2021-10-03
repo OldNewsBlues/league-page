@@ -35,6 +35,8 @@
             wins: leagueRosterRecord.wins,
             ties: leagueRosterRecord.ties,
             losses: leagueRosterRecord.losses,
+            epeW: leagueRosterRecord.epeWins,
+            epeL: leagueRosterRecord.epeLosses,
         })
 
         let lineupIQ = {
