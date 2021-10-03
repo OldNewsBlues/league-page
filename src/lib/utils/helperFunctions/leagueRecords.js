@@ -47,6 +47,7 @@ export const getLeagueRecords = async (refresh = false) => {
 	let leastSeasonLongPoints = []; // 10 lowest full season points
 	let allTimeBiggestBlowouts = []; // 10 biggest blowouts
 	let allTimeClosestMatchups = []; // 10 closest matchups
+	let weekTotals = [];
 
 	while(curSeason && curSeason != 0) {
 		const [rosterRes, users, leagueData] = await waitForAll(
@@ -106,7 +107,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
 			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties);
-			const epeWins = roster.settings.losses;
+// 			const epeWins = roster.settings.losses;
 // 			const epeLosses = [];
 
 			// add records to league roster record record
@@ -117,7 +118,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
 			leagueRosterRecords[rosterID].fptspg += fptspg;
-			leagueRosterRecords[rosterID].epeWins += epeWins;
+// 			leagueRosterRecords[rosterID].epeWins += epeWins;
 // 			leagueRosterRecords[rosterID].epeLosses += epeLosses;
 			
 
@@ -187,7 +188,6 @@ export const getLeagueRecords = async (refresh = false) => {
 
 		const seasonPointsRecord = [];
 		const seasonPointsLow = [];
-		const weektotals = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
@@ -205,7 +205,7 @@ export const getLeagueRecords = async (refresh = false) => {
 				seasonPointsLow.push(entry);
 				leagueWeekRecords.push(entry);
 				leagueWeekLows.push(entry);
-				weektotals.push(entry);
+				weekTotals.push(entry);
 				// add each entry to the matchup object
 				if(!matchups[matchup.matchup_id]) {
 					matchups[matchup.matchup_id] = [];
@@ -297,6 +297,12 @@ export const getLeagueRecords = async (refresh = false) => {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
 	}
 
+	weekTotals = weekTotals.sort((a, b) => b.fpts - a.fpts)
+	leagueRosterRecords[1].push({
+		epeWins: weekTotals.fpts,
+		epeLosses: 5,
+	})
+	
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
