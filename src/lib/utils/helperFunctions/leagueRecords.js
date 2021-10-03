@@ -276,12 +276,12 @@ export const getLeagueRecords = async (refresh = false) => {
 	}
 	
 	indivSeasonRecords = indivSeasonRecords.sort((a, b) => b.fpts - a.fpts);
-	let allTimeIndivSeason = [];
+	let allTimeIndivSeasons = [];
 	for(const rosterID in indivSeasonRecords) {
 		const indivSeasonRecord = indivSeasonRecords[rosterID].slice(0, 1);
-		allTimeIndivSeason.push(indivSeasonRecord);
+		allTimeIndivSeasons.push(indivSeasonRecord);
 	}
-	allTimeIndivSeason = allTimeIndivSeason.sort((a, b) => b.fpts - a.fpts);
+	allTimeIndivSeasons = allTimeIndivSeasons.sort((a, b) => b.fpts - a.fpts);
 
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
@@ -293,7 +293,7 @@ export const getLeagueRecords = async (refresh = false) => {
 		allTimeClosestMatchups,
 		mostSeasonLongPoints,
 		leastSeasonLongPoints,
-		allTimeIndivSeason,
+		allTimeIndivSeasons,
 		leagueWeekLows,
 		leagueWeekRecords,
 		seasonWeekRecords,
