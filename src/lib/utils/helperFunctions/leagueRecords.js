@@ -106,8 +106,8 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
 			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties);
-			const epeWins = roster.settings.wins;
-			const epeLosses = [];
+// 			const epeWins = roster.settings.wins;
+// 			const epeLosses = [];
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -117,7 +117,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
 			leagueRosterRecords[rosterID].fptspg += fptspg;
-			leagueRosterRecords[rosterID].epeWins += epeWins;
+// 			leagueRosterRecords[rosterID].epeWins += epeWins;
 // 			leagueRosterRecords[rosterID].epeLosses += epeLosses;
 			
 
@@ -130,8 +130,8 @@ export const getLeagueRecords = async (refresh = false) => {
 				fptsAgainst,
 				potentialPoints,
 				fptspg,
-				epeWins,
-				epeLosses,
+// 				epeWins,
+// 				epeLosses,
 				manager: originalManagers[rosterID],
 				year
 			}
@@ -217,6 +217,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			for(const key in leagueRosterRecords) {
 				const leagueRosterRecord = leagueRosterRecords[key];
 				leagueRosterRecord.years.epeLosses.push(weektotals.fpts);
+				leagueRosterRecord.years.epeWins.push("91");
 // 				const epeTarget = weektotals.filter(weektotal => weektotal.rosterID == key);
 // 				const epeRanks = {
 // 					rosterID: key,
