@@ -767,7 +767,7 @@
             <DataTable class="rankingTable">
                 <Head>
                     <Row>
-                        <Cell class="header" colspan=6>{prefix} Win Percentages Rankings</Cell>
+                        <Cell class="header" colspan=9>{prefix} Win Percentages Rankings</Cell>
                     </Row>
                     <Row>
                         <Cell class="header"></Cell>
@@ -778,6 +778,11 @@
                             <Cell class="header">T</Cell>
                         {/if}
                         <Cell class="header">L</Cell>
+	                <Cell class="header">EPE W</Cell>
+			{#if showTies}
+                            <Cell class="header">EPE T</Cell>
+                        {/if}
+                        <Cell class="header">EPE L</Cell>		   
                     </Row>
                 </Head>
                 <Body>
@@ -796,6 +801,11 @@
                                 <Cell class="center">{winPercentage.ties}</Cell>
                             {/if}
                             <Cell class="center">{winPercentage.losses}</Cell>
+                            <Cell class="center">{winPercentage.epeW}</Cell>
+                            {#if showTies}
+                                <Cell class="center">{winPercentage.ties}</Cell>
+                            {/if}
+                            <Cell class="center">{winPercentage.epeL}</Cell>				
                         </Row>
                     {/each}
                 </Body>
