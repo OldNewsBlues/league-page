@@ -216,12 +216,12 @@ export const getLeagueRecords = async (refresh = false) => {
 			// const epeRank = 
 			for(const key in leagueRosterRecords) {
 				const leagueRosterRecord = leagueRosterRecords[key];
-// 				const epeTarget = weektotals.filter(w => w.rosterID == key);
+				const epeTarget = weektotals.filter(w => w.rosterID == key);
 				const epeRanks = {
 					rosterID: key,
 					week: startWeek,
 					year,
-					epewin: 12 - weektotals.sort((a, b) => b.fpts - a.fpts).indexOf(key),
+					epewin: 12 - epeTarget.sort((a, b) => b.fpts - a.fpts).indexOf(key),
 					epeloss: weektotals.fpts
 // 					epeloss: 12 + matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID)
 				}
