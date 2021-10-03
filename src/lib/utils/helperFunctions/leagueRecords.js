@@ -106,7 +106,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
 			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties);
-// 			const epeWins = roster.settings.wins;
+			const epeWins = roster.settings.losses;
 // 			const epeLosses = [];
 
 			// add records to league roster record record
