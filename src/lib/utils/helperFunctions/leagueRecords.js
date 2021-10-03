@@ -47,6 +47,7 @@ export const getLeagueRecords = async (refresh = false) => {
 	let leastSeasonLongPoints = []; // 10 lowest full season points
 	let allTimeBiggestBlowouts = []; // 10 biggest blowouts
 	let allTimeClosestMatchups = []; // 10 closest matchups
+	let indivSeasonRecords = [];
 
 	while(curSeason && curSeason != 0) {
 		const [rosterRes, users, leagueData] = await waitForAll(
@@ -147,6 +148,14 @@ export const getLeagueRecords = async (refresh = false) => {
 					manager: originalManagers[rosterID]
 				})
 			}
+			
+			indivSeasonRecords.push({
+				rosterID,
+				fpts,
+				fptspg,
+				year,
+				manager: originalManagers[rosterID]
+			})
 		}
 		
 		if(!currentManagers) {
@@ -265,23 +274,26 @@ export const getLeagueRecords = async (refresh = false) => {
 	for(let i = 0; i < 10; i++) {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
 	}
+	
+	indivSeasonRecords = indivSeasonRecords.sort((a, b) => b.fpts - a.fpts);
+	const allTimeIndivSeason = [];
+	for(const rosterID in indivSeasonRecords) {
+		const indivSeasonRecord = indivSeasonRecords[rosterID].slice(0, 1);
+		allTimeIndivSeason.push(indivSeasonRecord);
+	}
+	allTimeIndivSeason = allTimeIndivSeason.sort((a, b) => b.fpts - a.fpts);
 
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
 	mostSeasonLongPoints = mostSeasonLongPoints.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leastSeasonLongPoints = leastSeasonLongPoints.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
-	
-// 	if(leagueData.status == 'complete' || nflState.week > leagueData.settings.playoff_week_start - 1) {
-// 		leastSeasonLongPoints = leastSeasonLongPoints.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
-// 	} else {
-// 		leastSeasonLongPoints = leastSeasonLongPoints.filter(leastSeasonLongPoint => leastSeasonLongPoint.year != parseInt(leagueData.season)).sort((a, b) => a.fpts - b.fpts).slice(0, 10);
-//         }
 
 	const recordsData = {
 		allTimeBiggestBlowouts,
 		allTimeClosestMatchups,
 		mostSeasonLongPoints,
 		leastSeasonLongPoints,
+		allTimeIndivSeason,
 		leagueWeekLows,
 		leagueWeekRecords,
 		seasonWeekRecords,
