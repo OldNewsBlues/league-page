@@ -130,8 +130,6 @@ export const getLeagueRecords = async (refresh = false) => {
 				fptsAgainst,
 				potentialPoints,
 				fptspg,
-				epeWins,
-				epeLosses,
 				manager: originalManagers[rosterID],
 				year
 			}
