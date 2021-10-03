@@ -5,7 +5,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table'; //fptsSeasonBest, fptsWeekBest,vvv
 
-    export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, allTimeIndivSeason, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, allTimeIndivSeasons, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
