@@ -216,7 +216,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			// const epeRank = 
 			for(const key in leagueRosterRecords) {
 				const leagueRosterRecord = leagueRosterRecords[key];
-				leagueRosterRecord.epeLosses.push(weektotals.fpts);
+				leagueRosterRecord.years.epeLosses.push(weektotals.fpts);
 // 				const epeTarget = weektotals.filter(weektotal => weektotal.rosterID == key);
 // 				const epeRanks = {
 // 					rosterID: key,
