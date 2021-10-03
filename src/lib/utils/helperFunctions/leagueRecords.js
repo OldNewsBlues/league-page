@@ -183,12 +183,12 @@ export const getLeagueRecords = async (refresh = false) => {
 
 		const seasonPointsRecord = [];
 		const seasonPointsLow = [];
+		const weektotals = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
 		for(const matchupWeek of matchupsData) {
 			let matchups = {};
-			let weektotals = {};
 			for(const matchup of matchupWeek) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
@@ -209,19 +209,21 @@ export const getLeagueRecords = async (refresh = false) => {
 				matchups[matchup.matchup_id].push(entry);
 
 			}
-			
-			for(const rosterID of weektotals) {
+			// const epeRank = 
+			for(const key in leagueRosterRecords) {
+				const leagueRosterRecord = leagueRosterRecords[key];
+// 				const epeTarget = weektotals.filter(w => w.rosterID == key);
 				const epeRanks = {
-					rosterID,
+					rosterID: key,
 					week: startWeek,
 					year,
-					epewin: 12 - weektotals.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID),
+					epewin: 12 - weektotals.sort((a, b) => b.fpts - a.fpts).indexOf(key),
 					epeloss: weektotals.fpts
 // 					epeloss: 12 + matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID)
 				}
-				leagueRosterRecords[rosterID].epeWins += epeRanks.epewin;
-				leagueRosterRecords[rosterID].epeLosses += epeRanks.epeloss;
-				leagueRosterRecords[rosterID].years.push({
+				leagueRosterRecord[key].epeWins += epeRanks.epewin;
+				leagueRosterRecord[key].epeLosses += epeRanks.epeloss;
+				leagueRosterRecord[key].years.push({
 					epeWins: epeRanks.epewin,
 					epeLosses: epeRanks.epeloss
 				})
