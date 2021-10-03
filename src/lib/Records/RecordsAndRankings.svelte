@@ -3,7 +3,7 @@
     import BarChart from '../BarChart.svelte'
     import { cleanName, generateGraph, gotoManager, round } from '$lib/utils/helper';
 
-  	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table'; //fptsSeasonBest, fptsWeekBest,vvv
+  	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table'; //fptsSeasonBest, fptsWeekBest,vvvv
 
     export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
