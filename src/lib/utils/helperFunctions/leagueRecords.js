@@ -106,6 +106,8 @@ export const getLeagueRecords = async (refresh = false) => {
 			const fptsAgainst = roster.settings.fpts_against + (roster.settings.fpts_against_decimal / 100);
 			const potentialPoints = roster.settings.ppts + (roster.settings.ppts_decimal / 100);
 			const fptspg = roster.settings.fpts / (roster.settings.wins + roster.settings.losses + roster.settings.ties);
+			let epeWins = [];
+			let epeLosses = [];
 
 			// add records to league roster record record
 			leagueRosterRecords[rosterID].wins += roster.settings.wins;
@@ -115,7 +117,9 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].fptsAgainst += fptsAgainst;
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
 			leagueRosterRecords[rosterID].fptspg += fptspg;
-
+			leagueRosterRecords[rosterID].epeWins += epeWins;
+			leagueRosterRecords[rosterID].epeLosses += epeLosses;
+			
 
 			// add singleSeason info [`${year}fptsFor`]
 			const singleYearInfo = {
@@ -188,6 +192,7 @@ export const getLeagueRecords = async (refresh = false) => {
 		// process all the matchups
 		for(const matchupWeek of matchupsData) {
 			let matchups = {};
+			let weektotals = {};
 			for(const matchup of matchupWeek) {
 				const entry = {
 					manager: originalManagers[matchup.roster_id],
@@ -200,6 +205,7 @@ export const getLeagueRecords = async (refresh = false) => {
 				seasonPointsLow.push(entry);
 				leagueWeekRecords.push(entry);
 				leagueWeekLows.push(entry);
+				weektotals.push(entry);
 				// add each entry to the matchup object
 				if(!matchups[matchup.matchup_id]) {
 					matchups[matchup.matchup_id] = [];
@@ -208,13 +214,14 @@ export const getLeagueRecords = async (refresh = false) => {
 
 			}
 			
-			for(const rosterID of matchups) {
+			for(const rosterID of weektotals) {
 				const epeRanks = {
 					rosterID,
 					week: startWeek,
 					year,
-					epewin: 12 - matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID),
-					epeloss: 12 + matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID)
+					epewin: 12 - weektotals.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID),
+					epeloss: weektotals.fpts
+// 					epeloss: 12 + matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID)
 				}
 				leagueRosterRecords[rosterID].epeWins += epeRanks.epewin;
 				leagueRosterRecords[rosterID].epeLosses += epeRanks.epeloss;
