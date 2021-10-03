@@ -147,7 +147,6 @@ export const getLeagueRecords = async (refresh = false) => {
 					manager: originalManagers[rosterID]
 				})
 			}
-			
 		}
 		
 		if(!currentManagers) {
@@ -180,7 +179,6 @@ export const getLeagueRecords = async (refresh = false) => {
 
 		const seasonPointsRecord = [];
 		const seasonPointsLow = [];
-		const indivPointsRecord = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
@@ -266,7 +264,7 @@ export const getLeagueRecords = async (refresh = false) => {
 
 	for(let i = 0; i < 10; i++) {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
-	}]
+	}
 
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
