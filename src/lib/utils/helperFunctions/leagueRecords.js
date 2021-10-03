@@ -225,9 +225,9 @@ export const getLeagueRecords = async (refresh = false) => {
 					epeloss: weektotals.fpts
 // 					epeloss: 12 + matchups.fpts.sort((a, b) => b.fpts - a.fpts).indexOf(rosterID)
 				}
-				leagueRosterRecord[key].epeWins += epeRanks.epewin;
-				leagueRosterRecord[key].epeLosses += epeRanks.epeloss;
-				leagueRosterRecord[key].years.push({
+				leagueRosterRecord.epeWins += epeRanks.epewin;
+				leagueRosterRecord.epeLosses += epeRanks.epeloss;
+				leagueRosterRecord.years.push({
 					epeWins: epeRanks.epewin,
 					epeLosses: epeRanks.epeloss
 				})
