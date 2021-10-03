@@ -118,7 +118,7 @@ export const getLeagueRecords = async (refresh = false) => {
 			leagueRosterRecords[rosterID].potentialPoints += potentialPoints;
 			leagueRosterRecords[rosterID].fptspg += fptspg;
 			leagueRosterRecords[rosterID].epeWins += epeWins;
-			leagueRosterRecords[rosterID].epeLosses += epeLosses;
+// 			leagueRosterRecords[rosterID].epeLosses += epeLosses;
 			
 
 			// add singleSeason info [`${year}fptsFor`]
