@@ -5,7 +5,7 @@
 
   	import DataTable, { Head, Body, Row, Cell } from '@smui/data-table'; //fptsSeasonBest, fptsWeekBest,vvv
 
-    export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
+    export let tradesData, waiversData, weekRecords, weekLows, seasonLongRecords, leastSeasonLongPoints, showTies, winPercentages, fptsHistories, allTimeIndivSeason, lineupIQs, prefix, blowouts, closestMatchups, currentManagers, allTime=false, last=false;
 
     const lineupIQGraph = {
         stats: lineupIQs,
@@ -887,18 +887,18 @@
                     </Row>
                 </Head>
                 <Body>
-                    {#each fptsHistories as fptsHistory, ix}
+                    {#each allTimeIndivSeasons as allTimeIndivSeason, ix}
                         <Row>
                             <Cell>{ix + 1}</Cell>
-                            <Cell class="cellName" on:click={() => gotoManager(fptsHistory.rosterID)}>
-                                {fptsHistory.manager.name}
-                                {#if !allTime  && cleanName(fptsHistory.manager.name) != cleanName(currentManagers[fptsHistory.rosterID].name)}
-                                    <div class="curRecordManager">({currentManagers[fptsHistory.rosterID].name})</div>
+                            <Cell class="cellName" on:click={() => gotoManager(allTimeIndivSeason.rosterID)}>
+                                {allTimeIndivSeason.manager.name}
+                                {#if !allTime  && cleanName(allTimeIndivSeason.manager.name) != cleanName(currentManagers[allTimeIndivSeason.rosterID].name)}
+                                    <div class="curRecordManager">({currentManagers[allTimeIndivSeason.rosterID].name})</div>
                                 {/if}
                             </Cell>
-                            <Cell class="center">{fptsHistory.fptsFor}</Cell>
-                            <Cell class="center">{fptsHistory.fptsAgainst}</Cell>
-			    <Cell class="center">{fptsHistory.fptsPerGame}</Cell>
+                            <Cell class="center">{allTimeIndivSeason.year}</Cell>
+                            <Cell class="center">{allTimeIndivSeason.fpts}</Cell>
+			    <Cell class="center">{allTimeIndivSeason.fptspg}</Cell>
                         </Row>
                     {/each}
                 </Body>
