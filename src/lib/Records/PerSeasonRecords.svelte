@@ -130,7 +130,7 @@
     years.sort((a, b) => b.year - a.year);
 </script>
 
-{#each years as {waiversData, tradesData, weekRecords, weekLows, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, allTimeIndivSeasons, lineupIQs, year, blowouts, closestMatchups}, ix}
+{#each years as {waiversData, tradesData, weekRecords, weekLows, seasonLongRecords, seasonLongLows, showTies, winPercentages, fptsHistories, lineupIQs, year, blowouts, closestMatchups}, ix}
     <RecordsAndRankings
         {waiversData}
         {tradesData}
@@ -141,7 +141,6 @@
         {showTies}
         {winPercentages}
         {fptsHistories}
-	{allTimeIndivSeasons}
         {lineupIQs}
         {blowouts}
         {closestMatchups}
