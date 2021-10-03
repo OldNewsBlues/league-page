@@ -47,7 +47,6 @@ export const getLeagueRecords = async (refresh = false) => {
 	let leastSeasonLongPoints = []; // 10 lowest full season points
 	let allTimeBiggestBlowouts = []; // 10 biggest blowouts
 	let allTimeClosestMatchups = []; // 10 closest matchups
-	let indivSeasonRecords = [];
 
 	while(curSeason && curSeason != 0) {
 		const [rosterRes, users, leagueData] = await waitForAll(
@@ -149,13 +148,6 @@ export const getLeagueRecords = async (refresh = false) => {
 				})
 			}
 			
-			indivSeasonRecords.push({
-				rosterID,
-				fpts,
-				fptspg,
-				year,
-				manager: originalManagers[rosterID]
-			})
 		}
 		
 		if(!currentManagers) {
@@ -188,6 +180,7 @@ export const getLeagueRecords = async (refresh = false) => {
 
 		const seasonPointsRecord = [];
 		const seasonPointsLow = [];
+		const indivPointsRecord = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
@@ -273,15 +266,7 @@ export const getLeagueRecords = async (refresh = false) => {
 
 	for(let i = 0; i < 10; i++) {
 		allTimeClosestMatchups.push(allTimeMatchupDifferentials.pop());
-	}
-	
-	indivSeasonRecords = indivSeasonRecords.sort((a, b) => b.fpts - a.fpts);
-	let allTimeIndivSeasons = [];
-	for(const rosterID in indivSeasonRecords) {
-		const indivSeasonRecord = indivSeasonRecords[rosterID].slice(0, 1);
-		allTimeIndivSeasons.push(indivSeasonRecord);
-	}
-	allTimeIndivSeasons = allTimeIndivSeasons.sort((a, b) => b.fpts - a.fpts);
+	}]
 
 	leagueWeekRecords = leagueWeekRecords.sort((a, b) => b.fpts - a.fpts).slice(0, 10);
 	leagueWeekLows = leagueWeekLows.sort((a, b) => a.fpts - b.fpts).slice(0, 10);
@@ -293,7 +278,6 @@ export const getLeagueRecords = async (refresh = false) => {
 		allTimeClosestMatchups,
 		mostSeasonLongPoints,
 		leastSeasonLongPoints,
-		allTimeIndivSeasons,
 		leagueWeekLows,
 		leagueWeekRecords,
 		seasonWeekRecords,
