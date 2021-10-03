@@ -84,6 +84,8 @@
                 wins: season.wins,
                 ties: season.ties,
                 losses: season.losses,
+		epeW: season.epeWins,
+		epeL: season.epeLosses,
             })
 
             // add lineup IQ rankings
