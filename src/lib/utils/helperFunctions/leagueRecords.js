@@ -187,7 +187,7 @@ export const getLeagueRecords = async (refresh = false) => {
 
 		const seasonPointsRecord = [];
 		const seasonPointsLow = [];
-// 		const weektotals = [];
+		const weektotals = [];
 		let matchupDifferentials = [];
 		
 		// process all the matchups
@@ -205,7 +205,7 @@ export const getLeagueRecords = async (refresh = false) => {
 				seasonPointsLow.push(entry);
 				leagueWeekRecords.push(entry);
 				leagueWeekLows.push(entry);
-// 				weektotals.push(entry);
+				weektotals.push(entry);
 				// add each entry to the matchup object
 				if(!matchups[matchup.matchup_id]) {
 					matchups[matchup.matchup_id] = [];
@@ -214,8 +214,9 @@ export const getLeagueRecords = async (refresh = false) => {
 
 			}
 			// const epeRank = 
-// 			for(const key in leagueRosterRecords) {
-// 				const leagueRosterRecord = leagueRosterRecords[key];
+			for(const key in leagueRosterRecords) {
+				const leagueRosterRecord = leagueRosterRecords[key];
+				leagueRosterRecord.epeLosses.push(weektotals.fpts);
 // 				const epeTarget = weektotals.filter(weektotal => weektotal.rosterID == key);
 // 				const epeRanks = {
 // 					rosterID: key,
@@ -231,7 +232,7 @@ export const getLeagueRecords = async (refresh = false) => {
 // 					epeWins: epeRanks.epewin,
 // 					epeLosses: epeRanks.epeloss,
 // 				})
-// 			}
+			}
 			startWeek--;
 					      
 			// create matchup differentials from matchups obj
