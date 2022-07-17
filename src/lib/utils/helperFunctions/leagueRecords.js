@@ -9,6 +9,7 @@ import {records} from '$lib/stores';
 import { round, sortHighAndLow } from './universalFunctions';
 import { Records } from '$lib/utils/dataClasses';
 import { getBrackets } from './leagueBrackets';
+import { loadPlayers } from '$lib/utils/helper';
 
 /**
  * getLeagueRecords obtains all the record for a league since it was first created
@@ -39,6 +40,14 @@ export const getLeagueRecords = async (refresh = false) => {
 		week = nflState.week - 1;
 	} else if(nflState.season_type == 'post') {
 		week = 18;
+	}
+
+	// get info about players
+	const playersInfo = await loadPlayers().catch((err) => { console.error(err); });
+	let players = playersInfo.players;
+	if(playersInfo.stale) {
+		const newPlayersInfo = await loadPlayers(true);
+		players = newPlayersInfo.players;
 	}
 
 	// initiate current season to be your current
